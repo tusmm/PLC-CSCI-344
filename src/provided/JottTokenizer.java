@@ -7,6 +7,9 @@ package provided;
  **/
 
 import java.util.ArrayList;
+import java.io.*;
+import java.util.Scanner;
+
 
 public class JottTokenizer {
 
@@ -17,6 +20,8 @@ public class JottTokenizer {
      * @return an ArrayList of Jott Tokens
      */
     public static ArrayList<Token> tokenize(String filename){
+      ArrayList<Token> tokens = new ArrayList<Token>(); 
+      int lineNum = 1; // iterate for every new line
 		return null;
 	}
 }
