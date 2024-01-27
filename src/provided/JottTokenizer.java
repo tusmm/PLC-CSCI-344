@@ -22,6 +22,19 @@ public class JottTokenizer {
     public static ArrayList<Token> tokenize(String filename){
       ArrayList<Token> tokens = new ArrayList<Token>(); 
       int lineNum = 1; // iterate for every new line
+
+      try (Scanner scanner = new Scanner(new File(filename))) {
+        // gets rid of whitespace and new lines
+        scanner.useDelimiter("\\s+");
+        while (scanner.hasNext()) {
+          String token = scanner.next();
+          System.out.println(token);
+        }
+
+      } catch (FileNotFoundException e) {
+        e.printStackTrace();
+      }
+
 		return null;
 	}
 }
