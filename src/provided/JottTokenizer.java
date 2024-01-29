@@ -8,7 +8,6 @@ package provided;
 
 import java.util.ArrayList;
 import java.io.*;
-import java.util.Scanner;
 
 
 public class JottTokenizer {
@@ -23,18 +22,26 @@ public class JottTokenizer {
       ArrayList<Token> tokens = new ArrayList<Token>(); 
       int lineNum = 1; // iterate for every new line
 
-      try (Scanner scanner = new Scanner(new File(filename))) {
-        // gets rid of whitespace and new lines
-        scanner.useDelimiter("\\s+");
-        while (scanner.hasNext()) {
-          String token = scanner.next();
-          System.out.println(token);
+      try {
+        BufferedReader br = new BufferedReader(
+                            new InputStreamReader(
+                            new FileInputStream(filename), "UTF8"));
+    
+        String line;
+        while ((line = br.readLine()) != null) {
+          for (int i = 0; i < line.length(); i++) {
+            // all characters are passed thru here beside new lines
+            System.out.println("Char at: " + line.charAt(i));
+          }
+            // new lines detected here
+          System.out.println("Another line");
         }
-
-      } catch (FileNotFoundException e) {
-        e.printStackTrace();
+        br.close();
+    
+        } catch (IOException e) {
+            e.printStackTrace();
       }
 
-		return null;
+		return tokens;
 	}
 }
