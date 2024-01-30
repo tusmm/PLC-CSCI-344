@@ -48,6 +48,9 @@ public class JottTokenizer {
 
             // NUMBER
           } else if (Character.isDigit(ch) || ch == '.') {
+            // needs to return an error when a character starts with a '.' but doesn't have
+            // a digit or whitespace after
+
             // if a digit is found, add to token string and do a while
             String token = "" + ch;
             
@@ -56,9 +59,15 @@ public class JottTokenizer {
             // the character is not lost
             PushbackReader pr = new PushbackReader(buffReader);
             char peek = (char)pr.read();
+            
             while (Character.isDigit(peek) || peek == '.') {
               // this line might be sus, might drop a character
               // ch = (char)buffReader.read();
+              if (!Character.isDigit(peek) && peek != ' ') {
+                // error has occured due to being stuck in the loop
+                System.err.println("Syntax Error:\nInvalid token \"" + token + "\"\n" + filename + ":" + lineNum);
+              }
+
               token += peek;
               peek = (char)pr.read();
 
@@ -69,8 +78,9 @@ public class JottTokenizer {
             } 
 
             pr.unread((int)peek);
-
-            tokens.add(new Token(token, filename, lineNum, TokenType.NUMBER));
+            
+            Token numberToken = new Token(token, filename, lineNum, TokenType.NUMBER);
+            tokens.add(numberToken);
           }
           
           // System.out.println("Char :"
