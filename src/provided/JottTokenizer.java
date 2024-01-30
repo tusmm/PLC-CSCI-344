@@ -8,7 +8,10 @@ package provided;
 
 import java.util.ArrayList;
 import java.io.*;
-
+import java.lang.Character;
+import java.lang.StringBuilder;
+import provided.Token;
+import provided.TokenType;
 
 public class JottTokenizer {
 
@@ -23,23 +26,52 @@ public class JottTokenizer {
       int lineNum = 1; // iterate for every new line
 
       try {
-        BufferedReader br = new BufferedReader(
-                            new InputStreamReader(
-                            new FileInputStream(filename), "UTF8"));
-    
-        String line;
-        while ((line = br.readLine()) != null) {
-          for (int i = 0; i < line.length(); i++) {
-            // all characters are passed thru here beside new lines
-            System.out.println("Char at: " + line.charAt(i));
+        FileReader fileReader 
+            = new FileReader( 
+                filename);
+  
+        // Convert fileReader to 
+        // bufferedReader 
+        BufferedReader buffReader 
+            = new BufferedReader( 
+                fileReader); 
+  
+        while (buffReader.ready()) { 
+          // Read and print characters one by one 
+          // by converting into character 
+          char ch = (char)buffReader.read(); 
+          if (ch == '\n') {
+            lineNum++;
+            continue;
+          } else if (ch == ' ') {
+            continue;
+          } else if (Character.isDigit(ch)) {
+            // if a digit is found, add to token string and do a while
+            String token = "" + ch;
+
+            // peek  in front, if it's not good, it will exit this loop and then 
+            // be unread so that the character is in the front again. this is so
+            // the character is not lost
+            PushbackReader pr = new PushbackReader(buffReader);
+            char peek = (char)pr.read();
+            while (Character.isDigit(peek)) {
+              token += ch;
+              ch = (char)buffReader.read();
+              peek = (char)pr.read();
+            } 
+            pr.unread((int)ch);
+
+            tokens.add(new Token(token, filename, lineNum, TokenType.NUMBER));
           }
-            // new lines detected here
-          System.out.println("Another line");
+          
+          // System.out.println("Char :"
+          //                   + ch);
         }
-        br.close();
-    
-        } catch (IOException e) {
-            e.printStackTrace();
+
+        buffReader.close();
+
+      } catch (IOException e) {
+        e.printStackTrace();
       }
 
 		return tokens;
