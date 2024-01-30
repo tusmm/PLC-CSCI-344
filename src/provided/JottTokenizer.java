@@ -9,7 +9,6 @@ package provided;
 import java.util.ArrayList;
 import java.io.*;
 import java.lang.Character;
-import java.lang.StringBuilder;
 import provided.Token;
 import provided.TokenType;
 
@@ -35,31 +34,41 @@ public class JottTokenizer {
         BufferedReader buffReader 
             = new BufferedReader( 
                 fileReader); 
-  
+        
+        char ch;
         while (buffReader.ready()) { 
           // Read and print characters one by one 
           // by converting into character 
-          char ch = (char)buffReader.read(); 
+          ch = (char)buffReader.read(); 
           if (ch == '\n') {
             lineNum++;
             continue;
           } else if (ch == ' ') {
             continue;
-          } else if (Character.isDigit(ch)) {
+
+            // NUMBER
+          } else if (Character.isDigit(ch) || ch == '.') {
             // if a digit is found, add to token string and do a while
             String token = "" + ch;
-
+            
             // peek  in front, if it's not good, it will exit this loop and then 
             // be unread so that the character is in the front again. this is so
             // the character is not lost
             PushbackReader pr = new PushbackReader(buffReader);
             char peek = (char)pr.read();
-            while (Character.isDigit(peek)) {
-              token += ch;
-              ch = (char)buffReader.read();
+            while (Character.isDigit(peek) || peek == '.') {
+              // this line might be sus, might drop a character
+              // ch = (char)buffReader.read();
+              token += peek;
               peek = (char)pr.read();
+
+              if (peek == '.' && ch == '.') {
+                break;
+              } 
+              
             } 
-            pr.unread((int)ch);
+
+            pr.unread((int)peek);
 
             tokens.add(new Token(token, filename, lineNum, TokenType.NUMBER));
           }
