@@ -60,13 +60,19 @@ public class JottTokenizer {
             PushbackReader pr = new PushbackReader(buffReader);
             char peek = (char)pr.read();
             
+            if (ch == '.' && !Character.isDigit(peek)) {
+                // error has occured due to the letter after a '.' not being a digit
+                System.err.println("Syntax Error:\nInvalid token \"" + token + "\"\n" + filename + ":" + lineNum);
+                tokens.replaceAll(null); // an error has occured, return null?
+                break;
+              }
+
             while (Character.isDigit(peek) || peek == '.') {
               // this line might be sus, might drop a character
               // ch = (char)buffReader.read();
-              if (!Character.isDigit(peek) && peek != ' ') {
-                // error has occured due to being stuck in the loop
-                System.err.println("Syntax Error:\nInvalid token \"" + token + "\"\n" + filename + ":" + lineNum);
-              }
+              // need to know if the current digit is a ., maybe can just check the 
+              // last character of the string. I think this is the easiest. then see if its not
+              // a digit and whitespace
 
               token += peek;
               peek = (char)pr.read();
