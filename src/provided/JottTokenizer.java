@@ -40,12 +40,18 @@ public class JottTokenizer {
           // Read and print characters one by one 
           // by converting into character 
           ch = (char)buffReader.read(); 
+          // NEWLINE
           if (ch == '\n') {
             lineNum++;
-            continue;
+            continue; 
+            // WHITESPACE
           } else if (ch == ' ') {
             continue;
 
+            // COMMENT
+          } else if (ch == '#') {
+            
+            
             // NUMBER
           } else if (Character.isDigit(ch) || ch == '.') {
             // needs to return an error when a character starts with a '.' but doesn't have
