@@ -43,8 +43,16 @@ public class JottTokenizer {
           if (ch == '\n') {
             lineNum++;
             continue;
-          } else if (ch == ' ') {
+          } else if (ch == ' ') { // white space
             continue;
+          } else if (ch == "#") { // comments
+            while(ch != '\n'){
+              ch = (char)buffReader.read(); 
+            }
+            lineNum++; 
+            continue; 
+          } 
+
 
             // NUMBER
           } else if (Character.isDigit(ch) || ch == '.') {
