@@ -40,12 +40,18 @@ public class JottTokenizer {
           // Read and print characters one by one 
           // by converting into character 
           ch = (char)buffReader.read(); 
+          // NEWLINE
           if (ch == '\n') {
             lineNum++;
-            continue;
+            continue; 
+            // WHITESPACE
           } else if (ch == ' ') {
             continue;
 
+            // COMMENT
+          } else if (ch == '#') {
+            
+            
             // NUMBER
           } else if (Character.isDigit(ch) || ch == '.') {
             // needs to return an error when a character starts with a '.' but doesn't have
@@ -60,6 +66,13 @@ public class JottTokenizer {
             PushbackReader pr = new PushbackReader(buffReader);
             char peek = (char)pr.read();
             
+            if (ch == '.' && !Character.isDigit(peek)) {
+                // error has occured due to the letter after a '.' not being a digit
+                System.err.println("Syntax Error:\nInvalid token \"" + token + "\"\n" + filename + ":" + lineNum);
+                tokens.replaceAll(null); // an error has occured, return null?
+                break;
+              }
+
             while (Character.isDigit(peek) || peek == '.') {
               // this line might be sus, might drop a character
               // ch = (char)buffReader.read();
