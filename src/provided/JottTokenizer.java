@@ -63,7 +63,8 @@ public class JottTokenizer {
             while (Character.isDigit(peek) || peek == '.') {
               // this line might be sus, might drop a character
               // ch = (char)buffReader.read();
-              if (!Character.isDigit(peek) && peek != ' ') {
+              // if end of token is '.'
+              if (token.charAt(token.length() - 1) == '.' && peek != ' ' && !Character.isDigit(peek)) {
                 // error has occured due to being stuck in the loop
                 System.err.println("Syntax Error:\nInvalid token \"" + token + "\"\n" + filename + ":" + lineNum);
               }
