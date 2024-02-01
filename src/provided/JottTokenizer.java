@@ -76,9 +76,11 @@ public class JottTokenizer {
             while (Character.isDigit(peek) || peek == '.') {
               // this line might be sus, might drop a character
               // ch = (char)buffReader.read();
-              // need to know if the current digit is a ., maybe can just check the 
-              // last character of the string. I think this is the easiest. then see if its not
-              // a digit and whitespace
+              // if end of token is '.'
+              if (token.charAt(token.length() - 1) == '.' && peek != ' ' && !Character.isDigit(peek)) {
+                // error has occured due to being stuck in the loop
+                System.err.println("Syntax Error:\nInvalid token \"" + token + "\"\n" + filename + ":" + lineNum);
+              }
 
               token += peek;
               peek = (char)pr.read();
