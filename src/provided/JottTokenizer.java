@@ -9,8 +9,6 @@ package provided;
 import java.util.ArrayList;
 import java.io.*;
 import java.lang.Character;
-import provided.Token;
-import provided.TokenType;
 
 public class JottTokenizer {
 
@@ -43,10 +41,39 @@ public class JottTokenizer {
           // NEWLINE
           if (ch == '\n') {
             lineNum++;
-            continue; 
-            // WHITESPACE
-          } else if (ch == ' ') {
             continue;
+          } else if (ch == ' ') { // white space
+            continue;
+          } else if (ch == '#') { // comments
+            while(ch != '\n'){
+              int checkChar = buffReader.read();
+              if (checkChar == -1){
+                break;
+              }
+              ch = (char)checkChar;
+            }
+            if (ch == '\n') lineNum++; 
+            continue; 
+          } else if (ch == ','){
+            String commaString = "" + ch; 
+            Token commaToken = new Token(commaString, filename, lineNum, TokenType.COMMA);
+            tokens.add(commaToken);
+          } else if (ch == ']'){
+            String rbracketString = "" + ch; 
+            Token rbracketToken = new Token(rbracketString, filename, lineNum, TokenType.R_BRACKET);
+            tokens.add(rbracketToken);
+          } else if (ch == '['){
+            String lbracketString = "" + ch; 
+            Token lbracketToken = new Token(lbracketString, filename, lineNum, TokenType.L_BRACKET);
+            tokens.add(lbracketToken);
+          } else if (ch == '{'){
+            String rbraceString = "" + ch; 
+            Token rbraceToken = new Token(rbraceString, filename, lineNum, TokenType.R_BRACE);
+            tokens.add(rbraceToken);
+          } else if (ch == '}'){
+            String lbraceString = "" + ch; 
+            Token lbraceToken = new Token(lbraceString, filename, lineNum, TokenType.L_BRACE);
+            tokens.add(lbraceToken);
 
             // COMMENT
           } else if (ch == '#') {
