@@ -46,9 +46,13 @@ public class JottTokenizer {
             continue;
           } else if (ch == '#') { // comments
             while(ch != '\n'){
-              ch = (char)buffReader.read(); 
+              int checkChar = buffReader.read();
+              if (checkChar == -1){
+                break;
+              }
+              ch = (char)checkChar;
             }
-            lineNum++; 
+            if (ch == '\n') lineNum++; 
             continue; 
           } else if (ch == ','){
             String commaString = "" + ch; 
