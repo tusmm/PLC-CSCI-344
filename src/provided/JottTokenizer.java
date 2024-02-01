@@ -25,8 +25,8 @@ public class JottTokenizer {
       int lineNum = 1; // iterate for every new line
 
       try {
-        FileReader fileReader 
-            = new FileReader( 
+        FileReader fileReader
+            = new FileReader(
                 filename);
   
         // Convert fileReader to 
@@ -95,6 +95,21 @@ public class JottTokenizer {
             
             Token numberToken = new Token(token, filename, lineNum, TokenType.NUMBER);
             tokens.add(numberToken);
+          } else if(ch == '=' || ch == '<' || ch == '>') {
+            // ASSIGN / REL_OP
+            PushbackReader pr = new PushbackReader(buffReader);
+            char peek = (char) pr.read();
+
+            if(peek == '=') {
+              Token relOpToken = new Token("" + ch + peek, filename, lineNum, TokenType.REL_OP);
+              tokens.add(relOpToken);
+            } else {
+              TokenType tokenType = (ch == '=') ? TokenType.ASSIGN : TokenType.REL_OP;
+              Token assignToken = new Token("" + ch, filename, lineNum, tokenType);
+              tokens.add(assignToken);
+              pr.unread(peek);
+            }
+
           }
           
           // System.out.println("Char :"
