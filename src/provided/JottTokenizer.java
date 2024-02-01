@@ -69,7 +69,7 @@ public class JottTokenizer {
             if (ch == '.' && !Character.isDigit(peek)) {
                 // error has occured due to the letter after a '.' not being a digit
                 System.err.println("Syntax Error:\nInvalid token \"" + token + "\"\n" + filename + ":" + lineNum);
-                tokens.replaceAll(null); // an error has occured, return null?
+                // tokens.replaceAll(null); // an error has occured, return null?
                 break;
               }
 
