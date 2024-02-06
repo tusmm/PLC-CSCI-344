@@ -68,17 +68,44 @@ public class JottTokenizer {
             tokens.add(lbracketToken);
           } else if (ch == '{'){
             String rbraceString = "" + ch; 
-            Token rbraceToken = new Token(rbraceString, filename, lineNum, TokenType.R_BRACE);
+            Token rbraceToken = new Token(rbraceString, filename, lineNum, TokenType.L_BRACE);
             tokens.add(rbraceToken);
           } else if (ch == '}'){
             String lbraceString = "" + ch; 
-            Token lbraceToken = new Token(lbraceString, filename, lineNum, TokenType.L_BRACE);
+            Token lbraceToken = new Token(lbraceString, filename, lineNum, TokenType.R_BRACE);
             tokens.add(lbraceToken);
+          } else if (ch == '/' || ch == '*' || ch == '+' || ch == '-') {
+            tokens.add(new Token("" + ch, filename, lineNum, TokenType.MATH_OP));
+          } else if (ch == ';') {
+            tokens.add(new Token("" + ch, filename, lineNum, TokenType.SEMICOLON));
+          } else if (Character.isLetter(ch)) {
+            String token = "" + ch;
 
-            // COMMENT
-          } else if (ch == '#') {
-            
-            
+            PushbackReader pr = new PushbackReader(buffReader);
+            char peek = (char)pr.read();
+
+            while (Character.isLetter(peek) || Character.isDigit(peek)) {
+              token += peek;
+              peek = (char)pr.read();
+            }
+
+            pr.unread(peek);
+
+            tokens.add(new Token(token, filename, lineNum, TokenType.ID_KEYWORD));
+          } else if (ch == ':') {
+            tokens.add(new Token("" + ch, filename, lineNum, TokenType.COLON));
+          } else if (ch == '!') {
+            PushbackReader pr = new PushbackReader(buffReader);
+            char peek = (char)pr.read();
+
+            if(peek == '=') {
+              Token relOpToken = new Token("" + ch + peek, filename, lineNum, TokenType.REL_OP);
+              tokens.add(relOpToken);
+            } else {
+              System.err.println("Syntax Error:\nInvalid token \"" + ch + "\"\n" + filename + ":" + lineNum);
+              pr.close();
+              return null;
+            }
             // NUMBER
           } else if (Character.isDigit(ch) || ch == '.') {
             // needs to return an error when a character starts with a '.' but doesn't have
