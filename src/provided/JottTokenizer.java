@@ -123,13 +123,11 @@ public class JottTokenizer {
                             break; // found the end
                           } else if ( Character.isDigit(tokenChar) || Character.isLetter(tokenChar) || Character.isWhitespace(tokenChar)) {
                             str += tokenChar;
-                            continue;
                           } else {
                             // error
                             return null;
                           }
                         }
-
                         str += "\"";
                         tokens.add(new Token(str, filename, lineNum, TokenType.STRING));
                         continue;
