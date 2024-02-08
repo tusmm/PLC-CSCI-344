@@ -114,16 +114,16 @@ public class JottTokenizer {
 
                     // string
                     if (tokenChar == '\"') {
-                        String str = "\"";
+                        String tokenStr = "\"";
                         i++;
                         for (; i < line.length(); i++) {
                           tokenChar = line.charAt(i);
                           if (tokenChar == '\"') {
                             break; // found the end
                           }else if ( Character.isDigit(tokenChar) || Character.isLetter(tokenChar) || Character.isWhitespace(tokenChar)) {
-                            str += tokenChar;
+                            tokenStr += tokenChar;
                           } else {
-                            // error, but this won't be reached
+                            // error, but i don't think this is reached
                             return null;
                           }
                         }
@@ -133,7 +133,7 @@ public class JottTokenizer {
                             return null;
                         }
 
-                        tokens.add(new Token(str + "\"", filename, lineNum, TokenType.STRING));
+                        tokens.add(new Token(tokenStr + "\"", filename, lineNum, TokenType.STRING));
                         continue;
                     }
 
