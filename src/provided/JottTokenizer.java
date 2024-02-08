@@ -39,6 +39,8 @@ public class JottTokenizer {
                     if (Character.isDigit(tokenChar) || tokenChar == '.') {
                         String tokenStr = "";
                         boolean fractional = false;
+
+                        // add in case here for .
                         
                         for (; i < line.length(); i++) {
                             tokenChar = line.charAt(i);
@@ -55,6 +57,11 @@ public class JottTokenizer {
                             }
 
                             tokenStr += tokenChar;
+                        }
+
+                        if (tokenStr.equals(".")) {
+                            // error
+                            return null;
                         }
 
                         tokens.add(new Token(tokenStr, filename, lineNum, TokenType.NUMBER));
@@ -111,6 +118,39 @@ public class JottTokenizer {
 
                         continue;
                     }
+
+                    // string
+                    if (tokenChar == '\"') {
+                        String tokenStr = "\"";
+                        i++;
+                        for (; i < line.length(); i++) {
+                          tokenChar = line.charAt(i);
+                          if (tokenChar == '\"') {
+                            break; // found the end
+                          }else if ( Character.isDigit(tokenChar) || Character.isLetter(tokenChar) || Character.isWhitespace(tokenChar)) {
+                            tokenStr += tokenChar;
+                          } else {
+                            // error, but i don't think this is reached
+                            return null;
+                          }
+                        }
+
+                        if (tokenChar != '"') {
+                            // error
+                            return null;
+                        }
+
+                        tokens.add(new Token(tokenStr + "\"", filename, lineNum, TokenType.STRING));
+                        continue;
+                    }
+
+                    // :: header
+                    if (tokenChar == ':' && i < line.length() - 1 && line.charAt( i + 1 ) == ':') {
+                        tokens.add(new Token("::", filename, lineNum, TokenType.FC_HEADER));
+                        i++;
+                        continue;
+                    }
+
 
                     // Single Character Tokens
                     switch (tokenChar) {
