@@ -133,6 +133,13 @@ public class JottTokenizer {
                         continue;
                     }
 
+                    // :: header
+                    if (tokenChar == ':' && i < line.length() - 1 && line.charAt( i + 1 ) == ':') {
+                        tokens.add(new Token("::", filename, lineNum, TokenType.FC_HEADER));
+                        i++;
+                        continue;
+                    }
+
 
                     // Single Character Tokens
                     switch (tokenChar) {
