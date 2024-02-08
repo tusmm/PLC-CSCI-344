@@ -133,13 +133,17 @@ public class JottTokenizer {
                           }else if ( Character.isDigit(tokenChar) || Character.isLetter(tokenChar) || Character.isWhitespace(tokenChar)) {
                             tokenStr += tokenChar;
                           } else {
-                            // error, but i don't think this is reached
+                            System.err.println("Syntax Error:"); // not reached, but necessary based on DFA
+                            System.err.println("Invalid character in string");
+                            System.err.println(filename + ":" + lineNum);
                             return null;
                           }
                         }
 
                         if (tokenChar != '"') {
-                            // error
+                            System.err.println("Syntax Error:");
+                            System.err.println("Expected closing quote (\")");
+                            System.err.println(filename + ":" + lineNum);
                             return null;
                         }
 
