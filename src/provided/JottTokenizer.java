@@ -118,18 +118,22 @@ public class JottTokenizer {
                         i++;
                         for (; i < line.length(); i++) {
                           tokenChar = line.charAt(i);
-
                           if (tokenChar == '\"') {
                             break; // found the end
-                          } else if ( Character.isDigit(tokenChar) || Character.isLetter(tokenChar) || Character.isWhitespace(tokenChar)) {
+                          }else if ( Character.isDigit(tokenChar) || Character.isLetter(tokenChar) || Character.isWhitespace(tokenChar)) {
                             str += tokenChar;
                           } else {
-                            // error
+                            // error, but this won't be reached
                             return null;
                           }
                         }
-                        str += "\"";
-                        tokens.add(new Token(str, filename, lineNum, TokenType.STRING));
+
+                        if (tokenChar != '"') {
+                            // error
+                            return null;
+                        }
+
+                        tokens.add(new Token(str + "\"", filename, lineNum, TokenType.STRING));
                         continue;
                     }
 
