@@ -63,7 +63,10 @@ public class JottTokenizer {
                         }
 
                         if (tokenStr.equals(".")) {
-                            // error
+                            // error, only a ' . '
+                            System.err.println("Syntax Error");
+                            System.err.println("Invalid token \".\". \".\" expects the following digit");
+                            System.err.println(filename + ":" + lineNum);
                             return null;
                         }
 
