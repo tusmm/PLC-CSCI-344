@@ -39,6 +39,8 @@ public class JottTokenizer {
                     if (Character.isDigit(tokenChar) || tokenChar == '.') {
                         String tokenStr = "";
                         boolean fractional = false;
+
+                        // add in case here for .
                         
                         for (; i < line.length(); i++) {
                             tokenChar = line.charAt(i);
@@ -55,6 +57,11 @@ public class JottTokenizer {
                             }
 
                             tokenStr += tokenChar;
+                        }
+
+                        if (tokenStr.equals(".")) {
+                            // error
+                            return null;
                         }
 
                         tokens.add(new Token(tokenStr, filename, lineNum, TokenType.NUMBER));
