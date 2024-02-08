@@ -112,6 +112,8 @@ public class JottTokenizer {
                         continue;
                     }
 
+                    // string
+
                     // Single Character Tokens
                     switch (tokenChar) {
                         case ',':
