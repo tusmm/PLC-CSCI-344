@@ -7,7 +7,7 @@ import java.util.ArrayList;
 /**
  * This class is responsible for tokenizing Jott code.
  * 
- * @author 
+ * @author Lucy Hu, Ryan Ong, Sam Havanki, Luke Wyland, Patrick LeBlanc
  **/
 
 public class JottTokenizer {
@@ -47,6 +47,9 @@ public class JottTokenizer {
                             
                             if (fractional == true && tokenChar == '.') {
                                 // Handle errors
+                                System.err.println("Syntax Error:");
+                                System.err.println("Invalid token \".\". \".\" expects following digit"); 
+                                System.err.println(filename + ":" + lineNum);
                                 return null;
                             } else if (tokenChar == '.'){
                                 fractional = true;
