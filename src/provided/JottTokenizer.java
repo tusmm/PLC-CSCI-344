@@ -143,7 +143,7 @@ public class JottTokenizer {
                 tokenStr += tokenChar;
               } else {
                 System.err.println("Syntax Error:"); // not reached, but necessary based on DFA
-                System.err.println("Invalid character in string");
+                System.err.println("Invalid character \"" + tokenChar + "\" in string");
                 System.err.println(filename + ":" + lineNum);
                 return null;
               }
@@ -151,7 +151,7 @@ public class JottTokenizer {
 
             if (tokenChar != '"') {
               System.err.println("Syntax Error:");
-              System.err.println("Expected closing quote (\")");
+              System.err.println("Expected closing quote \"");
               System.err.println(filename + ":" + lineNum);
               return null;
             }
