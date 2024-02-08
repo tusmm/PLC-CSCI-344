@@ -1,7 +1,9 @@
 package provided;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -209,8 +211,12 @@ public class JottTokenizer {
           }
         }
       }
-    } catch (Exception e) {
-      e.printStackTrace();
+    } catch (FileNotFoundException e) {
+      System.err.println("Error: " + filename + " not found.");
+      return null;
+    } catch (IOException e) {
+        System.err.println("Error: IO Exception when accessing " + filename + ".");
+        return null;
     }
 
     return tokens;
