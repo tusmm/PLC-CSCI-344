@@ -7,7 +7,7 @@ import java.util.ArrayList;
 /**
  * This class is responsible for tokenizing Jott code.
  * 
- * @author 
+ * @author Lucy Hu, Ryan Ong, Sam Havanki, Luke Wyland, Patrick LeBlanc
  **/
 
 public class JottTokenizer {
@@ -47,6 +47,9 @@ public class JottTokenizer {
                             
                             if (fractional == true && tokenChar == '.') {
                                 // Handle errors
+                                System.err.println("Syntax Error:");
+                                System.err.println("Invalid token \".\". \".\" expects following digit"); 
+                                System.err.println(filename + ":" + lineNum);
                                 return null;
                             } else if (tokenChar == '.'){
                                 fractional = true;
@@ -116,6 +119,9 @@ public class JottTokenizer {
                             i++;
                         } else {
                             // Handle errors
+                            System.err.println("Syntax Error:");
+                            System.err.println("Invalid token \"!\". \"!\" expects following \"=\""); 
+                            System.err.println(filename + ":" + lineNum);
                             return null;
                         }
 
@@ -133,17 +139,13 @@ public class JottTokenizer {
                           }else if ( Character.isDigit(tokenChar) || Character.isLetter(tokenChar) || Character.isWhitespace(tokenChar)) {
                             tokenStr += tokenChar;
                           } else {
-                            System.err.println("Syntax Error:"); // not reached, but necessary based on DFA
-                            System.err.println("Invalid character in string");
-                            System.err.println(filename + ":" + lineNum);
+                            // error, but i don't think this is reached
                             return null;
                           }
                         }
 
                         if (tokenChar != '"') {
-                            System.err.println("Syntax Error:");
-                            System.err.println("Expected closing quote (\")");
-                            System.err.println(filename + ":" + lineNum);
+                            // error
                             return null;
                         }
 
