@@ -116,6 +116,9 @@ public class JottTokenizer {
                             i++;
                         } else {
                             // Handle errors
+                            System.err.println("Syntax Error:");
+                            System.err.println("Invalid token \"!\". \"!\" expects following \"=\""); 
+                            System.err.println(filename + ":" + lineNum);
                             return null;
                         }
 
@@ -133,17 +136,13 @@ public class JottTokenizer {
                           }else if ( Character.isDigit(tokenChar) || Character.isLetter(tokenChar) || Character.isWhitespace(tokenChar)) {
                             tokenStr += tokenChar;
                           } else {
-                            System.err.println("Syntax Error:"); // not reached, but necessary based on DFA
-                            System.err.println("Invalid character in string");
-                            System.err.println(filename + ":" + lineNum);
+                            // error, but i don't think this is reached
                             return null;
                           }
                         }
 
                         if (tokenChar != '"') {
-                            System.err.println("Syntax Error:");
-                            System.err.println("Expected closing quote (\")");
-                            System.err.println(filename + ":" + lineNum);
+                            // error
                             return null;
                         }
 
