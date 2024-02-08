@@ -113,6 +113,28 @@ public class JottTokenizer {
                     }
 
                     // string
+                    if (tokenChar == '\"') {
+                        String str = "\"";
+                        i++;
+                        for (; i < line.length(); i++) {
+                          tokenChar = line.charAt(i);
+
+                          if (tokenChar == '\"') {
+                            break; // found the end
+                          } else if ( Character.isDigit(tokenChar) || Character.isLetter(tokenChar) || Character.isWhitespace(tokenChar)) {
+                            str += tokenChar;
+                            continue;
+                          } else {
+                            // error
+                            return null;
+                          }
+                        }
+
+                        str += "\"";
+                        tokens.add(new Token(str, filename, lineNum, TokenType.STRING));
+                        continue;
+                    }
+
 
                     // Single Character Tokens
                     switch (tokenChar) {
