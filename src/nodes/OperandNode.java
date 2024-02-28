@@ -1,7 +1,20 @@
 package nodes;
-import provided.JottTree;
+import java.util.ArrayList;
 
-public class OperandNode implements JottTree {
+import provided.JottTree;
+import provided.Token;
+import provided.TokenType;
+
+abstract class OperandNode implements JottTree {
+
+    public static OperandNode parseOperand(ArrayList<Token> tokens) {
+        Token token = tokens.get(0);
+        if (token.getTokenType() == TokenType.ID_KEYWORD) {
+            return IDNode.parseIDNode(tokens);
+        }
+        // write further code
+        return null;
+    }
 
     @Override
     public String convertToJott() {
@@ -33,5 +46,4 @@ public class OperandNode implements JottTree {
         throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
     }
     
-
 }
