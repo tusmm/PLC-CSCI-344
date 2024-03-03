@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import provided.Token;
 
-public class ParamNode extends OperandNode {
+public class ParamNode implements OperandNode {
 
     public static ParamNode parseParamNode(ArrayList<Token> tokens) {
         // TODO Auto-generated method stub

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import provided.Token;
 import provided.TokenType;
 
-public class FunctionCallNode extends OperandNode {
+public class FunctionCallNode implements OperandNode {
     IDNode id;
     ParamNode params;
 

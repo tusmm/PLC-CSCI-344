@@ -6,7 +6,7 @@ import provided.Token;
 import provided.TokenType;
 
 
-public class NumberNode extends OperandNode {
+public class NumberNode implements OperandNode {
    Token token;
    
    public NumberNode(Token token) { 

@@ -6,7 +6,7 @@ import provided.Token;
 import provided.TokenType;
 
 
-public class IDNode extends OperandNode {
+public class IDNode implements OperandNode {
    Token token;
    
    public IDNode(Token token) { 
