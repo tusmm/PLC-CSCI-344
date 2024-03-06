@@ -54,4 +54,28 @@ public class FunctionCallNode implements OperandNode {
     private static boolean isEmptyTokensList(ArrayList<Token> tokens) {
         return tokens.size() != 0;
     }
+
+	@Override
+	public String convertToJava(String className) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'convertToJava'");
+	}
+
+	@Override
+	public String convertToC() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'convertToC'");
+	}
+
+	@Override
+	public String convertToPython() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'convertToPython'");
+	}
+
+	@Override
+	public boolean validateTree() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
+	}
 }
