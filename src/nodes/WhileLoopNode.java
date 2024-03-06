@@ -132,8 +132,7 @@ public class WhileLoopNode implements BodyStatementNode{
 
     @Override
     public String convertToJott() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToJott'");
+        return "While[" + expression.convertToJott() + "]{" + body.convertToJott() + "}";
     }
 
     @Override
