@@ -3,6 +3,7 @@ package nodes;
 import java.util.ArrayList;
 
 import provided.Token;
+import provided.TokenType;
 
 public class ParamsTNode implements OperandNode {
     ExpressionNode expressionNode;
@@ -19,7 +20,21 @@ public class ParamsTNode implements OperandNode {
         }
 
         Token token = tokens.get(0); // get the frton of the token
-        
+        if (token.getTokenType() == TokenType.COMMA) {
+            tokens.remove(0); // take off the first element
+            
+            if (tokens.size() == 0) {
+                System.out.println("handle exception");
+                return null;
+            }
+
+            if (ExpressionNode.parseExpressionNode(tokens) != null) {
+                ExpressionNode expressionNode = ExpressionNode.parseExpressionNode(tokens);
+                return new ParamsTNode(expressionNode);
+            }
+            return null;
+        }
+        return null;
     }
 
     @Override
