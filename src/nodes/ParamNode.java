@@ -16,8 +16,7 @@ public class ParamNode implements OperandNode {
     }
 
     // empty parameter function call
-    public ParamNode() {
-    }
+    public ParamNode() { }
 
     // < params > -> < expr > < params_t >? | epsilon
     public static ParamNode parseParamNode(ArrayList<Token> tokens) {
