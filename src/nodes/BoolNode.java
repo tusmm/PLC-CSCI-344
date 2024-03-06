@@ -15,11 +15,15 @@ public class BoolNode implements ExpressionNode {
     public static BoolNode parseBoolNode(ArrayList<Token> tokens) {
         // check if empty
         if (tokens.size() == 0) {
+            // handle error 
             return null;
         }
-        
+
         Token token = tokens.get(0); // get first token
         if (token.getTokenType() != TokenType.ID_KEYWORD) {
+            System.err.println("Syntax Error:");
+            System.err.println("Expected id");
+            System.err.println(token.getFilename() + ":" + token.getLineNum());
             return null;
         }
 
@@ -28,6 +32,9 @@ public class BoolNode implements ExpressionNode {
             return new BoolNode(token);
         }
 
+        System.err.println("Syntax Error:");
+        System.err.println("Expected True or False but got neither");
+        System.err.println(token.getFilename() + ":" + token.getLineNum());
         return null;
     }
 

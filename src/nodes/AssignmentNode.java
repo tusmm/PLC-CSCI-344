@@ -22,6 +22,9 @@ public class AssignmentNode implements BodyStatementNode {
         }
         // <id>=<expr>;
         IDNode id = IDNode.parseIDNode(tokens);
+        if (id == null){
+            return null; 
+        }
 
         if (tokens.size() == 0) {
             return null;
@@ -33,6 +36,9 @@ public class AssignmentNode implements BodyStatementNode {
         tokens.remove(0); // remove assign token
 
         ExpressionNode expression = ExpressionNode.parseExpressionNode(tokens);
+        if (expression == null){
+            return null; 
+        }
 
         if (tokens.size() == 0) {
             return null;
