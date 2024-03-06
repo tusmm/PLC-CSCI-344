@@ -17,6 +17,7 @@ public class IDNode implements OperandNode {
         // first check if the token list is empty
         if (tokens.size() == 0) {
             System.out.println("Handle exception here");
+            return null;
         }        
         Token name = tokens.get(0); // get the front of the token
         if (name.getTokenType() == TokenType.ID_KEYWORD) {

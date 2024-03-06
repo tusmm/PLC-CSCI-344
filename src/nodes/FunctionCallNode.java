@@ -17,9 +17,11 @@ public class FunctionCallNode implements OperandNode {
     public static FunctionCallNode parseFunctionCallNode(ArrayList<Token> tokens) {
         if (isEmptyTokensList(tokens)) {
             System.out.println("Handle exception here");
+            return null;
         }
         if (tokens.get(0).getTokenType() != TokenType.FC_HEADER) {
             System.out.println("Handle error");
+            return null;
         }
         
         tokens.remove(0); // dequeue the FC_Header
@@ -27,9 +29,11 @@ public class FunctionCallNode implements OperandNode {
         
         if (isEmptyTokensList(tokens)) {
             System.out.println("Handle exception here");
+            return null;
         } 
         if (tokens.get(0).getTokenType() != TokenType.L_BRACKET) {
             System.out.println("Handle error");
+            return null;
         }
 
         // do you need to pop here? wont the loewr level method call do it?
@@ -37,9 +41,11 @@ public class FunctionCallNode implements OperandNode {
         
         if (isEmptyTokensList(tokens)) {
             System.out.println("Handle exception here");
+            return null;
         } 
         if (tokens.get(0).getTokenType() != TokenType.R_BRACKET) {
             System.out.println("Handle error");
+            return null;
         }
 
        // do you need to pop here? wont lower leve method call do it?

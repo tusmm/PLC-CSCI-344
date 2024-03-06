@@ -9,6 +9,8 @@ package provided;
 
 import java.util.ArrayList;
 
+import nodes.FunctionCallNode;
+
 public class JottParser {
 
     /**
@@ -18,6 +20,8 @@ public class JottParser {
      *         or null upon an error in parsing.
      */
     public static JottTree parse(ArrayList<Token> tokens){
-		return null;
+      JottTree root = null;
+      root = FunctionCallNode.parseFunctionCallNode(tokens);
+      return root;
     }
 }

@@ -4,27 +4,25 @@ import java.util.ArrayList;
 
 import provided.Token;
 
-public class ParamNode implements OperandNode {
+public class ParamsTNode implements OperandNode {
     ExpressionNode expressionNode;
-    ParamsTNode paramsT;
-    
-    public ParamNode() {
+
+    public ParamsTNode(ExpressionNode expressionNode) {
+        this.expressionNode = expressionNode;
+    }
+
+    public static ParamsTNode parseParamsTNode(ArrayList<Token> tokens) {
+        // first check if the token list is empty
+        if (tokens.size() == 0) {
+            System.out.println("handle exception");
+            return null;
+        }
+
+        Token token = tokens.get(0); // get the frton of the token
         
     }
 
-    public static ParamNode parseParamNode(ArrayList<Token> tokens) {
-       if (isEmptyTokensList(tokens)) {
-        System.out.println("Handle exception here");
-        return null;
-       }
-       
-
-    }
-
-    private static boolean isEmptyTokensList(ArrayList<Token> tokens) {
-        return tokens.size() != 0;
-    }
-
+    @Override
     public String convertToJott() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'convertToJott'");
