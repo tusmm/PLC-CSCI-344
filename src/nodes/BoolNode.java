@@ -16,13 +16,15 @@ public class BoolNode implements ExpressionNode {
         // check if empty
         if (tokens.size() == 0) {
             // handle error 
+            // missing boolean id 
             return null;
         }
 
         Token token = tokens.get(0); // get first token
         if (token.getTokenType() != TokenType.ID_KEYWORD) {
             System.err.println("Syntax Error:");
-            System.err.println("Expected id");
+            String unexpected = token.getTokenType().toString().toLowerCase();
+            System.err.println("Expected id but got " + unexpected);
             System.err.println(token.getFilename() + ":" + token.getLineNum());
             return null;
         }

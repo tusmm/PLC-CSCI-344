@@ -13,7 +13,7 @@ public interface BodyStatementNode extends JottTree {
         if (tokens.size() == 0) {
             return null;
         }
-
+        Token token = tokens.get(0);
         if (IfStatementNode.parseIfStatementNode(tokens) != null) {
             return IfStatementNode.parseIfStatementNode(tokens);
         } else if (WhileLoopNode.parseWhileLoopNode(tokens) != null) {
@@ -23,6 +23,9 @@ public interface BodyStatementNode extends JottTree {
         } else if (FunctionCallNode.parseFunctionCallNode(tokens) != null) {
             return FunctionCallNode.parseFunctionCallNode(tokens);
         } else {
+            System.err.println("Syntax Error:");
+            System.err.println("Invalid Body Statement");
+            System.err.println(token.getFilename() + ":" + token.getLineNum());
             return null;
         }
 
