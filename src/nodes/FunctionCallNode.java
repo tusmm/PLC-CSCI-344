@@ -26,6 +26,9 @@ public class FunctionCallNode implements OperandNode, BodyStatementNode {
         
         tokens.remove(0); // dequeue the FC_Header
         IDNode id = IDNode.parseIDNode(tokens);
+        if (id == null) {
+            return null;
+        }
         
         if (isEmptyTokensList(tokens)) {
             System.out.println("Handle exception here");
@@ -35,9 +38,13 @@ public class FunctionCallNode implements OperandNode, BodyStatementNode {
             System.out.println("Handle error");
             return null;
         }
+        
+        tokens.remove(0); // remove left bracket
 
-        // do you need to pop here? wont the loewr level method call do it?
         ParamNode pm = ParamNode.parseParamNode(tokens);
+        if (pm == null) {
+            return null;
+        }
         
         if (isEmptyTokensList(tokens)) {
             System.out.println("Handle exception here");
@@ -47,8 +54,9 @@ public class FunctionCallNode implements OperandNode, BodyStatementNode {
             System.out.println("Handle error");
             return null;
         }
+        
+        tokens.remove(0); // remove right bracket
 
-       // do you need to pop here? wont lower leve method call do it?
        return new FunctionCallNode(id, pm); 
     }
 

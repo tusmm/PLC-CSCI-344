@@ -19,9 +19,9 @@ public class ParamsTNode implements OperandNode {
             return null;
         }
 
-        Token token = tokens.get(0); // get the frton of the token
+        Token token = tokens.get(0); // get the front of the token
         if (token.getTokenType() == TokenType.COMMA) {
-            tokens.remove(0); // take off the first element
+            tokens.remove(0); // take off the comma
             
             if (tokens.size() == 0) {
                 System.out.println("handle exception");
