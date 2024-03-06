@@ -39,8 +39,7 @@ public class ParamsTNode implements OperandNode {
 
     @Override
     public String convertToJott() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToJott'");
+        return "," + expressionNode.convertToJott();
     }
 
     @Override

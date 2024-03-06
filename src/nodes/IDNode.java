@@ -30,8 +30,7 @@ public class IDNode implements OperandNode {
 
     @Override
     public String convertToJott() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToJott'");
+        return token.getToken();
     }
 
     @Override

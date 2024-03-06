@@ -57,9 +57,14 @@ public class ParamNode implements OperandNode {
         return tokens.size() != 0;
     }
 
+    @Override
     public String convertToJott() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToJott'");
+        String jottString = "";
+        jottString += expressionNode.convertToJott();
+        for (ParamsTNode param : paramsTNode) {
+            jottString += param.convertToJott();
+        }
+        return jottString;
     }
 
     @Override
