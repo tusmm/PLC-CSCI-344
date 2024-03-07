@@ -31,6 +31,7 @@ public class BoolNode implements ExpressionNode {
 
         String bool = token.getToken();
         if (bool.equals("True") || bool.equals("False")) {
+            tokens.remove(0); 
             return new BoolNode(token);
         }
 
