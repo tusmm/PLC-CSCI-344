@@ -34,7 +34,8 @@ public class ExpressionRelopNode implements ExpressionNode {
                 }
             }
         }
-        return null;
+        
+        throw new SyntaxErrorException("Invalid parameter node", 0, "expressoinrelop.java");
     } 
 
     @Override
