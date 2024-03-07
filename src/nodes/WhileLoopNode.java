@@ -106,7 +106,7 @@ public class WhileLoopNode implements BodyStatementNode{
             System.err.println(token.getFilename() + ":" + token.getLineNum());
             return null; 
         } 
-        Body body = BodyNode.parseBodyNode(tokens); 
+        BodyNode body = BodyNode.parseBodyNode(tokens);
         if (body == null){
             return null; 
         }
