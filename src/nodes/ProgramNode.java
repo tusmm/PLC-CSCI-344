@@ -12,10 +12,9 @@ public class ProgramNode implements JottTree{
         this.functionDefs = functionDefs;
     }
     
-    public static ProgramNode parseProgramNode(ArrayList<Token> tokens) {
+    public static ProgramNode parseProgramNode(ArrayList<Token> tokens) throws SyntaxErrorException {
         if (tokens.isEmpty()) {
-            System.err.println("Empty token list");
-            return null;
+            throw new SyntaxErrorException("No tokens to parse", 0, "ProgramNode.java");
         }
 
         ArrayList<FunctionDefNode> functionDefs = new ArrayList<FunctionDefNode>();
