@@ -10,7 +10,7 @@ public class ExpressionRelopNode implements ExpressionNode {
     OperandNode operandNodeRight;
 
     public ExpressionRelopNode(OperandNode operandNodeLeft, 
-                            ReplopNode relopNode, 
+                            RelopNode relopNode, 
                             OperandNode operandNodeRight) {
         this.operandNodeLeft = operandNodeLeft;
         this.relopNode = relopNode;

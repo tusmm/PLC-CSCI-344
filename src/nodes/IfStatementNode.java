@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import provided.*;
 
 // this is going to assume a lot of things work bc not everything is on main yet
-public class IfStatementNode implements JottTree {
+public class IfStatementNode implements BodyStatementNode {
 
     //< if_stmt > -> If [ < expr >]{ < body >} < elseif_lst >? < else >
 
@@ -21,7 +21,7 @@ public class IfStatementNode implements JottTree {
         this.elseNode = elseNode;   // may be null
     }
 
-    public IfStatementNode parseIfStatementNode(ArrayList<Token> tokens) {
+    public static IfStatementNode parseIfStatementNode(ArrayList<Token> tokens) {
 
         if (tokens.size() == 0) {
             // handle error: no tokens
