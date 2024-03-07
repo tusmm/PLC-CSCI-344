@@ -29,9 +29,10 @@ public class StringLiteralNode implements ExpressionNode{
             return null;
         }
 
+        tokens.remove(0); // remove string literal
         return new StringLiteralNode(token);
     }
-    
+
     @Override
     public String convertToJott() {
         return token.getToken();
