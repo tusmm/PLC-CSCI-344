@@ -12,7 +12,7 @@ public class RelopNode implements JottTree {
         this.token = token;
     }
 
-    public static RelopNode parseRelopNode(ArrayList<Token> tokens) {
+    public static RelopNode parseRelopNode(ArrayList<Token> tokens) throws Exception {
         if (tokens.size() == 0) {
             return null; // TODO add error
         }
@@ -24,10 +24,7 @@ public class RelopNode implements JottTree {
         }
         
         // error, found not a relop
-        System.err.println("Syntax Error:");
-        System.err.println("Expected relop (<, >, or =) but got " + relop.getTokenType().toString().toLowerCase());
-        System.err.println(relop.getFilename() + ":" + relop.getLineNum());
-        return null;
+        throw new SyntaxErrorException("expected relop", relop.getLineNum(), relop.getFilename());
     }
 
     @Override

@@ -21,7 +21,7 @@ public class IfStatementNode implements BodyStatementNode {
         this.elseNode = elseNode;   // may be null
     }
 
-    public static IfStatementNode parseIfStatementNode(ArrayList<Token> tokens) {
+    public static IfStatementNode parseIfStatementNode(ArrayList<Token> tokens) throws Exception {
 
         if (tokens.size() == 0) {
             // handle error: no tokens
@@ -30,22 +30,26 @@ public class IfStatementNode implements BodyStatementNode {
         Token tossToken = tokens.get(0);
         if (tossToken.getTokenType() != TokenType.ID_KEYWORD) {
             // handle error: not an id
-            return null;
+            throw new SyntaxErrorException("not an id", tossToken.getLineNum(), tossToken.getFilename());
+            // return null;
         }
         if (!tossToken.getToken().equals("If")) {
+            throw new SyntaxErrorException("expected 'If'", tossToken.getLineNum(), tossToken.getFilename());
             // handle error: not an if
-            return null;
+            // return null;
         }
         tokens.remove(0); // pop if
 
         if (tokens.size() == 0) {
             // handle error: missing left bracket
-            return null;
+            throw new SyntaxErrorException("missing left bracket", tossToken.getLineNum(), tossToken.getFilename());
+            // return null;
         }
         tossToken = tokens.get(0);
         if (tossToken.getTokenType() != TokenType.L_BRACKET) {
             // handle error: expected left bracket
-            return null;
+            throw new SyntaxErrorException("expected [", tossToken.getLineNum(), tossToken.getFilename());
+            // return null;
         }
         tokens.remove(0); // pop [
 
@@ -53,23 +57,27 @@ public class IfStatementNode implements BodyStatementNode {
 
         if (tokens.size() == 0) {
             // handle error: missing right brace
-            return null;
+            throw new SyntaxErrorException("missing right brace", tossToken.getLineNum(), tossToken.getFilename());
+            // return null;
         }
         tossToken = tokens.get(0);
-        if (tossToken.getTokenType() != TokenType.R_BRACE) {
+        if (tossToken.getTokenType() != TokenType.R_BRACKET) {
             // handle error: expected right brace
-            return null;
+            throw new SyntaxErrorException("expected ]", tossToken.getLineNum(), tossToken.getFilename());
+            // return null;
         }
         tokens.remove(0); // pop ]
 
         if (tokens.size() == 0) {
             // handle error: missing left brace
-            return null;
+            throw new SyntaxErrorException("missing left brace", tossToken.getLineNum(), tossToken.getFilename());
+            // return null;
         }
         tossToken = tokens.get(0);
         if (tossToken.getTokenType() != TokenType.L_BRACE) {
             // handle error: expected left brace
-            return null;
+            throw new SyntaxErrorException("expected {", tossToken.getLineNum(), tossToken.getFilename());
+            // return null;
         }
         tokens.remove(0); // pop {
 
@@ -77,12 +85,14 @@ public class IfStatementNode implements BodyStatementNode {
 
         if (tokens.size() == 0) {
             // handle error: missing right brace
-            return null;
+            throw new SyntaxErrorException("missing right brace", tossToken.getLineNum(), tossToken.getFilename());
+            // return null;
         }
         tossToken = tokens.get(0);
         if (tossToken.getTokenType() != TokenType.R_BRACE) {
             // handle error: expected left brace
-            return null;
+            throw new SyntaxErrorException("expected }", tossToken.getLineNum(), tossToken.getFilename());
+            // return null;
         }
         tokens.remove(0); // pop }
 
@@ -91,7 +101,7 @@ public class IfStatementNode implements BodyStatementNode {
 
         while ( tossToken.getToken() == "Elseif") { // 
 
-            elseIfNodes.add( ElseIfNode.parseEsElseIfNode(tokens) );
+            elseIfNodes.add( ElseIfNode.parseElseIfNode(tokens) );
             
             if (tokens.size() == 0) {
                 // handle error: ... something

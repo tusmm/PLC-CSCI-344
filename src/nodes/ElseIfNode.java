@@ -2,9 +2,7 @@ package nodes;
 
 import java.util.ArrayList;
 
-import provided.JottTree;
-import provided.Token;
-import provided.TokenType;
+import provided.*;
 
 public class ElseIfNode implements JottTree {
 
@@ -17,7 +15,7 @@ public class ElseIfNode implements JottTree {
         this.body = body;
     }
 
-    public static ElseIfNode parseEsElseIfNode(ArrayList<Token> tokens) {
+    public static ElseIfNode parseElseIfNode(ArrayList<Token> tokens) throws Exception {
 
         if (tokens.size() == 0) {
             // handle error: no tokens
@@ -26,22 +24,26 @@ public class ElseIfNode implements JottTree {
         Token tossToken = tokens.get(0);
         if (tossToken.getTokenType() != TokenType.ID_KEYWORD) {
             // handle error: not an id
-            return null;
+            throw new SyntaxErrorException("not an id", tossToken.getLineNum(), tossToken.getFilename());
+            // return null;
         }
         if (!tossToken.getToken().equals("Elseif")) {
             // handle error: not an elseif
-            return null;
+            throw new SyntaxErrorException("not an elseif", tossToken.getLineNum(), tossToken.getFilename());
+            // return null;
         }
         tokens.remove(0); // pop Elseif
 
         if (tokens.size() == 0) {
             // handle error: missing left bracket
-            return null;
+            throw new SyntaxErrorException("missing left bracket", tossToken.getLineNum(), tossToken.getFilename());
+            // return null;
         }
         tossToken = tokens.get(0);
         if (tossToken.getTokenType() != TokenType.L_BRACKET) {
             // handle error: expected [
-            return null;
+                throw new SyntaxErrorException("expected ]", tossToken.getLineNum(), tossToken.getFilename());
+            // return null;
         }
         tokens.remove(0); // pop [
 
@@ -49,23 +51,27 @@ public class ElseIfNode implements JottTree {
         
         if (tokens.size() == 0) {
             // handle error: missing right bracket
-            return null;
+            throw new SyntaxErrorException("missing right bracket", tossToken.getLineNum(), tossToken.getFilename());
+            // return null;
         }
         tossToken = tokens.get(0);
         if (tossToken.getTokenType() != TokenType.R_BRACKET) {
             // handle error: expected ]
-            return null;
+            throw new SyntaxErrorException("expected ]", tossToken.getLineNum(), tossToken.getFilename());
+            // return null;
         }
         tokens.remove(0); // pop ]
 
         if (tokens.size() == 0) {
             // handle error: missing left brace
-            return null;
+            throw new SyntaxErrorException("missing left brace", tossToken.getLineNum(), tossToken.getFilename());
+            // return null;
         }
         tossToken = tokens.get(0);
         if (tossToken.getTokenType() != TokenType.L_BRACE) {
             // handle error: expected {
-            return null;
+                throw new SyntaxErrorException("expected {", tossToken.getLineNum(), tossToken.getFilename());
+            // return null;
         }
         tokens.remove(0); // pop {
 
@@ -73,12 +79,14 @@ public class ElseIfNode implements JottTree {
 
         if (tokens.size() == 0) {
             // handle error: missing right brace
-            return null;
+            throw new SyntaxErrorException("missing right brace", tossToken.getLineNum(), tossToken.getFilename());
+            // return null;
         }
         tossToken = tokens.get(0);
         if (tossToken.getTokenType() != TokenType.R_BRACE) {
             // handle error: expected }
-            return null;
+            throw new SyntaxErrorException("expected }", tossToken.getLineNum(), tossToken.getFilename());
+            // return null;
         }
         tokens.remove(0); // pop }
 

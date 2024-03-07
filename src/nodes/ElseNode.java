@@ -16,7 +16,7 @@ public class ElseNode implements JottTree {
 
     public ElseNode() {}
 
-    public static ElseNode parseElseNode(ArrayList<Token> tokens) {
+    public static ElseNode parseElseNode(ArrayList<Token> tokens) throws Exception {
 
         if (tokens.size() == 0) {
             // handle error: no tokens
@@ -30,12 +30,14 @@ public class ElseNode implements JottTree {
 
         if (tokens.size() == 0) {
             // handle error: missing left brace
-            return null;
+            throw new SyntaxErrorException("missing left brace", tossToken.getLineNum(), tossToken.getFilename());
+            // return null;
         }
         tossToken = tokens.get(0);
         if (tossToken.getTokenType() != TokenType.L_BRACE) {
             // handle error: expected left brace
-            return null;
+            throw new SyntaxErrorException("expected [", tossToken.getLineNum(), tossToken.getFilename());
+            // return null;
         }
         tokens.remove(0); // pop {
 
@@ -43,12 +45,14 @@ public class ElseNode implements JottTree {
 
         if (tokens.size() == 0) {
             // handle error: missing right brace
-            return null;
+            throw new SyntaxErrorException("missing right brace", tossToken.getLineNum(), tossToken.getFilename());
+            // return null;
         }
         tossToken = tokens.get(0);
         if (tossToken.getTokenType() != TokenType.R_BRACE) {
             // handle error: expected right brace
-            return null;
+            throw new SyntaxErrorException("expected ]", tossToken.getLineNum(), tossToken.getFilename());
+            // return null;
         }
         tokens.remove(0); // pop }
 

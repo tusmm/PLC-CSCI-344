@@ -12,7 +12,7 @@ public class MathopNode implements JottTree{
         this.token = token;
     }
     
-    public static MathopNode parseRelopNode(ArrayList<Token> tokens) {
+    public static MathopNode parseRelopNode(ArrayList<Token> tokens) throws Exception {
         if (tokens.size() == 0) {
             return null; // TODO add error
         }
@@ -23,10 +23,7 @@ public class MathopNode implements JottTree{
             return new MathopNode(mathop);
         }
 
-        System.err.println("Syntax Error:");
-        System.err.println("Expected mathop (+, -, *, or /) but got " + mathop.getTokenType().toString().toLowerCase());
-        System.err.println(mathop.getFilename() + ":" + mathop.getLineNum());
-        return null;
+        throw new SyntaxErrorException("expected mathop", mathop.getLineNum(), mathop.getFilename());
     }
 
 
