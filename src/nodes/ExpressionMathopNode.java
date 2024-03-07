@@ -34,7 +34,8 @@ public class ExpressionMathopNode implements ExpressionNode {
                 }
             }
         }
-        return null;
+        
+        throw new SyntaxErrorException("Invalid parameter node", 0, "expressionmathop.java");
     } 
 
     @Override
