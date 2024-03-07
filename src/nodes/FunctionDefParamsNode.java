@@ -76,6 +76,10 @@ public class FunctionDefParamsNode implements JottTree {
 
             functionDefParamsTypeNodes.add(functionDefParamsTypeNode);
 
+            if(tokens.isEmpty()) {
+                break;
+            }
+            nextToken = tokens.get(0);
         }
 
         return new FunctionDefParamsNode(idNode, typeNode, functionDefParamsTypeNodes, false);
@@ -96,7 +100,7 @@ public class FunctionDefParamsNode implements JottTree {
         }
 
         return jott;
-        
+
     }
 
     @Override
