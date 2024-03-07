@@ -21,7 +21,7 @@ public class IfStatementNode implements BodyStatementNode {
         this.elseNode = elseNode;   // may be null
     }
 
-    public static IfStatementNode parseIfStatementNode(ArrayList<Token> tokens) throws Exception {
+    public static IfStatementNode parseIfStatementNode(ArrayList<Token> tokens) throws SyntaxErrorException {
 
         if (tokens.size() == 0) {
             // handle error: no tokens

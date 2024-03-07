@@ -16,7 +16,7 @@ public class ElseNode implements JottTree {
 
     public ElseNode() {}
 
-    public static ElseNode parseElseNode(ArrayList<Token> tokens) throws Exception {
+    public static ElseNode parseElseNode(ArrayList<Token> tokens) throws SyntaxErrorException {
 
         if (tokens.size() == 0) {
             // handle error: no tokens

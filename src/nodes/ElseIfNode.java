@@ -15,7 +15,7 @@ public class ElseIfNode implements JottTree {
         this.body = body;
     }
 
-    public static ElseIfNode parseElseIfNode(ArrayList<Token> tokens) throws Exception {
+    public static ElseIfNode parseElseIfNode(ArrayList<Token> tokens) throws SyntaxErrorException {
 
         if (tokens.size() == 0) {
             // handle error: no tokens

@@ -12,7 +12,7 @@ public class MathopNode implements JottTree{
         this.token = token;
     }
     
-    public static MathopNode parseRelopNode(ArrayList<Token> tokens) throws Exception {
+    public static MathopNode parseRelopNode(ArrayList<Token> tokens) throws SyntaxErrorException {
         if (tokens.size() == 0) {
             return null; // TODO add error
         }
