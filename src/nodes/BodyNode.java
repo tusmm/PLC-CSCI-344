@@ -20,6 +20,11 @@ public class BodyNode implements JottTree {
 
     public static BodyNode parseBodyNode(ArrayList<Token> tokens) {
 
+        if (tokens.isEmpty()) {
+            System.err.println("No tokens left to parse type.");
+            return null;
+        }
+
         Token nextToken = tokens.get(0);
         ArrayList<BodyStatementNode> bodyStatments = new ArrayList<>();
 

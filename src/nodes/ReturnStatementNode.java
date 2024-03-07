@@ -20,6 +20,11 @@ public class ReturnStatementNode implements JottTree {
 
     public static ReturnStatementNode parseReturnStatementNode(ArrayList<Token> tokens) {
 
+        if (tokens.isEmpty()) {
+            System.err.println("No tokens left to parse type.");
+            return null;
+        }
+
         Token retr = tokens.get(0);
         if(retr.getTokenType() != TokenType.ID_KEYWORD || !retr.getToken().equals("Return")) {
             return new ReturnStatementNode(null, true);
