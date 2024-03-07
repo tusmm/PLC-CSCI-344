@@ -17,10 +17,9 @@ public class ExpressionMathopNode implements ExpressionNode {
         this.operandNodeRight = operandNodeRight;
     }
 
-    public static ExpressionMathopNode parseExpressionMathopNode(ArrayList<Token> tokens) {
+    public static ExpressionMathopNode parseExpressionMathopNode(ArrayList<Token> tokens) throws SyntaxErrorException {
         if (tokens.size() == 0) {
-            System.out.println("handle exception here");
-            return null;
+            throw new SyntaxErrorException("empty list", 0, "ExpressionRelopNode.java");
         }
         OperandNode operandNodeLeft;
         MathopNode mathopNode;

@@ -13,19 +13,17 @@ public class IDNode implements OperandNode {
         this.token = token;
    }
 
-   public static IDNode parseIDNode(ArrayList<Token> tokens) {
+   public static IDNode parseIDNode(ArrayList<Token> tokens) throws SyntaxErrorException {
         // first check if the token list is empty
         if (tokens.size() == 0) {
-            System.out.println("Handle exception here");
-            return null;
+            throw new SyntaxErrorException("Empty token list", 0, "IDNode.java");
         }        
-        Token name = tokens.get(0); // get the front of the token
-        if (name.getTokenType() == TokenType.ID_KEYWORD) {
+        Token token = tokens.get(0); // get the front of the token
+        if (token.getTokenType() == TokenType.ID_KEYWORD) {
             tokens.remove(0); // take off the first element
-            return new IDNode(name);
+            return new IDNode(token);
         }
-        System.out.println("Handle exception here");
-        return null;
+        throw new SyntaxErrorException("Invalid ID node", token.getLineNum(), token.getFilename());
    }
 
     @Override

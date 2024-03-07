@@ -19,15 +19,15 @@ public class ParamNode implements OperandNode {
     public ParamNode() { }
 
     // < params > -> < expr > < params_t >? | epsilon
-    public static ParamNode parseParamNode(ArrayList<Token> tokens) {
+    public static ParamNode parseParamNode(ArrayList<Token> tokens) throws SyntaxErrorException {
         if (isEmptyTokensList(tokens)) {
-            System.out.println("Handle exception here");
-            return null;
+            throw new SyntaxErrorException("empty lits", 0, "ParamNode.java");
         }
         
         // checks the front token to see if the parameter list is empty,
         // returns an empty constructor if so
-        if (tokens.get(0).getTokenType() == TokenType.R_BRACKET) {
+        Token token = tokens.get(0);
+        if (token.getTokenType() == TokenType.R_BRACKET) {
             return new ParamNode();
         }
 
@@ -36,7 +36,7 @@ public class ParamNode implements OperandNode {
 
             // begin reading in paramTNodes
             ArrayList<ParamsTNode> paramTNodes = new ArrayList<ParamsTNode>();
-            Token token = tokens.get(0);
+            token = tokens.get(0);
             while (token.getTokenType() != TokenType.R_BRACKET) {
                 if (tokens.size() == 0) {
                     System.out.println("Handle error");
@@ -50,7 +50,7 @@ public class ParamNode implements OperandNode {
         }
 
         // problems persist and nothing was returned, return null
-        return null;
+        throw new SyntaxErrorException("Invalid parameter node", token.getLineNum(), token.getFilename());
     }
 
     private static boolean isEmptyTokensList(ArrayList<Token> tokens) {

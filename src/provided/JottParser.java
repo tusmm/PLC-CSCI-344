@@ -23,13 +23,12 @@ public class JottParser {
      */
     public static JottTree parse(ArrayList<Token> tokens){
       JottTree root;
-    //   try {
-    //       root = FunctionCallNode.parseFunctionCallNode(tokens);
-    //   } catch(SyntaxErrorException e) {
-    //       System.err.println(e.getMessage());
-    //       return null;
-    //   }
-        root = ProgramNode.parseProgramNode(tokens);
+       try {
+           root = ProgramNode.parseProgramNode(tokens);
+       } catch(SyntaxErrorException e) {
+           System.err.println(e.getMessage());
+           return null;
+       }
 
       return root;
     }
