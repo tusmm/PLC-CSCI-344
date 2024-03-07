@@ -15,62 +15,56 @@ public class AssignmentNode implements BodyStatementNode {
         this.expression = expression;
     }
 
-    public static AssignmentNode parseAssignmentNode(ArrayList<Token> tokens) {
+    public static AssignmentNode parseAssignmentNode(ArrayList<Token> tokens) throws SyntaxErrorException {
         // check if token list is empty
         if (tokens.size() == 0) {
-            // handle error
-            // missing id
-            return null;
+            String message = "No tokens to parse"; 
+            String filename = "AssignmentNode.java";
+            int lineNum = 0; 
+            throw new SyntaxErrorException(message, lineNum, filename);
         }
         // <id>=<expr>;
         Token token = tokens.get(0);
         IDNode id = IDNode.parseIDNode(tokens);
-        if (id == null){
-            return null; 
-        }
 
         if (tokens.size() == 0) {
-            // handle error 
-            System.err.println("Syntax Error:");
-            System.err.println("Missing =");
-            System.err.println(token.getFilename() + ":" + token.getLineNum());
-            return null;
+            String message = "Missing ="; 
+            String filename = token.getFilename(); 
+            int lineNum = token.getLineNum(); 
+            throw new SyntaxErrorException(message, lineNum, filename);
         }
         token = tokens.get(0);
         if (token.getTokenType() != TokenType.ASSIGN) {
-            System.err.println("Syntax Error:");
             String unexpected = token.getTokenType().toString().toLowerCase();
-            System.err.println("Expected = but got " + unexpected);
-            System.err.println(token.getFilename() + ":" + token.getLineNum());
-            return null;
+            String message = "Expected = but got " + unexpected; 
+            String filename = token.getFilename(); 
+            int lineNum = token.getLineNum(); 
+            throw new SyntaxErrorException(message, lineNum, filename);
         }
 
         tokens.remove(0); // remove assign token
 
         if (tokens.size() == 0) {
-            System.err.println("Syntax Error:");
-            System.err.println("Assignment missing right side expression");
-            System.err.println(token.getFilename() + ":" + token.getLineNum());
-            return null;
+            String message = "Assignment missing right side expression"; 
+            String filename = token.getFilename(); 
+            int lineNum = token.getLineNum(); 
+            throw new SyntaxErrorException(message, lineNum, filename);
         }
         ExpressionNode expression = ExpressionNode.parseExpressionNode(tokens);
-        if (expression == null){
-            return null; 
-        }
 
         if (tokens.size() == 0) {
-            System.err.println("Syntax Error:");
-            System.err.println("Missing semicolon");
-            System.err.println(token.getFilename() + ":" + token.getLineNum());
-            return null;
+            String message = "Missing semicolon"; 
+            String filename = token.getFilename(); 
+            int lineNum = token.getLineNum(); 
+            throw new SyntaxErrorException(message, lineNum, filename);
         }
         token = tokens.get(0);
         if (token.getTokenType() != TokenType.SEMICOLON) {
-            System.err.println("Syntax Error:");
             String unexpected = token.getTokenType().toString().toLowerCase();
-            System.err.println("Expected semicolon but got " + unexpected);
-            System.err.println(token.getFilename() + ":" + token.getLineNum());
-            return null;
+            String message = "Expected semicolon but got " + unexpected; 
+            String filename = token.getFilename(); 
+            int lineNum = token.getLineNum(); 
+            throw new SyntaxErrorException(message, lineNum, filename);
         }
 
         tokens.remove(0); // remove semicolon token
