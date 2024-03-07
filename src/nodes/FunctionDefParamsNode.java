@@ -23,13 +23,13 @@ public class FunctionDefParamsNode implements JottTree {
         this.isEmpty = isEmpty;
     }
 
-    public static FunctionDefParamsNode parseFunctionDefParamsNode(ArrayList<Token> tokens) {
+    public static FunctionDefParamsNode parseFunctionDefParamsNode(ArrayList<Token> tokens) throws SyntaxErrorException {
 
         FunctionDefParamsNode emptyFunctionDefParamsNode =
                 new FunctionDefParamsNode(null, null, null, true);
 
         if (tokens.isEmpty()) {
-            return emptyFunctionDefParamsNode;
+            throw new SyntaxErrorException("No tokens left to parse", 0, "");
         }
 
         Token nextToken = tokens.get(0);
@@ -38,30 +38,17 @@ public class FunctionDefParamsNode implements JottTree {
         }
 
         IDNode idNode = IDNode.parseIDNode(tokens);
-        if(idNode == null) {
-            System.err.println("Invalid id while parsing function definition parameters");
-            return null;
-        }
 
         Token colon = tokens.get(0);
         if(colon.getTokenType() != TokenType.COLON) {
-            System.err.println("Syntax Error:");
-            String unexpected = colon.getTokenType().toString().toLowerCase();
-            System.err.println("Expected colon but got " + unexpected);
-            System.err.println(colon.getFilename() + ":" + colon.getLineNum());
-            return null;
+            throw new SyntaxErrorException("Expected colon while parsing function def params but got: " + colon.getToken(), colon.getLineNum(), colon.getFilename());
         }
         tokens.remove(0);
 
         TypeNode typeNode = TypeNode.parseTypeNode(tokens);
-        if(typeNode == null) {
-            System.err.println("Invalid type while parsing function definition parameters");
-            return null;
-        }
 
-        if(tokens.isEmpty()) {
-            System.err.println("No more tokens while parsing definition parameters");
-            return null;
+        if (tokens.isEmpty()) {
+            throw new SyntaxErrorException("No tokens left to parse", 0, "");
         }
 
         ArrayList<FunctionDefParamsTypeNode> functionDefParamsTypeNodes = new ArrayList<>();
@@ -69,11 +56,6 @@ public class FunctionDefParamsNode implements JottTree {
         while(nextToken.getTokenType() == TokenType.COMMA) {
 
             FunctionDefParamsTypeNode functionDefParamsTypeNode = FunctionDefParamsTypeNode.parseFunctionDefParamsTypeNode(tokens);
-            if(functionDefParamsTypeNode == null) {
-                System.err.println("Error while parsing function def params type in function definition params");
-                return null;
-            }
-
             functionDefParamsTypeNodes.add(functionDefParamsTypeNode);
 
             if(tokens.isEmpty()) {

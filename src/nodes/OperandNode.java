@@ -6,7 +6,7 @@ import provided.TokenType;
 
 public interface OperandNode extends ExpressionNode {
 
-    public static OperandNode parseOperandNode(ArrayList<Token> tokens) {
+    public static OperandNode parseOperandNode(ArrayList<Token> tokens) throws SyntaxErrorException {
         if (tokens.size() == 0) {
             System.out.println("Handle error");
             return null;

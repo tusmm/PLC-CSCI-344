@@ -12,11 +12,10 @@ public class ParamsTNode implements OperandNode {
         this.expressionNode = expressionNode;
     }
 
-    public static ParamsTNode parseParamsTNode(ArrayList<Token> tokens) {
+    public static ParamsTNode parseParamsTNode(ArrayList<Token> tokens) throws SyntaxErrorException {
         // first check if the token list is empty
         if (tokens.size() == 0) {
-            System.out.println("handle exception");
-            return null;
+            throw new SyntaxErrorException("Empty list", 0, "ParamsTNode.java");
         }
 
         Token token = tokens.get(0); // get the front of the token
@@ -24,17 +23,17 @@ public class ParamsTNode implements OperandNode {
             tokens.remove(0); // take off the comma
             
             if (tokens.size() == 0) {
-                System.out.println("handle exception");
-                return null;
+                throw new SyntaxErrorException("Empty list", 0, "ParamsTNode.java");
             }
 
             if (ExpressionNode.parseExpressionNode(tokens) != null) {
                 ExpressionNode expressionNode = ExpressionNode.parseExpressionNode(tokens);
                 return new ParamsTNode(expressionNode);
             }
-            return null;
+            throw new SyntaxErrorException("Invalid ParamsNode", token.getLineNum(), token.getFilename());
         }
-        return null;
+
+        throw new SyntaxErrorException("Invalid ParamsNode", token.getLineNum(), token.getFilename());
     }
 
     @Override

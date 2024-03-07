@@ -15,28 +15,19 @@ public class TypeNode implements JottTree {
     public TypeNode(Token token) {
         this.token = token;
     }
-    public static TypeNode parseTypeNode(ArrayList<Token> tokens) {
+    public static TypeNode parseTypeNode(ArrayList<Token> tokens) throws SyntaxErrorException {
 
         if (tokens.isEmpty()) {
-            System.err.println("No tokens left to parse type.");
-            return null;
+            throw new SyntaxErrorException("No tokens left to parse", 0, "");
         }
         Token nextToken = tokens.get(0);
 
         if (nextToken.getTokenType() != TokenType.ID_KEYWORD) {
-            System.err.println("Syntax Error:");
-            String unexpected = nextToken.getTokenType().toString().toLowerCase();
-            System.err.println("Expected type but got " + unexpected);
-            System.err.println(nextToken.getFilename() + ":" + nextToken.getLineNum());
-            return null;
+            throw new SyntaxErrorException("Expected type keyword while parsing type but got: " + nextToken.getTokenType().toString().toLowerCase(), nextToken.getLineNum(), nextToken.getFilename());
         }
 
         if(!validTypes.contains(nextToken.getToken())) {
-            System.err.println("Syntax Error:");
-            String unexpected = nextToken.getTokenType().toString().toLowerCase();
-            System.err.println("Not a valid type: " + unexpected);
-            System.err.println(nextToken.getFilename() + ":" + nextToken.getLineNum());
-            return null;
+            throw new SyntaxErrorException("Not a valid type: " + nextToken.getToken(), nextToken.getLineNum(), nextToken.getFilename());
         }
 
         tokens.remove(0);

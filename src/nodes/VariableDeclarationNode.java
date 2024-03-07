@@ -14,24 +14,14 @@ public class VariableDeclarationNode implements JottTree {
         this.id = id;
     }
 
-    public static VariableDeclarationNode parseVariableDeclarationNode(ArrayList<Token> tokens) {
+    public static VariableDeclarationNode parseVariableDeclarationNode(ArrayList<Token> tokens) throws SyntaxErrorException {
         if (tokens.isEmpty()) {
-            System.err.println("Empty token list");
-            return null;
+            throw new SyntaxErrorException("No tokens to parse", 0, "VariableDeclarationNode.java");
         }
 
         // <type> <id>
         TypeNode type = TypeNode.parseTypeNode(tokens);
-        if (type == null) {
-            System.err.println("Failed to parse type");
-            return null;
-        }
-
         IDNode id = IDNode.parseIDNode(tokens);
-        if (id == null) {
-            System.err.println("Failed to parse id");
-            return null;
-        }
 
         return new VariableDeclarationNode(type, id);
     }

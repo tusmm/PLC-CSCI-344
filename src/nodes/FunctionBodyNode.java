@@ -15,27 +15,18 @@ public class FunctionBodyNode implements JottTree{
         this.body = body;
     }
 
-    public static FunctionBodyNode parseFunctionBodyNode(ArrayList<Token> tokens) {
+    public static FunctionBodyNode parseFunctionBodyNode(ArrayList<Token> tokens) throws SyntaxErrorException {
         if (tokens.isEmpty()) {
-            System.err.println("Empty token list");
-            return null;
+            throw new SyntaxErrorException("No tokens to parse", 0, "FunctionBodyNode.java");
         }
 
         ArrayList<VariableDeclarationNode> variableDeclarations = new ArrayList<VariableDeclarationNode>();
         while (tokens.get(0).getTokenType() == TokenType.ID_KEYWORD) {
             VariableDeclarationNode variableDeclaration = VariableDeclarationNode.parseVariableDeclarationNode(tokens);
-            if (variableDeclaration == null) {
-                System.err.println("Failed to parse variable declaration");
-                return null;
-            }
             variableDeclarations.add(variableDeclaration);
         }
 
         BodyNode body = BodyNode.parseBodyNode(tokens);
-        if (body == null) {
-            System.err.println("Failed to parse body");
-            return null;
-        }
 
         return new FunctionBodyNode(variableDeclarations, body);
     }
