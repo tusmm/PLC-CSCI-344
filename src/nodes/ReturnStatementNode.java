@@ -18,11 +18,10 @@ public class ReturnStatementNode implements JottTree {
         this.isVoid = isVoid;
     }
 
-    public static ReturnStatementNode parseReturnStatementNode(ArrayList<Token> tokens) {
+    public static ReturnStatementNode parseReturnStatementNode(ArrayList<Token> tokens) throws SyntaxErrorException {
 
         if (tokens.isEmpty()) {
-            System.err.println("No tokens left to parse type.");
-            return null;
+            throw new SyntaxErrorException("No tokens left to parse", 0, "");
         }
 
         Token retr = tokens.get(0);
@@ -32,18 +31,10 @@ public class ReturnStatementNode implements JottTree {
         tokens.remove(0);
 
         ExpressionNode expr = ExpressionNode.parseExpressionNode(tokens);
-        if(expr == null) {
-            System.err.println("Invalid expression while parsing return statement");
-            return null;
-        }
 
         Token semicolon = tokens.get(0);
         if(semicolon.getTokenType() != TokenType.SEMICOLON) {
-            System.err.println("Syntax Error:");
-            String unexpected = semicolon.getTokenType().toString().toLowerCase();
-            System.err.println("Expected semicolon but got " + unexpected);
-            System.err.println(semicolon.getFilename() + ":" + semicolon.getLineNum());
-            return null;
+            throw new SyntaxErrorException("Expected semicolon but got: " + semicolon.getToken(), semicolon.getLineNum(), semicolon.getFilename());
         }
         tokens.remove(0);
 

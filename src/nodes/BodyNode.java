@@ -18,11 +18,10 @@ public class BodyNode implements JottTree {
         this.returnStatementNode = returnStatementNode;
     }
 
-    public static BodyNode parseBodyNode(ArrayList<Token> tokens) {
+    public static BodyNode parseBodyNode(ArrayList<Token> tokens) throws SyntaxErrorException {
 
         if (tokens.isEmpty()) {
-            System.err.println("No tokens left to parse type.");
-            return null;
+            throw new SyntaxErrorException("No tokens left to parse", 0, "");
         }
 
         Token nextToken = tokens.get(0);
@@ -31,24 +30,15 @@ public class BodyNode implements JottTree {
         while(!nextToken.getToken().equals("Return")) {
 
             BodyStatementNode bodyStatement = BodyStatementNode.parseBodyStatementNode(tokens);
-            if(bodyStatement == null) {
-                System.err.println("Invalid body statement while parsing body");
-                return null;
-            }
             bodyStatments.add(bodyStatement);
 
             if (tokens.isEmpty()) {
-                System.err.println("No tokens left to parse type.");
-                return null;
+                throw new SyntaxErrorException("No tokens left to parse", 0, "");
             }
             nextToken = tokens.get(0);
         }
 
         ReturnStatementNode returnStatement = ReturnStatementNode.parseReturnStatementNode(tokens);
-        if(returnStatement == null) {
-            System.err.println("Invalid return statement while parsing body");
-            return null;
-        }
 
         return new BodyNode(bodyStatments, returnStatement);
 
