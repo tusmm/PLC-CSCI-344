@@ -6,48 +6,51 @@ import provided.TokenType;
 
 import java.util.ArrayList;
 
-public class FunctionReturnNode implements JottTree {
 
-    private TypeNode type;
+public class ReturnStatementNode implements JottTree {
+    // < return_stmt > -> Return < expr >; | e
+
+    private ExpressionNode expressionNode;
     private boolean isVoid;
 
-    FunctionReturnNode(TypeNode type, boolean isVoid) {
-        this.type = type;
+    public ReturnStatementNode(ExpressionNode expr, boolean isVoid) {
+        this.expressionNode = expr;
         this.isVoid = isVoid;
     }
 
-    public static FunctionReturnNode parseFunctionReturnNode(ArrayList<Token> tokens) {
+    public static ReturnStatementNode parseReturnStatementNode(ArrayList<Token> tokens) {
 
-        if (tokens.isEmpty()) {
-            System.err.println("No tokens left to parse type.");
-            return null;
+        Token retr = tokens.get(0);
+        if(retr.getTokenType() != TokenType.ID_KEYWORD || !retr.getToken().equals("Return")) {
+            return new ReturnStatementNode(null, true);
         }
-        Token nextToken = tokens.get(0);
+        tokens.remove(0);
 
-        if (nextToken.getTokenType() != TokenType.ID_KEYWORD) {
+        ExpressionNode expr = ExpressionNode.parseExpressionNode(tokens);
+
+        Token semicolon = tokens.get(0);
+        if(semicolon.getTokenType() != TokenType.SEMICOLON) {
             System.err.println("Syntax Error:");
-            String unexpected = nextToken.getTokenType().toString().toLowerCase();
-            System.err.println("Expected return type but got " + unexpected);
-            System.err.println(nextToken.getFilename() + ":" + nextToken.getLineNum());
+            String unexpected = semicolon.getTokenType().toString().toLowerCase();
+            System.err.println("Expected semicolon but got " + unexpected);
+            System.err.println(semicolon.getFilename() + ":" + semicolon.getLineNum());
             return null;
         }
+        tokens.remove(0);
 
-        if (nextToken.getToken().equals("Void")) {
-            tokens.remove(0);
-            return new FunctionReturnNode(null, true);
-        }
 
-        return new FunctionReturnNode(TypeNode.parseTypeNode(tokens), false);
+        return new ReturnStatementNode(expr, false);
 
     }
 
     @Override
     public String convertToJott() {
+
         if(isVoid) {
-            return "Void";
+            return "";
         }
 
-        return type.convertToJott();
+        return "Return " + expressionNode.convertToJott() + ";";
     }
 
     @Override
