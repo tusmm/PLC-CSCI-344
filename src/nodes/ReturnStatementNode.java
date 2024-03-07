@@ -32,6 +32,10 @@ public class ReturnStatementNode implements JottTree {
         tokens.remove(0);
 
         ExpressionNode expr = ExpressionNode.parseExpressionNode(tokens);
+        if(expr == null) {
+            System.err.println("Invalid expression while parsing return statement");
+            return null;
+        }
 
         Token semicolon = tokens.get(0);
         if(semicolon.getTokenType() != TokenType.SEMICOLON) {

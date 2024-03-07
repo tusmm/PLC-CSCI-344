@@ -37,7 +37,13 @@ public class FunctionReturnNode implements JottTree {
             return new FunctionReturnNode(null, true);
         }
 
-        return new FunctionReturnNode(TypeNode.parseTypeNode(tokens), false);
+        TypeNode typeNode = TypeNode.parseTypeNode(tokens);
+        if(typeNode == null) {
+            System.err.println("Invalid type while parsing Return Statement");
+            return null;
+        }
+
+        return new FunctionReturnNode(typeNode, false);
 
     }
 

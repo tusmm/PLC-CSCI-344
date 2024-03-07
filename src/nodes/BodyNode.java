@@ -30,12 +30,25 @@ public class BodyNode implements JottTree {
 
         while(!nextToken.getToken().equals("Return")) {
 
-            bodyStatments.add(BodyStatementNode.parseBodyStatementNode(tokens));
+            BodyStatementNode bodyStatement = BodyStatementNode.parseBodyStatementNode(tokens);
+            if(bodyStatement == null) {
+                System.err.println("Invalid body statement while parsing body");
+                return null;
+            }
+            bodyStatments.add(bodyStatement);
 
+            if (tokens.isEmpty()) {
+                System.err.println("No tokens left to parse type.");
+                return null;
+            }
             nextToken = tokens.get(0);
         }
 
         ReturnStatementNode returnStatement = ReturnStatementNode.parseReturnStatementNode(tokens);
+        if(returnStatement == null) {
+            System.err.println("Invalid return statement while parsing body");
+            return null;
+        }
 
         return new BodyNode(bodyStatments, returnStatement);
 
