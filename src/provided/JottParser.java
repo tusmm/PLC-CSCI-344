@@ -22,12 +22,22 @@ public class JottParser {
      */
     public static JottTree parse(ArrayList<Token> tokens){
       JottTree root;
+<<<<<<< Updated upstream
       try {
           root = FunctionCallNode.parseFunctionCallNode(tokens);
       } catch(SyntaxErrorException e) {
           System.err.println(e.getMessage());
           return null;
       }
+=======
+       try {
+           root = ProgramNode.parseProgramNode(tokens);
+       } catch(SyntaxErrorException e) {
+           System.err.println(e.getMessage());
+           e.printStackTrace();
+           return null;
+       }
+>>>>>>> Stashed changes
 
       return root;
     }

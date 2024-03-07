@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import provided.JottTree;
 import provided.Token;
+import provided.TokenType;
 
 public interface ExpressionNode extends JottTree {
     public static ExpressionNode parseExpressionNode(ArrayList<Token> tokens) {
@@ -11,20 +12,29 @@ public interface ExpressionNode extends JottTree {
             System.out.println("handle error");
             return null;
         }
-        if (ExpressionRelopNode.parseExpressionRelopNode(tokens) != null) {
-            return ExpressionRelopNode.parseExpressionRelopNode(tokens);
-        }
-        else if (ExpressionMathopNode.parseExpressionMathopNode(tokens) != null) {
-            return ExpressionMathopNode.parseExpressionMathopNode(tokens);
-        }
-        else if (OperandNode.parseOperandNode(tokens) != null) {
-            return OperandNode.parseOperandNode(tokens);
-        } else if (BoolNode.parseBoolNode(tokens) != null) {
-            return BoolNode.parseBoolNode(tokens); 
-        } else if (StringLiteralNode.parseStringLiteralNode(tokens) != null) {
+        Token nextToken = tokens.get(0);
+
+        if(nextToken.getTokenType() == TokenType.STRING) {
             return StringLiteralNode.parseStringLiteralNode(tokens);
         }
+        if (nextToken.getToken().equals("True") || nextToken.getToken().equals("False")) {
+            return BoolNode.parseBoolNode(tokens);
+        }
 
-        return null;
+        OperandNode opNode1 = OperandNode.parseOperandNode(tokens);
+        if (tokens.size() == 0) {
+            return opNode1;
+        }
+        nextToken = tokens.get(0);
+
+        if(nextToken.getTokenType() == TokenType.REL_OP) {
+            return ExpressionRelopNode.parseExpressionRelopNode(tokens);
+        }
+        if(nextToken.getTokenType() == TokenType.MATH_OP) {
+            return ExpressionMathopNode.parseExpressionMathopNode(tokens);
+        }
+
+        return opNode1;
+
     }
 }

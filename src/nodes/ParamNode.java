@@ -31,9 +31,9 @@ public class ParamNode implements OperandNode {
             return new ParamNode();
         }
 
-        if (ExpressionNode.parseExpressionNode(tokens) != null) {
-            ExpressionNode expressionNode = ExpressionNode.parseExpressionNode(tokens);
+        ExpressionNode expressionNode = ExpressionNode.parseExpressionNode(tokens);
 
+<<<<<<< Updated upstream
             // begin reading in paramTNodes
             ArrayList<ParamsTNode> paramTNodes = new ArrayList<ParamsTNode>();
             Token token = tokens.get(0);
@@ -43,17 +43,31 @@ public class ParamNode implements OperandNode {
                     return null;
                 }
                 paramTNodes.add(ParamsTNode.parseParamsTNode(tokens));
+=======
+        // begin reading in paramTNodes
+        ArrayList<ParamsTNode> paramTNodes = new ArrayList<ParamsTNode>();
+        token = tokens.get(0);
+        while (token.getTokenType() != TokenType.R_BRACKET) {
+            if (tokens.size() == 0) {
+                System.out.println("Handle error");
+                return null;
+>>>>>>> Stashed changes
             }
-            
-            return new ParamNode(expressionNode, paramTNodes);
+            paramTNodes.add(ParamsTNode.parseParamsTNode(tokens));
+            token = tokens.get(0);
         }
 
+<<<<<<< Updated upstream
         // problems persist and nothing was returned, return null
         return null;
+=======
+        return new ParamNode(expressionNode, paramTNodes);
+
+>>>>>>> Stashed changes
     }
 
     private static boolean isEmptyTokensList(ArrayList<Token> tokens) {
-        return tokens.size() != 0;
+        return tokens.size() == 0;
     }
 
     @Override

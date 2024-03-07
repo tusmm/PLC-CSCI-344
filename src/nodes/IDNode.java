@@ -24,8 +24,12 @@ public class IDNode implements OperandNode {
             tokens.remove(0); // take off the first element
             return new IDNode(name);
         }
+<<<<<<< Updated upstream
         System.out.println("Handle exception here");
         return null;
+=======
+        throw new SyntaxErrorException("Invalid ID: " + token.getToken(), token.getLineNum(), token.getFilename());
+>>>>>>> Stashed changes
    }
 
     @Override

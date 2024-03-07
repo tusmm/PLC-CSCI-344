@@ -23,12 +23,21 @@ public class FunctionBodyNode implements JottTree{
 
         ArrayList<VariableDeclarationNode> variableDeclarations = new ArrayList<VariableDeclarationNode>();
         while (tokens.get(0).getTokenType() == TokenType.ID_KEYWORD) {
+<<<<<<< Updated upstream
             VariableDeclarationNode variableDeclaration = VariableDeclarationNode.parseVariableDeclarationNode(tokens);
             if (variableDeclaration == null) {
                 System.err.println("Failed to parse variable declaration");
                 return null;
             }
             variableDeclarations.add(variableDeclaration);
+=======
+            try {
+                VariableDeclarationNode variableDeclaration = VariableDeclarationNode.parseVariableDeclarationNode(tokens);
+                variableDeclarations.add(variableDeclaration);
+            } catch (SyntaxErrorException e) {
+                break;
+            }
+>>>>>>> Stashed changes
         }
 
         BodyNode body = BodyNode.parseBodyNode(tokens);

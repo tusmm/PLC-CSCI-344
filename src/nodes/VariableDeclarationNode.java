@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import provided.JottTree;
 import provided.Token;
+import provided.TokenType;
 
 public class VariableDeclarationNode implements JottTree {
     private TypeNode type;
@@ -20,7 +21,7 @@ public class VariableDeclarationNode implements JottTree {
             return null;
         }
 
-        // <type> <id>
+        // <type><id>;
         TypeNode type = TypeNode.parseTypeNode(tokens);
         if (type == null) {
             System.err.println("Failed to parse type");
@@ -28,10 +29,21 @@ public class VariableDeclarationNode implements JottTree {
         }
 
         IDNode id = IDNode.parseIDNode(tokens);
+<<<<<<< Updated upstream
         if (id == null) {
             System.err.println("Failed to parse id");
             return null;
         }
+=======
+        if (tokens.isEmpty()) {
+            throw new SyntaxErrorException("No tokens to parse", 0, "VariableDeclarationNode.java");
+        }
+        Token semicolon = tokens.get(0);
+        if(semicolon.getTokenType() != TokenType.SEMICOLON) {
+            throw new SyntaxErrorException("Expected semicolon but got: " + semicolon.getToken(), semicolon.getLineNum(), semicolon.getFilename());
+        }
+        tokens.remove(0);
+>>>>>>> Stashed changes
 
         return new VariableDeclarationNode(type, id);
     }
