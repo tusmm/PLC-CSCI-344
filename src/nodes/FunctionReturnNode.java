@@ -11,7 +11,7 @@ public class FunctionReturnNode implements JottTree {
     private TypeNode type;
     private boolean isVoid;
 
-    FunctionReturnNode(TypeNode type, boolean isVoid) {
+    public FunctionReturnNode(TypeNode type, boolean isVoid) {
         this.type = type;
         this.isVoid = isVoid;
     }
