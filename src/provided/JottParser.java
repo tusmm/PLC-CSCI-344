@@ -10,6 +10,7 @@ package provided;
 import java.util.ArrayList;
 
 import nodes.FunctionCallNode;
+import nodes.SyntaxErrorException;
 
 public class JottParser {
 
@@ -20,8 +21,14 @@ public class JottParser {
      *         or null upon an error in parsing.
      */
     public static JottTree parse(ArrayList<Token> tokens){
-      JottTree root = null;
-      root = FunctionCallNode.parseFunctionCallNode(tokens);
+      JottTree root;
+      try {
+          root = FunctionCallNode.parseFunctionCallNode(tokens);
+      } catch(SyntaxErrorException e) {
+          System.err.println(e.getMessage());
+          return null;
+      }
+
       return root;
     }
 }
