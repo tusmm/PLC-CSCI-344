@@ -12,21 +12,22 @@ public class BoolNode implements ExpressionNode {
         this.token = token;
     }
 
-    public static BoolNode parseBoolNode(ArrayList<Token> tokens) {
+    public static BoolNode parseBoolNode(ArrayList<Token> tokens) throws SyntaxErrorException {
         // check if empty
         if (tokens.size() == 0) {
-            // handle error 
-            // missing boolean id 
-            return null;
+            String message = "No tokens to parse"; 
+            String filename = "BoolNode.java";
+            int lineNum = 0; 
+            throw new SyntaxErrorException(message, lineNum, filename);
         }
 
         Token token = tokens.get(0); // get first token
         if (token.getTokenType() != TokenType.ID_KEYWORD) {
-            System.err.println("Syntax Error:");
             String unexpected = token.getTokenType().toString().toLowerCase();
-            System.err.println("Expected id but got " + unexpected);
-            System.err.println(token.getFilename() + ":" + token.getLineNum());
-            return null;
+            String message = "Expected id but got " + unexpected; 
+            String filename = token.getFilename(); 
+            int lineNum = token.getLineNum(); 
+            throw new SyntaxErrorException(message, lineNum, filename);
         }
 
         String bool = token.getToken();
@@ -34,11 +35,11 @@ public class BoolNode implements ExpressionNode {
             tokens.remove(0); 
             return new BoolNode(token);
         }
-
-        System.err.println("Syntax Error:");
-        System.err.println("Expected True or False but got neither");
-        System.err.println(token.getFilename() + ":" + token.getLineNum());
-        return null;
+        
+        String message = "Expected True or False but got neither"; 
+        String filename = token.getFilename(); 
+        int lineNum = token.getLineNum(); 
+        throw new SyntaxErrorException(message, lineNum, filename);
     }
 
     @Override
