@@ -20,10 +20,6 @@ public class ProgramNode implements JottTree{
         ArrayList<FunctionDefNode> functionDefs = new ArrayList<FunctionDefNode>();
         while (!tokens.isEmpty()) {
             FunctionDefNode functionDef = FunctionDefNode.parseFunctionDefNode(tokens);
-            if (functionDef == null) {
-                System.err.println("Failed to parse function def");
-                return null;
-            }
             functionDefs.add(functionDef);
         }
 
