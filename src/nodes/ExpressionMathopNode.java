@@ -9,7 +9,7 @@ public class ExpressionMathopNode implements ExpressionNode {
     MathopNode mathopNode;
     OperandNode operandNodeRight;
      
-    public ExpressionRelopNode(OperandNode operandNodeLeft, 
+    public ExpressionMathopNode(OperandNode operandNodeLeft, 
                             MathopNode mathopNode, 
                             OperandNode operandNodeRight) {
         this.operandNodeLeft = operandNodeLeft;
@@ -31,7 +31,7 @@ public class ExpressionMathopNode implements ExpressionNode {
                 mathopNode = MathopNode.parseRelopNode(tokens);
                 if (OperandNode.parseOperandNode(tokens) != null) {
                     operandNodeRight = OperandNode.parseOperandNode(tokens);
-                    return new ExpressionRelopNode(operandNodeLeft, mathopNode, operandNodeRight);
+                    return new ExpressionMathopNode(operandNodeLeft, mathopNode, operandNodeRight);
                 }
             }
         }
