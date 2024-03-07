@@ -4,14 +4,16 @@ import java.util.ArrayList;
 
 import provided.JottTree;
 import provided.Token;
-import provided.TokenType;
 
 public interface BodyStatementNode extends JottTree {
 
-    public static BodyStatementNode parseBodyStatementNode(ArrayList<Token> tokens) {
+    public static BodyStatementNode parseBodyStatementNode(ArrayList<Token> tokens) throws SyntaxErrorException {
 
         if (tokens.size() == 0) {
-            return null;
+            String message = "No tokens to parse"; 
+            String filename = "BoolNode.java";
+            int lineNum = 0; 
+            throw new SyntaxErrorException(message, lineNum, filename);
         }
         Token token = tokens.get(0);
         if (IfStatementNode.parseIfStatementNode(tokens) != null) {
@@ -23,10 +25,10 @@ public interface BodyStatementNode extends JottTree {
         } else if (FunctionCallNode.parseFunctionCallNode(tokens) != null) {
             return FunctionCallNode.parseFunctionCallNode(tokens);
         } else {
-            System.err.println("Syntax Error:");
-            System.err.println("Invalid Body Statement");
-            System.err.println(token.getFilename() + ":" + token.getLineNum());
-            return null;
+            String message = "Invalid Body Statement"; 
+            String filename = token.getFilename(); 
+            int lineNum = token.getLineNum(); 
+            throw new SyntaxErrorException(message, lineNum, filename);
         }
 
     }
