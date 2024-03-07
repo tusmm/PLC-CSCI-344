@@ -16,20 +16,15 @@ public class FunctionReturnNode implements JottTree {
         this.isVoid = isVoid;
     }
 
-    public static FunctionReturnNode parseFunctionReturnNode(ArrayList<Token> tokens) {
+    public static FunctionReturnNode parseFunctionReturnNode(ArrayList<Token> tokens) throws SyntaxErrorException {
 
         if (tokens.isEmpty()) {
-            System.err.println("No tokens left to parse type.");
-            return null;
+            throw new SyntaxErrorException("No tokens left to parse", 0, "");
         }
         Token nextToken = tokens.get(0);
 
         if (nextToken.getTokenType() != TokenType.ID_KEYWORD) {
-            System.err.println("Syntax Error:");
-            String unexpected = nextToken.getTokenType().toString().toLowerCase();
-            System.err.println("Expected return type but got " + unexpected);
-            System.err.println(nextToken.getFilename() + ":" + nextToken.getLineNum());
-            return null;
+            throw new SyntaxErrorException("Expected return type but got: " + nextToken.getToken(), nextToken.getLineNum(), nextToken.getFilename());
         }
 
         if (nextToken.getToken().equals("Void")) {
@@ -38,10 +33,6 @@ public class FunctionReturnNode implements JottTree {
         }
 
         TypeNode typeNode = TypeNode.parseTypeNode(tokens);
-        if(typeNode == null) {
-            System.err.println("Invalid type while parsing Return Statement");
-            return null;
-        }
 
         return new FunctionReturnNode(typeNode, false);
 

@@ -18,44 +18,27 @@ public class FunctionDefParamsTypeNode implements JottTree {
         this.type = type;
     }
 
-    public static FunctionDefParamsTypeNode parseFunctionDefParamsTypeNode(ArrayList<Token> tokens) {
+    public static FunctionDefParamsTypeNode parseFunctionDefParamsTypeNode(ArrayList<Token> tokens) throws SyntaxErrorException {
 
         if (tokens.isEmpty()) {
-            System.err.println("No tokens left to parse type.");
-            return null;
+            throw new SyntaxErrorException("No tokens left to parse", 0, "");
         }
 
         Token comma = tokens.get(0);
         if(comma.getTokenType() != TokenType.COMMA) {
-            System.err.println("Syntax Error:");
-            String unexpected = comma.getTokenType().toString().toLowerCase();
-            System.err.println("Expected comma but got " + unexpected);
-            System.err.println(comma.getFilename() + ":" + comma.getLineNum());
-            return null;
+            throw new SyntaxErrorException("Expected comma but got: " + comma.getToken(), comma.getLineNum(), comma.getFilename());
         }
         tokens.remove(0);
 
         IDNode idNode = IDNode.parseIDNode(tokens);
-        if(idNode == null) {
-            System.err.println("Invalid id while parsing function definition parameters type");
-            return null;
-        }
 
         Token colon = tokens.get(0);
         if(colon.getTokenType() != TokenType.COLON) {
-            System.err.println("Syntax Error:");
-            String unexpected = colon.getTokenType().toString().toLowerCase();
-            System.err.println("Expected colon but got " + unexpected);
-            System.err.println(colon.getFilename() + ":" + colon.getLineNum());
-            return null;
+            throw new SyntaxErrorException("Expected colon but got: " + colon.getToken(), colon.getLineNum(), colon.getFilename());
         }
         tokens.remove(0);
 
         TypeNode typeNode = TypeNode.parseTypeNode(tokens);
-        if(typeNode == null) {
-            System.err.println("Invalid type while parsing function definition parameters type");
-            return null;
-        }
 
         return new FunctionDefParamsTypeNode(idNode, typeNode);
     }

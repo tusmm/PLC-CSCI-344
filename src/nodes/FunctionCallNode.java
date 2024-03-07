@@ -14,10 +14,9 @@ public class FunctionCallNode implements OperandNode, BodyStatementNode {
         this.params = params;
     }
 
-    public static FunctionCallNode parseFunctionCallNode(ArrayList<Token> tokens) {
+    public static FunctionCallNode parseFunctionCallNode(ArrayList<Token> tokens) throws SyntaxErrorException {
         if (isEmptyTokensList(tokens)) {
-            System.out.println("Handle exception here");
-            return null;
+            throw new SyntaxErrorException("empty list", 0, "FunctionCallNode.java");
         }
         if (tokens.get(0).getTokenType() != TokenType.FC_HEADER) {
             System.out.println("Handle error");

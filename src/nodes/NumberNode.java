@@ -13,20 +13,17 @@ public class NumberNode implements OperandNode {
         this.token = token;
    }
 
-   public static NumberNode parseNumberNode(ArrayList<Token> tokens) {
+   public static NumberNode parseNumberNode(ArrayList<Token> tokens) throws SyntaxErrorException {
         // first check if the token list is empty
         if (tokens.size() == 0) {
-            System.out.println("Handle exception here");
-            // throw exception
-            return null;
+            throw new SyntaxErrorException("No tokens to parse", 0, "NumberNode.java");
         }        
-        Token name = tokens.get(0); // get the front of the token
-        if (name.getTokenType() == TokenType.NUMBER) {
+        Token token = tokens.get(0); // get the front of the token
+        if (token.getTokenType() == TokenType.NUMBER) {
             tokens.remove(0); // take off the first element
-            return new NumberNode(name);
+            return new NumberNode(token);
         }
-        System.out.println("Handle exception here");
-        return null;
+        throw new SyntaxErrorException("Invalid Number Node", token.getLineNum(), token.getFilename());
    }
 
 @Override

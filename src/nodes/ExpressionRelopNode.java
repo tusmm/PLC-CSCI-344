@@ -17,10 +17,9 @@ public class ExpressionRelopNode implements ExpressionNode {
         this.operandNodeRight = operandNodeRight;
     }
 
-    public static ExpressionRelopNode parseExpressionRelopNode(ArrayList<Token> tokens) {
+    public static ExpressionRelopNode parseExpressionRelopNode(ArrayList<Token> tokens) throws SyntaxErrorException {
         if (tokens.size() == 0) {
-            System.out.println("handle exception here");
-            return null;
+            throw new SyntaxErrorException("empty list", 0, "ExpressionRelopNode.java");
         }
         OperandNode operandNodeLeft;
         RelopNode relopNode;
