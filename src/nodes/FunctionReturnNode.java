@@ -5,17 +5,18 @@ import provided.Token;
 import provided.TokenType;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class TypeNode implements JottTree {
+public class FunctionReturnNode implements JottTree {
 
-    private Token token;
-    private static ArrayList<String> validTypes = new ArrayList(List.of(new String[]{"Double", "Integer", "String", "Boolean"}));
+    private TypeNode type;
+    private boolean isVoid;
 
-    public TypeNode(Token token) {
-        this.token = token;
+    FunctionReturnNode(TypeNode type, boolean isVoid) {
+        this.type = type;
+        this.isVoid = isVoid;
     }
-    public static TypeNode parseTypeNode(ArrayList<Token> tokens) {
+
+    public FunctionReturnNode parseFunctionReturnNode(ArrayList<Token> tokens) {
 
         if (tokens.isEmpty()) {
             System.err.println("No tokens left to parse type.");
@@ -26,27 +27,27 @@ public class TypeNode implements JottTree {
         if (nextToken.getTokenType() != TokenType.ID_KEYWORD) {
             System.err.println("Syntax Error:");
             String unexpected = nextToken.getTokenType().toString().toLowerCase();
-            System.err.println("Expected type but got " + unexpected);
+            System.err.println("Expected return type but got " + unexpected);
             System.err.println(nextToken.getFilename() + ":" + nextToken.getLineNum());
             return null;
         }
 
-        if(!validTypes.contains(nextToken.getToken())) {
-            System.err.println("Syntax Error:");
-            String unexpected = nextToken.getTokenType().toString().toLowerCase();
-            System.err.println("Not a valid type: " + unexpected);
-            System.err.println(nextToken.getFilename() + ":" + nextToken.getLineNum());
-            return null;
+        if (nextToken.getToken().equals("Void")) {
+            tokens.remove(0);
+            return new FunctionReturnNode(null, true);
         }
 
-        tokens.remove(0);
-        return new TypeNode(nextToken);
+        return new FunctionReturnNode(TypeNode.parseTypeNode(tokens), false);
 
     }
 
     @Override
     public String convertToJott() {
-        return token.getToken();
+        if(isVoid) {
+            return "Void";
+        }
+        
+        return type.convertToJott();
     }
 
     @Override
