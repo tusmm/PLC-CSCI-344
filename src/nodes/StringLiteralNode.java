@@ -5,32 +5,36 @@ import java.util.ArrayList;
 import provided.Token;
 import provided.TokenType;
 
+public class StringLiteralNode implements ExpressionNode{
+    Token token;
 
-public class IDNode implements OperandNode {
-   Token token;
-   
-   public IDNode(Token token) { 
+    public StringLiteralNode(Token token) {
         this.token = token;
-   }
+    }
 
-   public static IDNode parseIDNode(ArrayList<Token> tokens) {
-        // first check if the token list is empty
+    public static StringLiteralNode parseStringLiteralNode(ArrayList<Token> tokens) {
+        // check if empty
         if (tokens.size() == 0) {
-            System.out.println("Handle exception here");
-        }        
-        Token name = tokens.get(0); // get the front of the token
-        if (name.getTokenType() == TokenType.ID_KEYWORD) {
-            tokens.remove(0); // take off the first element
-            return new IDNode(name);
+            // handle error 
+            // missing string literal
+            return null;
         }
-        System.out.println("Handle exception here");
-        return null;
-   }
 
+        Token token = tokens.get(0);
+        if (token.getTokenType() != TokenType.STRING) {
+            System.err.println("Syntax Error:");
+            String unexpected = token.getTokenType().toString().toLowerCase();
+            System.err.println("Expected string but got " + unexpected);
+            System.err.println(token.getFilename() + ":" + token.getLineNum());
+            return null;
+        }
+
+        return new StringLiteralNode(token);
+    }
+    
     @Override
     public String convertToJott() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToJott'");
+        return token.getToken();
     }
 
     @Override
@@ -56,4 +60,5 @@ public class IDNode implements OperandNode {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
     }
+    
 }
