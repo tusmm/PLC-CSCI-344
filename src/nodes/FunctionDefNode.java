@@ -19,7 +19,7 @@ public class FunctionDefNode implements JottTree {
         this.functionBody = functionBody;
     }
 
-    public static FunctionDefNode parseFunctionDefNode(ArrayList<Token> tokens) {
+    public static FunctionDefNode parseFunctionDefNode(ArrayList<Token> tokens) throws SyntaxErrorException {
         if (tokens.isEmpty()) {
             System.err.println("Empty token list");
             return null;

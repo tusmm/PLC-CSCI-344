@@ -23,7 +23,7 @@ public class FunctionDefParamsNode implements JottTree {
         this.isEmpty = isEmpty;
     }
 
-    public static FunctionDefParamsNode parseFunctionDefParamsNode(ArrayList<Token> tokens) {
+    public static FunctionDefParamsNode parseFunctionDefParamsNode(ArrayList<Token> tokens) throws SyntaxErrorException {
 
         FunctionDefParamsNode emptyFunctionDefParamsNode =
                 new FunctionDefParamsNode(null, null, null, true);

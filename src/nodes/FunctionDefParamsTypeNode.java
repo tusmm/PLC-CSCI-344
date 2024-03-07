@@ -18,7 +18,7 @@ public class FunctionDefParamsTypeNode implements JottTree {
         this.type = type;
     }
 
-    public static FunctionDefParamsTypeNode parseFunctionDefParamsTypeNode(ArrayList<Token> tokens) {
+    public static FunctionDefParamsTypeNode parseFunctionDefParamsTypeNode(ArrayList<Token> tokens) throws SyntaxErrorException {
 
         if (tokens.isEmpty()) {
             System.err.println("No tokens left to parse type.");

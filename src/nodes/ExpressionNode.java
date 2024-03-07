@@ -6,10 +6,9 @@ import provided.JottTree;
 import provided.Token;
 
 public interface ExpressionNode extends JottTree {
-    public static ExpressionNode parseExpressionNode(ArrayList<Token> tokens) {
+    public static ExpressionNode parseExpressionNode(ArrayList<Token> tokens) throws SyntaxErrorException {
         if (tokens.size() == 0) {
-            System.out.println("handle error");
-            return null;
+            throw new SyntaxErrorException("empty list", 0, "ExpressoinNode.java");
         }
         if (ExpressionRelopNode.parseExpressionRelopNode(tokens) != null) {
             return ExpressionRelopNode.parseExpressionRelopNode(tokens);
