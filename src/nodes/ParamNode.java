@@ -43,6 +43,7 @@ public class ParamNode implements OperandNode {
                     return null;
                 }
                 paramTNodes.add(ParamsTNode.parseParamsTNode(tokens));
+                token = tokens.get(0);
             }
             
             return new ParamNode(expressionNode, paramTNodes);
