@@ -17,6 +17,8 @@ public class NumberNode implements OperandNode {
         // first check if the token list is empty
         if (tokens.size() == 0) {
             System.out.println("Handle exception here");
+            // throw exception
+            return null;
         }        
         Token name = tokens.get(0); // get the front of the token
         if (name.getTokenType() == TokenType.NUMBER) {
@@ -29,8 +31,7 @@ public class NumberNode implements OperandNode {
 
 @Override
 public String convertToJott() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'convertToJott'");
+    return token.getToken();
 }
 
 @Override
