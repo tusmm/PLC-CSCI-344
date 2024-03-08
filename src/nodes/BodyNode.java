@@ -23,7 +23,7 @@ public class BodyNode implements JottTree {
 
         // check if token list is empty
         if (tokens.get(0).getTokenType() == TokenType.EOF) {
-            String message = "No tokens to parse"; 
+            String message = "EOF reached while parsing body"; 
             throw new SyntaxErrorException(message, tokens.get(0).getLineNum(), tokens.get(0).getFilename());
         }
         Token nextToken = tokens.get(0);
@@ -40,7 +40,7 @@ public class BodyNode implements JottTree {
 
             // check if token list is empty
             if (tokens.get(0).getTokenType() == TokenType.EOF) {
-                String message = "No tokens to parse"; 
+                String message = "EOF reached while parsing body"; 
                 throw new SyntaxErrorException(message, tokens.get(0).getLineNum(), tokens.get(0).getFilename());
             }
             nextToken = tokens.get(0);

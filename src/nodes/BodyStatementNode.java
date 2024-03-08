@@ -12,7 +12,7 @@ public interface BodyStatementNode extends JottTree {
 
         // check if token list is empty
         if (tokens.get(0).getTokenType() == TokenType.EOF) {
-            String message = "No tokens to parse"; 
+            String message = "Reached EOF while parsing body statement"; 
             throw new SyntaxErrorException(message, tokens.get(0).getLineNum(), tokens.get(0).getFilename());
         }
         
@@ -29,13 +29,14 @@ public interface BodyStatementNode extends JottTree {
             FunctionCallNode fcn = FunctionCallNode.parseFunctionCallNode(tokens);
             // check if token list is empty
             if (tokens.get(0).getTokenType() == TokenType.EOF) {
-                String message = "No tokens to parse"; 
+                String message = "Missing semicolon"; 
                 throw new SyntaxErrorException(message, tokens.get(0).getLineNum(), tokens.get(0).getFilename());
             }
 
             Token nextToken = tokens.get(0);
             if (nextToken.getTokenType() != TokenType.SEMICOLON) {
-                throw new SyntaxErrorException("Missing semicolon after function call", nextToken.getLineNum(), nextToken.getFilename());
+                throw new SyntaxErrorException("Expected semicolon but got " + nextToken.getToken(), nextToken.getLineNum(), nextToken.getFilename());
+                
             }
 
             tokens.remove(0);

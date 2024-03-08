@@ -51,7 +51,7 @@ public class FunctionDefParamsNode implements JottTree {
 
         // check if token list is empty
         if (tokens.get(0).getTokenType() == TokenType.EOF) {
-            String message = "No tokens to parse"; 
+            String message = "Reached EOF while parsing function definition parameters"; 
             throw new SyntaxErrorException(message, tokens.get(0).getLineNum(), tokens.get(0).getFilename());
         }
         ArrayList<FunctionDefParamsTypeNode> functionDefParamsTypeNodes = new ArrayList<>();
@@ -61,7 +61,7 @@ public class FunctionDefParamsNode implements JottTree {
             FunctionDefParamsTypeNode functionDefParamsTypeNode = FunctionDefParamsTypeNode.parseFunctionDefParamsTypeNode(tokens);
             functionDefParamsTypeNodes.add(functionDefParamsTypeNode);
 
-            if(tokens.isEmpty()) {
+            if(tokens.get(0).getTokenType() == TokenType.EOF) {
                 break;
             }
             nextToken = tokens.get(0);
