@@ -28,8 +28,10 @@ public class FunctionDefParamsNode implements JottTree {
         FunctionDefParamsNode emptyFunctionDefParamsNode =
                 new FunctionDefParamsNode(null, null, null, true);
 
-        if (tokens.isEmpty()) {
-            throw new SyntaxErrorException("No tokens left to parse", 0, "");
+        // check if token list is empty
+        if (tokens.get(0).getTokenType() == TokenType.EOF) {
+            String message = "No tokens to parse"; 
+            throw new SyntaxErrorException(message, tokens.get(0).getLineNum(), tokens.get(0).getFilename());
         }
 
         Token nextToken = tokens.get(0);
@@ -47,10 +49,11 @@ public class FunctionDefParamsNode implements JottTree {
 
         TypeNode typeNode = TypeNode.parseTypeNode(tokens);
 
-        if (tokens.isEmpty()) {
-            throw new SyntaxErrorException("No tokens left to parse", 0, "");
+        // check if token list is empty
+        if (tokens.get(0).getTokenType() == TokenType.EOF) {
+            String message = "No tokens to parse"; 
+            throw new SyntaxErrorException(message, tokens.get(0).getLineNum(), tokens.get(0).getFilename());
         }
-
         ArrayList<FunctionDefParamsTypeNode> functionDefParamsTypeNodes = new ArrayList<>();
         nextToken = tokens.get(0);
         while(nextToken.getTokenType() == TokenType.COMMA) {

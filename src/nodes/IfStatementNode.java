@@ -22,11 +22,12 @@ public class IfStatementNode implements BodyStatementNode {
     }
 
     public static IfStatementNode parseIfStatementNode(ArrayList<Token> tokens) throws SyntaxErrorException {
-
-        if (tokens.size() == 0) {
-            // handle error: no tokens
-            return null;
+        // check if token list is empty
+        if (tokens.get(0).getTokenType() == TokenType.EOF) {
+            String message = "No tokens to parse"; 
+            throw new SyntaxErrorException(message, tokens.get(0).getLineNum(), tokens.get(0).getFilename());
         }
+
         Token tossToken = tokens.get(0);
         if (tossToken.getTokenType() != TokenType.ID_KEYWORD) {
             // handle error: not an id
@@ -40,7 +41,7 @@ public class IfStatementNode implements BodyStatementNode {
         }
         tokens.remove(0); // pop if
 
-        if (tokens.size() == 0) {
+        if (tokens.get(0).getTokenType() == TokenType.EOF) {
             // handle error: missing left bracket
             throw new SyntaxErrorException("missing left bracket", tossToken.getLineNum(), tossToken.getFilename());
             // return null;
@@ -55,7 +56,7 @@ public class IfStatementNode implements BodyStatementNode {
 
         ExpressionNode expression = ExpressionNode.parseExpressionNode(tokens);
 
-        if (tokens.size() == 0) {
+        if (tokens.get(0).getTokenType() == TokenType.EOF) {
             // handle error: missing right brace
             throw new SyntaxErrorException("missing right brace", tossToken.getLineNum(), tossToken.getFilename());
             // return null;
@@ -68,7 +69,7 @@ public class IfStatementNode implements BodyStatementNode {
         }
         tokens.remove(0); // pop ]
 
-        if (tokens.size() == 0) {
+        if (tokens.get(0).getTokenType() == TokenType.EOF) {
             // handle error: missing left brace
             throw new SyntaxErrorException("missing left brace", tossToken.getLineNum(), tossToken.getFilename());
             // return null;
@@ -83,7 +84,7 @@ public class IfStatementNode implements BodyStatementNode {
 
         BodyNode body = BodyNode.parseBodyNode(tokens);
 
-        if (tokens.size() == 0) {
+        if (tokens.get(0).getTokenType() == TokenType.EOF) {
             // handle error: missing right brace
             throw new SyntaxErrorException("missing right brace", tossToken.getLineNum(), tossToken.getFilename());
             // return null;
@@ -103,10 +104,12 @@ public class IfStatementNode implements BodyStatementNode {
 
             elseIfNodes.add( ElseIfNode.parseElseIfNode(tokens) );
             
-            if (tokens.size() == 0) {
-                // handle error: ... something
-                return null;
+            // check if token list is empty
+            if (tokens.get(0).getTokenType() == TokenType.EOF) {
+                String message = "No tokens to parse"; 
+                throw new SyntaxErrorException(message, tokens.get(0).getLineNum(), tokens.get(0).getFilename());
             }
+            
             tossToken = tokens.get(0);
         }
 

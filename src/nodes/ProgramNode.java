@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import provided.JottTree;
 import provided.Token;
+import provided.TokenType;
 
 public class ProgramNode implements JottTree{
     private ArrayList<FunctionDefNode> functionDefs;
@@ -13,14 +14,18 @@ public class ProgramNode implements JottTree{
     }
     
     public static ProgramNode parseProgramNode(ArrayList<Token> tokens) throws SyntaxErrorException {
-        if (tokens.isEmpty()) {
-            throw new SyntaxErrorException("No tokens to parse", 0, "ProgramNode.java");
+        // check if token list is empty
+        if (tokens.get(0).getTokenType() == TokenType.EOF) {
+            String message = "No tokens to parse"; 
+            throw new SyntaxErrorException(message, tokens.get(0).getLineNum(), tokens.get(0).getFilename());
         }
 
         ArrayList<FunctionDefNode> functionDefs = new ArrayList<FunctionDefNode>();
-        while (!tokens.isEmpty()) {
+        Token token = tokens.get(0);
+        while (token.getTokenType() != TokenType.EOF) {
             FunctionDefNode functionDef = FunctionDefNode.parseFunctionDefNode(tokens);
             functionDefs.add(functionDef);
+            token = tokens.get(0);
         }
 
         return new ProgramNode(functionDefs);

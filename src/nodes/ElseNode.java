@@ -18,9 +18,10 @@ public class ElseNode implements JottTree {
 
     public static ElseNode parseElseNode(ArrayList<Token> tokens) throws SyntaxErrorException {
 
-        if (tokens.size() == 0) {
-            // handle error: no tokens
-            return null;
+        // check if token list is empty
+        if (tokens.get(0).getTokenType() == TokenType.EOF) {
+            String message = "No tokens to parse"; 
+            throw new SyntaxErrorException(message, tokens.get(0).getLineNum(), tokens.get(0).getFilename());
         }
         Token tossToken = tokens.get(0);
         if (!tossToken.getToken().equals("Else")) { // no else
@@ -43,7 +44,7 @@ public class ElseNode implements JottTree {
 
         BodyNode body = BodyNode.parseBodyNode(tokens);
 
-        if (tokens.size() == 0) {
+        if (tokens.get(0).getTokenType() == TokenType.EOF) {
             // handle error: missing right brace
             throw new SyntaxErrorException("missing right brace", tossToken.getLineNum(), tossToken.getFilename());
             // return null;

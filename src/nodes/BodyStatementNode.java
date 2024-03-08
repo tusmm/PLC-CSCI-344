@@ -10,12 +10,12 @@ public interface BodyStatementNode extends JottTree {
 
     public static BodyStatementNode parseBodyStatementNode(ArrayList<Token> tokens) throws SyntaxErrorException {
 
-        if (tokens.size() == 0) {
+        // check if token list is empty
+        if (tokens.get(0).getTokenType() == TokenType.EOF) {
             String message = "No tokens to parse"; 
-            String filename = "BoolNode.java";
-            int lineNum = 0; 
-            throw new SyntaxErrorException(message, lineNum, filename);
+            throw new SyntaxErrorException(message, tokens.get(0).getLineNum(), tokens.get(0).getFilename());
         }
+        
         Token token = tokens.get(0);
 
         if(token.getToken().equals("If")) {
@@ -27,11 +27,10 @@ public interface BodyStatementNode extends JottTree {
         if(token.getTokenType() == TokenType.FC_HEADER) {
 
             FunctionCallNode fcn = FunctionCallNode.parseFunctionCallNode(tokens);
-            if (tokens.size() == 0) {
-                String message = "No tokens to parse";
-                String filename = "BoolNode.java";
-                int lineNum = 0;
-                throw new SyntaxErrorException(message, lineNum, filename);
+            // check if token list is empty
+            if (tokens.get(0).getTokenType() == TokenType.EOF) {
+                String message = "No tokens to parse"; 
+                throw new SyntaxErrorException(message, tokens.get(0).getLineNum(), tokens.get(0).getFilename());
             }
 
             Token nextToken = tokens.get(0);
