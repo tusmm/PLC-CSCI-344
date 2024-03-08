@@ -8,10 +8,16 @@ import provided.TokenType;
 public class FunctionCallNode implements OperandNode, BodyStatementNode {
     IDNode id;
     ParamNode params;
+    boolean hasSemiColon;
 
     public FunctionCallNode(IDNode id, ParamNode params) {
         this.id = id;
         this.params = params;
+        this.hasSemiColon = false;
+    }
+
+    public void setHasSemiColon(boolean hasSemiColon) {
+        this.hasSemiColon = hasSemiColon;
     }
 
     public static FunctionCallNode parseFunctionCallNode(ArrayList<Token> tokens) throws SyntaxErrorException {
@@ -61,7 +67,7 @@ public class FunctionCallNode implements OperandNode, BodyStatementNode {
 
     @Override
     public String convertToJott() {
-        return "::" + id.convertToJott() + "[" + params.convertToJott() + "];";
+        return "::" + id.convertToJott() + "[" + params.convertToJott() + "]" + (hasSemiColon ? ";" : "");
     }
 
     private static boolean isEmptyTokensList(ArrayList<Token> tokens) {

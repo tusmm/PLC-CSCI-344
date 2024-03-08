@@ -40,6 +40,7 @@ public interface BodyStatementNode extends JottTree {
             }
 
             tokens.remove(0);
+            fcn.setHasSemiColon(true);
             return fcn;
         }
         return AssignmentNode.parseAssignmentNode(tokens);
