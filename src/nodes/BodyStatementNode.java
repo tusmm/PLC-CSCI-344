@@ -18,10 +18,10 @@ public interface BodyStatementNode extends JottTree {
         }
         Token token = tokens.get(0);
 
-        if(token.getToken().startsWith("If")) {
+        if(token.getToken().equals("If")) {
             return IfStatementNode.parseIfStatementNode(tokens);
         }
-        if (token.getToken().startsWith("While")) {
+        if (token.getToken().equals("While")) {
             return WhileLoopNode.parseWhileLoopNode(tokens);
         }
         if(token.getTokenType() == TokenType.FC_HEADER) {

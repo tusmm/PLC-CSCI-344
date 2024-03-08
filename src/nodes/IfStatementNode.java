@@ -99,7 +99,7 @@ public class IfStatementNode implements BodyStatementNode {
         tossToken = tokens.get(0);
         ArrayList<ElseIfNode> elseIfNodes = new ArrayList<>();
 
-        while ( tossToken.getToken() == "Elseif") { // 
+        while (tossToken.getToken().equals("Elseif")) { //
 
             elseIfNodes.add( ElseIfNode.parseElseIfNode(tokens) );
             
