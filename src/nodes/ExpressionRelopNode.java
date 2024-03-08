@@ -17,25 +17,16 @@ public class ExpressionRelopNode implements ExpressionNode {
         this.operandNodeRight = operandNodeRight;
     }
 
-    public static ExpressionRelopNode parseExpressionRelopNode(ArrayList<Token> tokens) throws SyntaxErrorException {
+    public static ExpressionRelopNode parseExpressionRelopNode(ArrayList<Token> tokens, OperandNode operandNodeLeft) throws SyntaxErrorException {
         if (tokens.size() == 0) {
             throw new SyntaxErrorException("empty list", 0, "ExpressionRelopNode.java");
         }
-        OperandNode operandNodeLeft;
-        RelopNode relopNode;
-        OperandNode operandNodeRight;
-        if (OperandNode.parseOperandNode(tokens) != null) {
-            operandNodeLeft = OperandNode.parseOperandNode(tokens);
-            if (RelopNode.parseRelopNode(tokens) != null) {
-                relopNode = RelopNode.parseRelopNode(tokens);
-                if (OperandNode.parseOperandNode(tokens) != null) {
-                    operandNodeRight = OperandNode.parseOperandNode(tokens);
-                    return new ExpressionRelopNode(operandNodeLeft, relopNode, operandNodeRight);
-                }
-            }
-        }
-        
-        throw new SyntaxErrorException("Invalid parameter node", 0, "expressoinrelop.java");
+        RelopNode relopNode = RelopNode.parseRelopNode(tokens);
+        OperandNode operandNodeRight = OperandNode.parseOperandNode(tokens);
+
+        return new ExpressionRelopNode(operandNodeLeft, relopNode, operandNodeRight);
+
+
     } 
 
     @Override

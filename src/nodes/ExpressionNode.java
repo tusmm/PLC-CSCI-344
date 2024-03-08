@@ -27,11 +27,11 @@ public interface ExpressionNode extends JottTree {
         nextToken = tokens.get(0);
 
         if(nextToken.getTokenType() == TokenType.REL_OP) {
-            return ExpressionRelopNode.parseExpressionRelopNode(tokens);
+            return ExpressionRelopNode.parseExpressionRelopNode(tokens, opNode1);
         }
 
         if(nextToken.getTokenType() == TokenType.MATH_OP) {
-            return ExpressionMathopNode.parseExpressionMathopNode(tokens);
+            return ExpressionMathopNode.parseExpressionMathopNode(tokens, opNode1);
         }
 
         return opNode1;
