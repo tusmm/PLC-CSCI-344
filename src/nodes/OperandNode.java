@@ -25,7 +25,7 @@ public interface OperandNode extends ExpressionNode {
         }
         if(token.getToken().startsWith("-")) {
             tokens.remove(0);
-            return NumberNode.parseNumberNode(tokens);
+            return NumberNode.parseNumberNode(tokens, true);
         }
 
         throw new SyntaxErrorException("Unexpected token: " + token.getToken(), token.getLineNum(), token.getFilename());
