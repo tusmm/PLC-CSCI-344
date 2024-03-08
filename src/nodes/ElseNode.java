@@ -23,7 +23,7 @@ public class ElseNode implements JottTree {
             return null;
         }
         Token tossToken = tokens.get(0);
-        if (tossToken.getToken() != "Else") { // no else
+        if (!tossToken.getToken().equals("Else")) { // no else
             return new ElseNode();
         } // token will definitely be else
         tokens.remove(0); // pop Else

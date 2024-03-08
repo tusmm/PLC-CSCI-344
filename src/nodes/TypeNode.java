@@ -10,7 +10,7 @@ import java.util.List;
 public class TypeNode implements JottTree {
 
     private Token token;
-    private static ArrayList<String> validTypes = new ArrayList(List.of(new String[]{"Double", "Integer", "String", "Boolean"}));
+    public static ArrayList<String> validTypes = new ArrayList(List.of(new String[]{"Double", "Integer", "String", "Boolean"}));
 
     public TypeNode(Token token) {
         this.token = token;

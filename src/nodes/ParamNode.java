@@ -31,30 +31,26 @@ public class ParamNode implements OperandNode {
             return new ParamNode();
         }
 
-        if (ExpressionNode.parseExpressionNode(tokens) != null) {
-            ExpressionNode expressionNode = ExpressionNode.parseExpressionNode(tokens);
+        ExpressionNode expressionNode = ExpressionNode.parseExpressionNode(tokens);
 
-            // begin reading in paramTNodes
-            ArrayList<ParamsTNode> paramTNodes = new ArrayList<ParamsTNode>();
-            token = tokens.get(0);
-            while (token.getTokenType() != TokenType.R_BRACKET) {
-                if (tokens.size() == 0) {
-                    System.out.println("Handle error");
-                    return null;
-                }
-                paramTNodes.add(ParamsTNode.parseParamsTNode(tokens));
-                token = tokens.get(0);
+        // begin reading in paramTNodes
+        ArrayList<ParamsTNode> paramTNodes = new ArrayList<ParamsTNode>();
+        token = tokens.get(0);
+        while (token.getTokenType() != TokenType.R_BRACKET) {
+            if (tokens.size() == 0) {
+                System.out.println("Handle error");
+                return null;
             }
-            
-            return new ParamNode(expressionNode, paramTNodes);
+            paramTNodes.add(ParamsTNode.parseParamsTNode(tokens));
+            token = tokens.get(0);
         }
 
-        // problems persist and nothing was returned, return null
-        throw new SyntaxErrorException("Invalid parameter node", token.getLineNum(), token.getFilename());
+        return new ParamNode(expressionNode, paramTNodes);
+
     }
 
     private static boolean isEmptyTokensList(ArrayList<Token> tokens) {
-        return tokens.size() != 0;
+        return tokens.size() == 0;
     }
 
     @Override

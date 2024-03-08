@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import provided.JottTree;
 import provided.Token;
+import provided.TokenType;
 
 public class VariableDeclarationNode implements JottTree {
     private TypeNode type;
@@ -23,12 +24,21 @@ public class VariableDeclarationNode implements JottTree {
         TypeNode type = TypeNode.parseTypeNode(tokens);
         IDNode id = IDNode.parseIDNode(tokens);
 
+        if (tokens.isEmpty()) {
+            throw new SyntaxErrorException("No tokens to parse", 0, "VariableDeclarationNode.java");
+        }
+        Token semicolon = tokens.get(0);
+        if(semicolon.getTokenType() != TokenType.SEMICOLON) {
+            throw new SyntaxErrorException("Expected semicolon but got: " + semicolon.getToken(), semicolon.getLineNum(), semicolon.getFilename());
+        }
+        tokens.remove(0);
+
         return new VariableDeclarationNode(type, id);
     }
 
     @Override
     public String convertToJott() {
-        return type.convertToJott() + " " + id.convertToJott();
+        return type.convertToJott() + " " + id.convertToJott() + ";";
     }
 
     @Override

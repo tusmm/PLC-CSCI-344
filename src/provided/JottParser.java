@@ -27,6 +27,7 @@ public class JottParser {
            root = ProgramNode.parseProgramNode(tokens);
        } catch(SyntaxErrorException e) {
            System.err.println(e.getMessage());
+           e.printStackTrace();
            return null;
        }
 

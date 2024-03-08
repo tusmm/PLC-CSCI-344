@@ -2,6 +2,7 @@ package nodes;
 
 import provided.JottTree;
 import provided.Token;
+import provided.TokenType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,10 @@ public class BodyNode implements JottTree {
         ArrayList<BodyStatementNode> bodyStatments = new ArrayList<>();
 
         while(!nextToken.getToken().equals("Return")) {
+
+            if(nextToken.getTokenType() == TokenType.R_BRACE) {
+                break;
+            }
 
             BodyStatementNode bodyStatement = BodyStatementNode.parseBodyStatementNode(tokens);
             bodyStatments.add(bodyStatement);

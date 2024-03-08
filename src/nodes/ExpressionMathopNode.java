@@ -17,25 +17,16 @@ public class ExpressionMathopNode implements ExpressionNode {
         this.operandNodeRight = operandNodeRight;
     }
 
-    public static ExpressionMathopNode parseExpressionMathopNode(ArrayList<Token> tokens) throws SyntaxErrorException {
+    public static ExpressionMathopNode parseExpressionMathopNode(ArrayList<Token> tokens, OperandNode operandNodeLeft) throws SyntaxErrorException {
         if (tokens.size() == 0) {
             throw new SyntaxErrorException("empty list", 0, "ExpressionRelopNode.java");
         }
-        OperandNode operandNodeLeft;
-        MathopNode mathopNode;
-        OperandNode operandNodeRight;
-        if (OperandNode.parseOperandNode(tokens) != null) {
-            operandNodeLeft = OperandNode.parseOperandNode(tokens);
-            if (MathopNode.parseRelopNode(tokens) != null) {
-                mathopNode = MathopNode.parseRelopNode(tokens);
-                if (OperandNode.parseOperandNode(tokens) != null) {
-                    operandNodeRight = OperandNode.parseOperandNode(tokens);
-                    return new ExpressionMathopNode(operandNodeLeft, mathopNode, operandNodeRight);
-                }
-            }
-        }
-        
-        throw new SyntaxErrorException("Invalid parameter node", 0, "expressionmathop.java");
+
+        MathopNode mathopNode = MathopNode.parseMathOpNode(tokens);
+        OperandNode operandNodeRight = OperandNode.parseOperandNode(tokens);
+
+        return new ExpressionMathopNode(operandNodeLeft, mathopNode, operandNodeRight);
+
     } 
 
     @Override

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import provided.JottTree;
 import provided.Token;
+import provided.TokenType;
 
 public interface BodyStatementNode extends JottTree {
 
@@ -16,20 +17,33 @@ public interface BodyStatementNode extends JottTree {
             throw new SyntaxErrorException(message, lineNum, filename);
         }
         Token token = tokens.get(0);
-        if (IfStatementNode.parseIfStatementNode(tokens) != null) {
+
+        if(token.getToken().equals("If")) {
             return IfStatementNode.parseIfStatementNode(tokens);
-        } else if (WhileLoopNode.parseWhileLoopNode(tokens) != null) {
-            return WhileLoopNode.parseWhileLoopNode(tokens);
-        } else if (AssignmentNode.parseAssignmentNode(tokens) != null) {
-            return AssignmentNode.parseAssignmentNode(tokens);
-        } else if (FunctionCallNode.parseFunctionCallNode(tokens) != null) {
-            return FunctionCallNode.parseFunctionCallNode(tokens);
-        } else {
-            String message = "Invalid Body Statement"; 
-            String filename = token.getFilename(); 
-            int lineNum = token.getLineNum(); 
-            throw new SyntaxErrorException(message, lineNum, filename);
         }
+        if (token.getToken().equals("While")) {
+            return WhileLoopNode.parseWhileLoopNode(tokens);
+        }
+        if(token.getTokenType() == TokenType.FC_HEADER) {
+
+            FunctionCallNode fcn = FunctionCallNode.parseFunctionCallNode(tokens);
+            if (tokens.size() == 0) {
+                String message = "No tokens to parse";
+                String filename = "BoolNode.java";
+                int lineNum = 0;
+                throw new SyntaxErrorException(message, lineNum, filename);
+            }
+
+            Token nextToken = tokens.get(0);
+            if (nextToken.getTokenType() != TokenType.SEMICOLON) {
+                throw new SyntaxErrorException("Missing semicolon after function call", nextToken.getLineNum(), nextToken.getFilename());
+            }
+
+            tokens.remove(0);
+            fcn.setHasSemiColon(true);
+            return fcn;
+        }
+        return AssignmentNode.parseAssignmentNode(tokens);
 
     }
 

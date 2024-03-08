@@ -15,13 +15,18 @@ public interface OperandNode extends ExpressionNode {
         Token token = tokens.get(0);
         if (token.getTokenType() == TokenType.ID_KEYWORD) {
             return IDNode.parseIDNode(tokens);
-        } else if (token.getTokenType() == TokenType.NUMBER) {
-            return NumberNode.parseNumberNode(tokens);
-        } else if (token.getTokenType() == TokenType.FC_HEADER) {
-            return FunctionCallNode.parseFunctionCallNode(tokens);
-        } else {
-            System.out.println("Handle error here");
-            return null;
         }
+        if (token.getTokenType() == TokenType.NUMBER) {
+            return NumberNode.parseNumberNode(tokens);
+        }
+        if (token.getTokenType() == TokenType.FC_HEADER) {
+            return FunctionCallNode.parseFunctionCallNode(tokens);
+        }
+        if(token.getToken().startsWith("-")) {
+            tokens.remove(0);
+            return NumberNode.parseNumberNode(tokens);
+        }
+
+        throw new SyntaxErrorException("Unexpected token: " + token.getToken(), token.getLineNum(), token.getFilename());
     }
 }
