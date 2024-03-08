@@ -7,7 +7,7 @@ import provided.*;
 // this is going to assume a lot of things work bc not everything is on main yet
 public class IfStatementNode implements BodyStatementNode {
 
-    //< if_stmt > -> If [ < expr >]{ < body >} < elseif_lst >? < else >
+    // < if_stmt > -> If [ < expr >]{ < body >} < elseif_lst >? < else >
 
     ExpressionNode expr;
     BodyNode body;
@@ -17,25 +17,27 @@ public class IfStatementNode implements BodyStatementNode {
     public IfStatementNode(ExpressionNode expr, BodyNode body, ArrayList<ElseIfNode> elseif_lst, ElseNode elseNode) {
         this.expr = expr;
         this.body = body;
-        this.elseif_lst = elseif_lst;   // may be empty
-        this.elseNode = elseNode;   // may be null
+        this.elseif_lst = elseif_lst; // may be empty
+        this.elseNode = elseNode; // may be null
     }
 
     public static IfStatementNode parseIfStatementNode(ArrayList<Token> tokens) throws SyntaxErrorException {
         // check if token list is empty
         if (tokens.get(0).getTokenType() == TokenType.EOF) {
-            String message = "No tokens to parse"; 
+            String message = "Reached EOF while parsing if statement";
             throw new SyntaxErrorException(message, tokens.get(0).getLineNum(), tokens.get(0).getFilename());
         }
 
         Token tossToken = tokens.get(0);
         if (tossToken.getTokenType() != TokenType.ID_KEYWORD) {
             // handle error: not an id
-            throw new SyntaxErrorException("not an id", tossToken.getLineNum(), tossToken.getFilename());
+            throw new SyntaxErrorException("Expected id but got " + tossToken.getToken(), tossToken.getLineNum(),
+                    tossToken.getFilename());
             // return null;
         }
         if (!tossToken.getToken().equals("If")) {
-            throw new SyntaxErrorException("expected 'If'", tossToken.getLineNum(), tossToken.getFilename());
+            throw new SyntaxErrorException("Expected 'If' but got " + tossToken.getToken(), tossToken.getLineNum(),
+                    tossToken.getFilename());
             // handle error: not an if
             // return null;
         }
@@ -43,13 +45,14 @@ public class IfStatementNode implements BodyStatementNode {
 
         if (tokens.get(0).getTokenType() == TokenType.EOF) {
             // handle error: missing left bracket
-            throw new SyntaxErrorException("missing left bracket", tossToken.getLineNum(), tossToken.getFilename());
+            throw new SyntaxErrorException("Missing left bracket", tossToken.getLineNum(), tossToken.getFilename());
             // return null;
         }
         tossToken = tokens.get(0);
         if (tossToken.getTokenType() != TokenType.L_BRACKET) {
             // handle error: expected left bracket
-            throw new SyntaxErrorException("expected [", tossToken.getLineNum(), tossToken.getFilename());
+            throw new SyntaxErrorException("Expected [ but got " + tossToken.getToken(), tossToken.getLineNum(),
+                    tossToken.getFilename());
             // return null;
         }
         tokens.remove(0); // pop [
@@ -58,26 +61,28 @@ public class IfStatementNode implements BodyStatementNode {
 
         if (tokens.get(0).getTokenType() == TokenType.EOF) {
             // handle error: missing right brace
-            throw new SyntaxErrorException("missing right brace", tossToken.getLineNum(), tossToken.getFilename());
+            throw new SyntaxErrorException("Missing right brace", tossToken.getLineNum(), tossToken.getFilename());
             // return null;
         }
         tossToken = tokens.get(0);
         if (tossToken.getTokenType() != TokenType.R_BRACKET) {
             // handle error: expected right brace
-            throw new SyntaxErrorException("expected ]", tossToken.getLineNum(), tossToken.getFilename());
+            throw new SyntaxErrorException("Expected ] but got " + tossToken.getToken(), tossToken.getLineNum(),
+                    tossToken.getFilename());
             // return null;
         }
         tokens.remove(0); // pop ]
 
         if (tokens.get(0).getTokenType() == TokenType.EOF) {
             // handle error: missing left brace
-            throw new SyntaxErrorException("missing left brace", tossToken.getLineNum(), tossToken.getFilename());
+            throw new SyntaxErrorException("Missing left brace", tossToken.getLineNum(), tossToken.getFilename());
             // return null;
         }
         tossToken = tokens.get(0);
         if (tossToken.getTokenType() != TokenType.L_BRACE) {
             // handle error: expected left brace
-            throw new SyntaxErrorException("expected {", tossToken.getLineNum(), tossToken.getFilename());
+            throw new SyntaxErrorException("Expected { but got " + tossToken.getToken(), tossToken.getLineNum(),
+                    tossToken.getFilename());
             // return null;
         }
         tokens.remove(0); // pop {
@@ -86,13 +91,14 @@ public class IfStatementNode implements BodyStatementNode {
 
         if (tokens.get(0).getTokenType() == TokenType.EOF) {
             // handle error: missing right brace
-            throw new SyntaxErrorException("missing right brace", tossToken.getLineNum(), tossToken.getFilename());
+            throw new SyntaxErrorException("Missing right brace", tossToken.getLineNum(), tossToken.getFilename());
             // return null;
         }
         tossToken = tokens.get(0);
         if (tossToken.getTokenType() != TokenType.R_BRACE) {
             // handle error: expected left brace
-            throw new SyntaxErrorException("expected }", tossToken.getLineNum(), tossToken.getFilename());
+            throw new SyntaxErrorException("Expected } but got " + tossToken.getToken(), tossToken.getLineNum(),
+                    tossToken.getFilename());
             // return null;
         }
         tokens.remove(0); // pop }
@@ -102,14 +108,14 @@ public class IfStatementNode implements BodyStatementNode {
 
         while (tossToken.getToken().equals("Elseif")) { //
 
-            elseIfNodes.add( ElseIfNode.parseElseIfNode(tokens) );
-            
+            elseIfNodes.add(ElseIfNode.parseElseIfNode(tokens));
+
             // check if token list is empty
             if (tokens.get(0).getTokenType() == TokenType.EOF) {
-                String message = "No tokens to parse"; 
+                String message = "Reached EOF while parsing if statement";
                 throw new SyntaxErrorException(message, tokens.get(0).getLineNum(), tokens.get(0).getFilename());
             }
-            
+
             tossToken = tokens.get(0);
         }
 
@@ -121,8 +127,8 @@ public class IfStatementNode implements BodyStatementNode {
 
     @Override
     public String convertToJott() {
-        
-        String returnString =  "If[" + expr.convertToJott() + "]{" + body.convertToJott() + "}";
+
+        String returnString = "If[" + expr.convertToJott() + "]{" + body.convertToJott() + "}";
         for (int i = 0; i < elseif_lst.size(); i++) {
             returnString += elseif_lst.get(i).convertToJott();
         }
@@ -155,9 +161,4 @@ public class IfStatementNode implements BodyStatementNode {
         throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
     }
 
-
-
-
-
-    
 }

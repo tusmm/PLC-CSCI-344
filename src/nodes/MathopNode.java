@@ -4,18 +4,18 @@ import java.util.ArrayList;
 
 import provided.*;
 
-public class MathopNode implements JottTree{
+public class MathopNode implements JottTree {
 
     private Token token;
 
     public MathopNode(Token token) {
         this.token = token;
     }
-    
+
     public static MathopNode parseMathOpNode(ArrayList<Token> tokens) throws SyntaxErrorException {
         // check if token list is empty
         if (tokens.get(0).getTokenType() == TokenType.EOF) {
-            String message = "No tokens to parse"; 
+            String message = "Reached EOF while parsing mathop";
             throw new SyntaxErrorException(message, tokens.get(0).getLineNum(), tokens.get(0).getFilename());
         }
 
@@ -26,9 +26,9 @@ public class MathopNode implements JottTree{
             return new MathopNode(mathop);
         }
 
-        throw new SyntaxErrorException("expected mathop but got: " + mathop.getToken(), mathop.getLineNum(), mathop.getFilename());
+        throw new SyntaxErrorException("expected mathop but got: " + mathop.getToken(), mathop.getLineNum(),
+                mathop.getFilename());
     }
-
 
     @Override
     public String convertToJott() {
@@ -58,5 +58,5 @@ public class MathopNode implements JottTree{
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
     }
-    
+
 }

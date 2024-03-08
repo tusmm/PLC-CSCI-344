@@ -14,13 +14,14 @@ public class ElseNode implements JottTree {
         this.body = body;
     }
 
-    public ElseNode() {}
+    public ElseNode() {
+    }
 
     public static ElseNode parseElseNode(ArrayList<Token> tokens) throws SyntaxErrorException {
 
         // check if token list is empty
         if (tokens.get(0).getTokenType() == TokenType.EOF) {
-            String message = "No tokens to parse"; 
+            String message = "Reached EOF while parsing else";
             throw new SyntaxErrorException(message, tokens.get(0).getLineNum(), tokens.get(0).getFilename());
         }
         Token tossToken = tokens.get(0);
@@ -29,15 +30,16 @@ public class ElseNode implements JottTree {
         } // token will definitely be else
         tokens.remove(0); // pop Else
 
-        if (tokens.size() == 0) {
+        if (tokens.get(0).getTokenType() == TokenType.EOF) {
             // handle error: missing left brace
-            throw new SyntaxErrorException("missing left brace", tossToken.getLineNum(), tossToken.getFilename());
+            throw new SyntaxErrorException("Missing left brace", tossToken.getLineNum(), tossToken.getFilename());
             // return null;
         }
         tossToken = tokens.get(0);
         if (tossToken.getTokenType() != TokenType.L_BRACE) {
             // handle error: expected left brace
-            throw new SyntaxErrorException("expected [", tossToken.getLineNum(), tossToken.getFilename());
+            throw new SyntaxErrorException("Expected [ but got " + tossToken.getToken(), tossToken.getLineNum(),
+                    tossToken.getFilename());
             // return null;
         }
         tokens.remove(0); // pop {
@@ -46,13 +48,14 @@ public class ElseNode implements JottTree {
 
         if (tokens.get(0).getTokenType() == TokenType.EOF) {
             // handle error: missing right brace
-            throw new SyntaxErrorException("missing right brace", tossToken.getLineNum(), tossToken.getFilename());
+            throw new SyntaxErrorException("Missing right brace", tossToken.getLineNum(), tossToken.getFilename());
             // return null;
         }
         tossToken = tokens.get(0);
         if (tossToken.getTokenType() != TokenType.R_BRACE) {
             // handle error: expected right brace
-            throw new SyntaxErrorException("expected ]", tossToken.getLineNum(), tossToken.getFilename());
+            throw new SyntaxErrorException("Expected ] but got " + tossToken.getToken(), tossToken.getLineNum(),
+                    tossToken.getFilename());
             // return null;
         }
         tokens.remove(0); // pop }
@@ -63,7 +66,7 @@ public class ElseNode implements JottTree {
 
     @Override
     public String convertToJott() {
-        
+
         if (body == null) {
             return "";
         } else {
@@ -94,11 +97,5 @@ public class ElseNode implements JottTree {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
     }
-        
-    
-
-
-
-
 
 }

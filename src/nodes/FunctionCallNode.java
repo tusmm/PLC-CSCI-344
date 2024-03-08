@@ -23,49 +23,43 @@ public class FunctionCallNode implements OperandNode, BodyStatementNode {
     public static FunctionCallNode parseFunctionCallNode(ArrayList<Token> tokens) throws SyntaxErrorException {
         // check if token list is empty
         if (tokens.get(0).getTokenType() == TokenType.EOF) {
-            String message = "No tokens to parse"; 
+            String message = "Reached EOF while parsing function call";
             throw new SyntaxErrorException(message, tokens.get(0).getLineNum(), tokens.get(0).getFilename());
         }
-        
+
         if (tokens.get(0).getTokenType() != TokenType.FC_HEADER) {
-            System.out.println("Handle error");
-            return null;
+            throw new SyntaxErrorException("Expected :: but got: " + tokens.get(0).getToken(),
+                    tokens.get(0).getLineNum(), tokens.get(0).getFilename());
         }
-        
+
         tokens.remove(0); // dequeue the FC_Header
         IDNode id = IDNode.parseIDNode(tokens);
-        if (id == null) {
-            return null;
+
+        if (tokens.get(0).getTokenType() == TokenType.EOF) {
+            String message = "Missing left bracket";
+            throw new SyntaxErrorException(message, tokens.get(0).getLineNum(), tokens.get(0).getFilename());
         }
-        
-        if (isEmptyTokensList(tokens)) {
-            System.out.println("Handle exception here");
-            return null;
-        } 
         if (tokens.get(0).getTokenType() != TokenType.L_BRACKET) {
-            System.out.println("Handle error");
-            return null;
+            throw new SyntaxErrorException("Expected [ but got: " + tokens.get(0).getToken(),
+                    tokens.get(0).getLineNum(), tokens.get(0).getFilename());
         }
-        
+
         tokens.remove(0); // remove left bracket
 
         ParamNode pm = ParamNode.parseParamNode(tokens);
-        if (pm == null) {
-            return null;
+
+        if (tokens.get(0).getTokenType() == TokenType.EOF) {
+            String message = "Missing right bracket";
+            throw new SyntaxErrorException(message, tokens.get(0).getLineNum(), tokens.get(0).getFilename());
         }
-        
-        if (isEmptyTokensList(tokens)) {
-            System.out.println("Handle exception here");
-            return null;
-        } 
         if (tokens.get(0).getTokenType() != TokenType.R_BRACKET) {
-            System.out.println("Handle error");
-            return null;
+            throw new SyntaxErrorException("Expected ] but got: " + tokens.get(0).getToken(),
+                    tokens.get(0).getLineNum(), tokens.get(0).getFilename());
         }
-        
+
         tokens.remove(0); // remove right bracket
 
-       return new FunctionCallNode(id, pm); 
+        return new FunctionCallNode(id, pm);
     }
 
     @Override
@@ -73,31 +67,27 @@ public class FunctionCallNode implements OperandNode, BodyStatementNode {
         return "::" + id.convertToJott() + "[" + params.convertToJott() + "]" + (hasSemiColon ? ";" : "");
     }
 
-    private static boolean isEmptyTokensList(ArrayList<Token> tokens) {
-        return tokens.size() == 0;
+    @Override
+    public String convertToJava(String className) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'convertToJava'");
     }
 
-	@Override
-	public String convertToJava(String className) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'convertToJava'");
-	}
+    @Override
+    public String convertToC() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'convertToC'");
+    }
 
-	@Override
-	public String convertToC() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'convertToC'");
-	}
+    @Override
+    public String convertToPython() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'convertToPython'");
+    }
 
-	@Override
-	public String convertToPython() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'convertToPython'");
-	}
-
-	@Override
-	public boolean validateTree() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
-	}
+    @Override
+    public boolean validateTree() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
+    }
 }

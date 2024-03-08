@@ -9,19 +9,20 @@ public class ExpressionMathopNode implements ExpressionNode {
     OperandNode operandNodeLeft;
     MathopNode mathopNode;
     OperandNode operandNodeRight;
-     
-    public ExpressionMathopNode(OperandNode operandNodeLeft, 
-                            MathopNode mathopNode, 
-                            OperandNode operandNodeRight) {
+
+    public ExpressionMathopNode(OperandNode operandNodeLeft,
+            MathopNode mathopNode,
+            OperandNode operandNodeRight) {
         this.operandNodeLeft = operandNodeLeft;
         this.mathopNode = mathopNode;
         this.operandNodeRight = operandNodeRight;
     }
 
-    public static ExpressionMathopNode parseExpressionMathopNode(ArrayList<Token> tokens, OperandNode operandNodeLeft) throws SyntaxErrorException {
+    public static ExpressionMathopNode parseExpressionMathopNode(ArrayList<Token> tokens, OperandNode operandNodeLeft)
+            throws SyntaxErrorException {
         // check if token list is empty
         if (tokens.get(0).getTokenType() == TokenType.EOF) {
-            String message = "No tokens to parse"; 
+            String message = "Reached EOF while parsing mathop expression";
             throw new SyntaxErrorException(message, tokens.get(0).getLineNum(), tokens.get(0).getFilename());
         }
 
@@ -30,12 +31,12 @@ public class ExpressionMathopNode implements ExpressionNode {
 
         return new ExpressionMathopNode(operandNodeLeft, mathopNode, operandNodeRight);
 
-    } 
+    }
 
     @Override
     public String convertToJott() {
-        return operandNodeLeft.convertToJott() + mathopNode.convertToJott() + operandNodeRight.convertToJott(); 
-    } 
+        return operandNodeLeft.convertToJott() + mathopNode.convertToJott() + operandNodeRight.convertToJott();
+    }
 
     @Override
     public String convertToJava(String className) {
@@ -61,5 +62,4 @@ public class ExpressionMathopNode implements ExpressionNode {
         throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
     }
 
-    
 }
