@@ -10,18 +10,19 @@ public class ExpressionRelopNode implements ExpressionNode {
     RelopNode relopNode;
     OperandNode operandNodeRight;
 
-    public ExpressionRelopNode(OperandNode operandNodeLeft, 
-                            RelopNode relopNode, 
-                            OperandNode operandNodeRight) {
+    public ExpressionRelopNode(OperandNode operandNodeLeft,
+            RelopNode relopNode,
+            OperandNode operandNodeRight) {
         this.operandNodeLeft = operandNodeLeft;
         this.relopNode = relopNode;
         this.operandNodeRight = operandNodeRight;
     }
 
-    public static ExpressionRelopNode parseExpressionRelopNode(ArrayList<Token> tokens, OperandNode operandNodeLeft) throws SyntaxErrorException {
+    public static ExpressionRelopNode parseExpressionRelopNode(ArrayList<Token> tokens, OperandNode operandNodeLeft)
+            throws SyntaxErrorException {
         // check if token list is empty
         if (tokens.get(0).getTokenType() == TokenType.EOF) {
-            String message = "Reached EOF while parsing relop expression"; 
+            String message = "Reached EOF while parsing relop expression";
             throw new SyntaxErrorException(message, tokens.get(0).getLineNum(), tokens.get(0).getFilename());
         }
         RelopNode relopNode = RelopNode.parseRelopNode(tokens);
@@ -29,8 +30,7 @@ public class ExpressionRelopNode implements ExpressionNode {
 
         return new ExpressionRelopNode(operandNodeLeft, relopNode, operandNodeRight);
 
-
-    } 
+    }
 
     @Override
     public String convertToJott() {
@@ -60,5 +60,5 @@ public class ExpressionRelopNode implements ExpressionNode {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
     }
-    
+
 }

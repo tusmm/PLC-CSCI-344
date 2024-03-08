@@ -23,12 +23,13 @@ public class FunctionCallNode implements OperandNode, BodyStatementNode {
     public static FunctionCallNode parseFunctionCallNode(ArrayList<Token> tokens) throws SyntaxErrorException {
         // check if token list is empty
         if (tokens.get(0).getTokenType() == TokenType.EOF) {
-            String message = "Reached EOF while parsing function call"; 
+            String message = "Reached EOF while parsing function call";
             throw new SyntaxErrorException(message, tokens.get(0).getLineNum(), tokens.get(0).getFilename());
         }
 
         if (tokens.get(0).getTokenType() != TokenType.FC_HEADER) {
-            throw new SyntaxErrorException("Expected :: but got: " + tokens.get(0).getToken(), tokens.get(0).getLineNum(), tokens.get(0).getFilename());
+            throw new SyntaxErrorException("Expected :: but got: " + tokens.get(0).getToken(),
+                    tokens.get(0).getLineNum(), tokens.get(0).getFilename());
         }
 
         tokens.remove(0); // dequeue the FC_Header
@@ -39,7 +40,8 @@ public class FunctionCallNode implements OperandNode, BodyStatementNode {
             throw new SyntaxErrorException(message, tokens.get(0).getLineNum(), tokens.get(0).getFilename());
         }
         if (tokens.get(0).getTokenType() != TokenType.L_BRACKET) {
-            throw new SyntaxErrorException("Expected [ but got: " + tokens.get(0).getToken(), tokens.get(0).getLineNum(), tokens.get(0).getFilename());
+            throw new SyntaxErrorException("Expected [ but got: " + tokens.get(0).getToken(),
+                    tokens.get(0).getLineNum(), tokens.get(0).getFilename());
         }
 
         tokens.remove(0); // remove left bracket
@@ -51,7 +53,8 @@ public class FunctionCallNode implements OperandNode, BodyStatementNode {
             throw new SyntaxErrorException(message, tokens.get(0).getLineNum(), tokens.get(0).getFilename());
         }
         if (tokens.get(0).getTokenType() != TokenType.R_BRACKET) {
-            throw new SyntaxErrorException("Expected ] but got: " + tokens.get(0).getToken(), tokens.get(0).getLineNum(), tokens.get(0).getFilename());
+            throw new SyntaxErrorException("Expected ] but got: " + tokens.get(0).getToken(),
+                    tokens.get(0).getLineNum(), tokens.get(0).getFilename());
         }
 
         tokens.remove(0); // remove right bracket

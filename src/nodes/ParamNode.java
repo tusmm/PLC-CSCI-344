@@ -16,16 +16,17 @@ public class ParamNode implements OperandNode {
     }
 
     // empty parameter function call
-    public ParamNode() { }
+    public ParamNode() {
+    }
 
     // < params > -> < expr > < params_t >? | epsilon
     public static ParamNode parseParamNode(ArrayList<Token> tokens) throws SyntaxErrorException {
         // check if token list is empty
         if (tokens.get(0).getTokenType() == TokenType.EOF) {
-            String message = "Reached EOF while parsing parameter"; 
+            String message = "Reached EOF while parsing parameter";
             throw new SyntaxErrorException(message, tokens.get(0).getLineNum(), tokens.get(0).getFilename());
         }
-        
+
         // checks the front token to see if the parameter list is empty,
         // returns an empty constructor if so
         Token token = tokens.get(0);
@@ -41,7 +42,7 @@ public class ParamNode implements OperandNode {
         while (token.getTokenType() != TokenType.R_BRACKET) {
             // check if token list is empty
             if (tokens.get(0).getTokenType() == TokenType.EOF) {
-                String message = "Expected params, got EOF"; 
+                String message = "Expected params, got EOF";
                 throw new SyntaxErrorException(message, tokens.get(0).getLineNum(), tokens.get(0).getFilename());
             }
             paramTNodes.add(ParamsTNode.parseParamsTNode(tokens));

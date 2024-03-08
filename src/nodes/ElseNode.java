@@ -14,13 +14,14 @@ public class ElseNode implements JottTree {
         this.body = body;
     }
 
-    public ElseNode() {}
+    public ElseNode() {
+    }
 
     public static ElseNode parseElseNode(ArrayList<Token> tokens) throws SyntaxErrorException {
 
         // check if token list is empty
         if (tokens.get(0).getTokenType() == TokenType.EOF) {
-            String message = "Reached EOF while parsing else"; 
+            String message = "Reached EOF while parsing else";
             throw new SyntaxErrorException(message, tokens.get(0).getLineNum(), tokens.get(0).getFilename());
         }
         Token tossToken = tokens.get(0);
@@ -37,7 +38,8 @@ public class ElseNode implements JottTree {
         tossToken = tokens.get(0);
         if (tossToken.getTokenType() != TokenType.L_BRACE) {
             // handle error: expected left brace
-            throw new SyntaxErrorException("Expected [ but got " + tossToken.getToken(), tossToken.getLineNum(), tossToken.getFilename());
+            throw new SyntaxErrorException("Expected [ but got " + tossToken.getToken(), tossToken.getLineNum(),
+                    tossToken.getFilename());
             // return null;
         }
         tokens.remove(0); // pop {
@@ -52,7 +54,8 @@ public class ElseNode implements JottTree {
         tossToken = tokens.get(0);
         if (tossToken.getTokenType() != TokenType.R_BRACE) {
             // handle error: expected right brace
-            throw new SyntaxErrorException("Expected ] but got " + tossToken.getToken(), tossToken.getLineNum(), tossToken.getFilename());
+            throw new SyntaxErrorException("Expected ] but got " + tossToken.getToken(), tossToken.getLineNum(),
+                    tossToken.getFilename());
             // return null;
         }
         tokens.remove(0); // pop }
@@ -63,7 +66,7 @@ public class ElseNode implements JottTree {
 
     @Override
     public String convertToJott() {
-        
+
         if (body == null) {
             return "";
         } else {
@@ -94,11 +97,5 @@ public class ElseNode implements JottTree {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
     }
-        
-    
-
-
-
-
 
 }

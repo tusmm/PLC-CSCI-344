@@ -19,14 +19,15 @@ public class FunctionReturnNode implements JottTree {
     public static FunctionReturnNode parseFunctionReturnNode(ArrayList<Token> tokens) throws SyntaxErrorException {
         // check if token list is empty
         if (tokens.get(0).getTokenType() == TokenType.EOF) {
-            String message = "Reached EOF while parsing function return"; 
+            String message = "Reached EOF while parsing function return";
             throw new SyntaxErrorException(message, tokens.get(0).getLineNum(), tokens.get(0).getFilename());
         }
 
         Token nextToken = tokens.get(0);
 
         if (nextToken.getTokenType() != TokenType.ID_KEYWORD) {
-            throw new SyntaxErrorException("Expected return type but got: " + nextToken.getToken(), nextToken.getLineNum(), nextToken.getFilename());
+            throw new SyntaxErrorException("Expected return type but got: " + nextToken.getToken(),
+                    nextToken.getLineNum(), nextToken.getFilename());
         }
 
         if (nextToken.getToken().equals("Void")) {
@@ -42,7 +43,7 @@ public class FunctionReturnNode implements JottTree {
 
     @Override
     public String convertToJott() {
-        if(isVoid) {
+        if (isVoid) {
             return "Void";
         }
 

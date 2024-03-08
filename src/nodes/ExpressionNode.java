@@ -10,12 +10,12 @@ public interface ExpressionNode extends JottTree {
     public static ExpressionNode parseExpressionNode(ArrayList<Token> tokens) throws SyntaxErrorException {
         // check if token list is empty
         if (tokens.get(0).getTokenType() == TokenType.EOF) {
-            String message = "Reached EOF while parsing expression"; 
+            String message = "Reached EOF while parsing expression";
             throw new SyntaxErrorException(message, tokens.get(0).getLineNum(), tokens.get(0).getFilename());
         }
         Token nextToken = tokens.get(0);
 
-        if(nextToken.getTokenType() == TokenType.STRING) {
+        if (nextToken.getTokenType() == TokenType.STRING) {
             return StringLiteralNode.parseStringLiteralNode(tokens);
         }
         if (nextToken.getToken().equals("True") || nextToken.getToken().equals("False")) {
@@ -28,11 +28,11 @@ public interface ExpressionNode extends JottTree {
         }
         nextToken = tokens.get(0);
 
-        if(nextToken.getTokenType() == TokenType.REL_OP) {
+        if (nextToken.getTokenType() == TokenType.REL_OP) {
             return ExpressionRelopNode.parseExpressionRelopNode(tokens, opNode1);
         }
 
-        if(nextToken.getTokenType() == TokenType.MATH_OP) {
+        if (nextToken.getTokenType() == TokenType.MATH_OP) {
             return ExpressionMathopNode.parseExpressionMathopNode(tokens, opNode1);
         }
 

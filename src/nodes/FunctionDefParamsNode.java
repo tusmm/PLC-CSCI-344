@@ -16,34 +16,37 @@ public class FunctionDefParamsNode implements JottTree {
 
     boolean isEmpty;
 
-    public FunctionDefParamsNode(IDNode id, TypeNode type, List<FunctionDefParamsTypeNode> functionDefParamsTypes, boolean isEmpty) {
+    public FunctionDefParamsNode(IDNode id, TypeNode type, List<FunctionDefParamsTypeNode> functionDefParamsTypes,
+            boolean isEmpty) {
         this.id = id;
         this.type = type;
         this.functionDefParamsTypes = functionDefParamsTypes;
         this.isEmpty = isEmpty;
     }
 
-    public static FunctionDefParamsNode parseFunctionDefParamsNode(ArrayList<Token> tokens) throws SyntaxErrorException {
+    public static FunctionDefParamsNode parseFunctionDefParamsNode(ArrayList<Token> tokens)
+            throws SyntaxErrorException {
 
-        FunctionDefParamsNode emptyFunctionDefParamsNode =
-                new FunctionDefParamsNode(null, null, null, true);
+        FunctionDefParamsNode emptyFunctionDefParamsNode = new FunctionDefParamsNode(null, null, null, true);
 
         // check if token list is empty
         if (tokens.get(0).getTokenType() == TokenType.EOF) {
-            String message = "No tokens to parse"; 
+            String message = "No tokens to parse";
             throw new SyntaxErrorException(message, tokens.get(0).getLineNum(), tokens.get(0).getFilename());
         }
 
         Token nextToken = tokens.get(0);
-        if(nextToken.getTokenType() != TokenType.ID_KEYWORD) {
+        if (nextToken.getTokenType() != TokenType.ID_KEYWORD) {
             return emptyFunctionDefParamsNode;
         }
 
         IDNode idNode = IDNode.parseIDNode(tokens);
 
         Token colon = tokens.get(0);
-        if(colon.getTokenType() != TokenType.COLON) {
-            throw new SyntaxErrorException("Expected colon while parsing function def params but got: " + colon.getToken(), colon.getLineNum(), colon.getFilename());
+        if (colon.getTokenType() != TokenType.COLON) {
+            throw new SyntaxErrorException(
+                    "Expected colon while parsing function def params but got: " + colon.getToken(), colon.getLineNum(),
+                    colon.getFilename());
         }
         tokens.remove(0);
 
@@ -51,17 +54,18 @@ public class FunctionDefParamsNode implements JottTree {
 
         // check if token list is empty
         if (tokens.get(0).getTokenType() == TokenType.EOF) {
-            String message = "Reached EOF while parsing function definition parameters"; 
+            String message = "Reached EOF while parsing function definition parameters";
             throw new SyntaxErrorException(message, tokens.get(0).getLineNum(), tokens.get(0).getFilename());
         }
         ArrayList<FunctionDefParamsTypeNode> functionDefParamsTypeNodes = new ArrayList<>();
         nextToken = tokens.get(0);
-        while(nextToken.getTokenType() == TokenType.COMMA) {
+        while (nextToken.getTokenType() == TokenType.COMMA) {
 
-            FunctionDefParamsTypeNode functionDefParamsTypeNode = FunctionDefParamsTypeNode.parseFunctionDefParamsTypeNode(tokens);
+            FunctionDefParamsTypeNode functionDefParamsTypeNode = FunctionDefParamsTypeNode
+                    .parseFunctionDefParamsTypeNode(tokens);
             functionDefParamsTypeNodes.add(functionDefParamsTypeNode);
 
-            if(tokens.get(0).getTokenType() == TokenType.EOF) {
+            if (tokens.get(0).getTokenType() == TokenType.EOF) {
                 break;
             }
             nextToken = tokens.get(0);
@@ -74,13 +78,13 @@ public class FunctionDefParamsNode implements JottTree {
     @Override
     public String convertToJott() {
 
-        if(isEmpty) {
+        if (isEmpty) {
             return "";
         }
 
         String jott = id.convertToJott() + ":" + type.convertToJott();
 
-        for(FunctionDefParamsTypeNode functionDefParamsTypeNode : functionDefParamsTypes) {
+        for (FunctionDefParamsTypeNode functionDefParamsTypeNode : functionDefParamsTypes) {
             jott += functionDefParamsTypeNode.convertToJott();
         }
 

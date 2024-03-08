@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import provided.Token;
 import provided.TokenType;
 
-public class StringLiteralNode implements ExpressionNode{
+public class StringLiteralNode implements ExpressionNode {
     Token token;
 
     public StringLiteralNode(Token token) {
@@ -15,16 +15,16 @@ public class StringLiteralNode implements ExpressionNode{
     public static StringLiteralNode parseStringLiteralNode(ArrayList<Token> tokens) throws SyntaxErrorException {
         // check if token list is empty
         if (tokens.get(0).getTokenType() == TokenType.EOF) {
-            String message = "No tokens to parse"; 
+            String message = "Reach EOF while parsing a String literal";
             throw new SyntaxErrorException(message, tokens.get(0).getLineNum(), tokens.get(0).getFilename());
         }
 
         Token token = tokens.get(0);
         if (token.getTokenType() != TokenType.STRING) {
             String unexpected = token.getTokenType().toString().toLowerCase();
-            String message = "Expected string but got " + unexpected; 
-            String filename = token.getFilename(); 
-            int lineNum = token.getLineNum(); 
+            String message = "Expected string but got " + unexpected;
+            String filename = token.getFilename();
+            int lineNum = token.getLineNum();
             throw new SyntaxErrorException(message, lineNum, filename);
         }
 
@@ -60,5 +60,5 @@ public class StringLiteralNode implements ExpressionNode{
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
     }
-    
+
 }

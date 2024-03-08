@@ -6,17 +6,17 @@ import provided.JottTree;
 import provided.Token;
 import provided.TokenType;
 
-public class ProgramNode implements JottTree{
+public class ProgramNode implements JottTree {
     private ArrayList<FunctionDefNode> functionDefs;
 
     public ProgramNode(ArrayList<FunctionDefNode> functionDefs) {
         this.functionDefs = functionDefs;
     }
-    
+
     public static ProgramNode parseProgramNode(ArrayList<Token> tokens) throws SyntaxErrorException {
         // check if token list is empty
         if (tokens.get(0).getTokenType() == TokenType.EOF) {
-            String message = "No tokens to parse"; 
+            String message = "Reach EOF while parsing the program";
             throw new SyntaxErrorException(message, tokens.get(0).getLineNum(), tokens.get(0).getFilename());
         }
 
