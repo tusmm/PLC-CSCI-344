@@ -169,6 +169,10 @@ public class JottTokenizer {
             continue;
           }
 
+          if(Character.isWhitespace(tokenChar)) {
+            continue;
+          }
+
           // Single Character Tokens
           switch (tokenChar) {
             case ',':
