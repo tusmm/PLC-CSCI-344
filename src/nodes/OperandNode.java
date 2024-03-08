@@ -7,9 +7,10 @@ import provided.TokenType;
 public interface OperandNode extends ExpressionNode {
 
     public static OperandNode parseOperandNode(ArrayList<Token> tokens) throws SyntaxErrorException {
-        if (tokens.size() == 0) {
-            System.out.println("Handle error");
-            return null;
+        // check if token list is empty
+        if (tokens.get(0).getTokenType() == TokenType.EOF) {
+            String message = "No tokens to parse"; 
+            throw new SyntaxErrorException(message, tokens.get(0).getLineNum(), tokens.get(0).getFilename());
         }
 
         Token token = tokens.get(0);

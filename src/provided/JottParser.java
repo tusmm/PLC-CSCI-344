@@ -9,7 +9,6 @@ package provided;
 
 import java.util.ArrayList;
 
-import nodes.FunctionCallNode;
 import nodes.ProgramNode;
 import nodes.SyntaxErrorException;
 
@@ -23,6 +22,8 @@ public class JottParser {
      */
     public static JottTree parse(ArrayList<Token> tokens){
       JottTree root;
+      Token lastElement = tokens.get(tokens.size() - 1);
+      tokens.add(new Token("EOF", lastElement.getFilename(), lastElement.getLineNum(), TokenType.EOF));
        try {
            root = ProgramNode.parseProgramNode(tokens);
        } catch(SyntaxErrorException e) {

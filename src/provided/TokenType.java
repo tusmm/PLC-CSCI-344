@@ -17,5 +17,6 @@ public enum TokenType {
     ID_KEYWORD,
     COLON,
     STRING,
-	FC_HEADER;
+	FC_HEADER,
+    EOF;
 }

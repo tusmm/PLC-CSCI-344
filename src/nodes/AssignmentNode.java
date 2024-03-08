@@ -17,21 +17,21 @@ public class AssignmentNode implements BodyStatementNode {
 
     public static AssignmentNode parseAssignmentNode(ArrayList<Token> tokens) throws SyntaxErrorException {
         // check if token list is empty
-        if (tokens.size() == 0) {
+        if (tokens.get(0).getTokenType() == TokenType.EOF) {
             String message = "No tokens to parse"; 
-            String filename = "AssignmentNode.java";
-            int lineNum = 0; 
-            throw new SyntaxErrorException(message, lineNum, filename);
+            throw new SyntaxErrorException(message, tokens.get(0).getLineNum(), tokens.get(0).getFilename());
         }
         // <id>=<expr>;
-
+        Token token = tokens.get(0);
         IDNode id = IDNode.parseIDNode(tokens);
 
         if (tokens.size() == 0) {
-            String message = "Missing =, out of tokens";
-            throw new SyntaxErrorException(message, 0, "AssignmentNode.java");
+            String message = "Missing ="; 
+            String filename = token.getFilename(); 
+            int lineNum = token.getLineNum(); 
+            throw new SyntaxErrorException(message, lineNum, filename);
         }
-        Token token = tokens.get(0);
+        token = tokens.get(0);
         if (token.getTokenType() != TokenType.ASSIGN) {
             String unexpected = token.getTokenType().toString().toLowerCase();
             String message = "Expected = but got " + unexpected; 
@@ -42,7 +42,7 @@ public class AssignmentNode implements BodyStatementNode {
 
         tokens.remove(0); // remove assign token
 
-        if (tokens.size() == 0) {
+        if (tokens.get(0).getTokenType() == TokenType.EOF) {
             String message = "Assignment missing right side expression"; 
             String filename = token.getFilename(); 
             int lineNum = token.getLineNum(); 
@@ -50,7 +50,7 @@ public class AssignmentNode implements BodyStatementNode {
         }
         ExpressionNode expression = ExpressionNode.parseExpressionNode(tokens);
 
-        if (tokens.size() == 0) {
+        if (tokens.get(0).getTokenType() == TokenType.EOF) {
             String message = "Missing semicolon"; 
             String filename = token.getFilename(); 
             int lineNum = token.getLineNum(); 

@@ -20,8 +20,10 @@ public class ParamNode implements OperandNode {
 
     // < params > -> < expr > < params_t >? | epsilon
     public static ParamNode parseParamNode(ArrayList<Token> tokens) throws SyntaxErrorException {
-        if (isEmptyTokensList(tokens)) {
-            throw new SyntaxErrorException("empty lits", 0, "ParamNode.java");
+        // check if token list is empty
+        if (tokens.get(0).getTokenType() == TokenType.EOF) {
+            String message = "No tokens to parse"; 
+            throw new SyntaxErrorException(message, tokens.get(0).getLineNum(), tokens.get(0).getFilename());
         }
         
         // checks the front token to see if the parameter list is empty,
@@ -37,9 +39,10 @@ public class ParamNode implements OperandNode {
         ArrayList<ParamsTNode> paramTNodes = new ArrayList<ParamsTNode>();
         token = tokens.get(0);
         while (token.getTokenType() != TokenType.R_BRACKET) {
-            if (tokens.size() == 0) {
-                System.out.println("Handle error");
-                return null;
+            // check if token list is empty
+            if (tokens.get(0).getTokenType() == TokenType.EOF) {
+                String message = "Expected params, got EOF"; 
+                throw new SyntaxErrorException(message, tokens.get(0).getLineNum(), tokens.get(0).getFilename());
             }
             paramTNodes.add(ParamsTNode.parseParamsTNode(tokens));
             token = tokens.get(0);

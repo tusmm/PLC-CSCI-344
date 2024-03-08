@@ -3,6 +3,7 @@ package nodes;
 import java.util.ArrayList;
 
 import provided.Token;
+import provided.TokenType;
 
 public class ExpressionRelopNode implements ExpressionNode {
     OperandNode operandNodeLeft;
@@ -18,8 +19,10 @@ public class ExpressionRelopNode implements ExpressionNode {
     }
 
     public static ExpressionRelopNode parseExpressionRelopNode(ArrayList<Token> tokens, OperandNode operandNodeLeft) throws SyntaxErrorException {
-        if (tokens.size() == 0) {
-            throw new SyntaxErrorException("empty list", 0, "ExpressionRelopNode.java");
+        // check if token list is empty
+        if (tokens.get(0).getTokenType() == TokenType.EOF) {
+            String message = "No tokens to parse"; 
+            throw new SyntaxErrorException(message, tokens.get(0).getLineNum(), tokens.get(0).getFilename());
         }
         RelopNode relopNode = RelopNode.parseRelopNode(tokens);
         OperandNode operandNodeRight = OperandNode.parseOperandNode(tokens);

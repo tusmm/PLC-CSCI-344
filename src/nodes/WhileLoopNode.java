@@ -17,11 +17,9 @@ public class WhileLoopNode implements BodyStatementNode{
 
     public static WhileLoopNode parseWhileLoopNode(ArrayList<Token> tokens) throws SyntaxErrorException {
         // check if token list is empty
-        if (tokens.size() == 0){
+        if (tokens.get(0).getTokenType() == TokenType.EOF) {
             String message = "No tokens to parse"; 
-            String filename = "WhileLoopNode.java";
-            int lineNum = 0; 
-            throw new SyntaxErrorException(message, lineNum, filename);
+            throw new SyntaxErrorException(message, tokens.get(0).getLineNum(), tokens.get(0).getFilename());
         }
 
         // While[<expr>]{<body>}
@@ -42,7 +40,7 @@ public class WhileLoopNode implements BodyStatementNode{
         }
         tokens.remove(0); // remove while ID
 
-        if (tokens.size() == 0){
+        if (tokens.get(0).getTokenType() == TokenType.EOF){
             String message = "Missing left bracket"; 
             String filename = token.getFilename(); 
             int lineNum = token.getLineNum(); 
@@ -58,7 +56,7 @@ public class WhileLoopNode implements BodyStatementNode{
         }
         tokens.remove(0); // remove l_bracket token
 
-        if (tokens.size() == 0){
+        if (tokens.get(0).getTokenType() == TokenType.EOF){
             String message = "While Loop missing expression"; 
             String filename = token.getFilename(); 
             int lineNum = token.getLineNum(); 
@@ -66,7 +64,7 @@ public class WhileLoopNode implements BodyStatementNode{
         }
         ExpressionNode expression = ExpressionNode.parseExpressionNode(tokens);
 
-        if (tokens.size() == 0){
+        if (tokens.get(0).getTokenType() == TokenType.EOF){
             String message = "Missing right bracket"; 
             String filename = token.getFilename(); 
             int lineNum = token.getLineNum(); 
@@ -82,7 +80,7 @@ public class WhileLoopNode implements BodyStatementNode{
         }
         tokens.remove(0); // remove r_bracket token
 
-        if (tokens.size() == 0){
+        if (tokens.get(0).getTokenType() == TokenType.EOF){
             String message = "Missing left brace"; 
             String filename = token.getFilename(); 
             int lineNum = token.getLineNum(); 
@@ -98,7 +96,7 @@ public class WhileLoopNode implements BodyStatementNode{
         }
         tokens.remove(0); // remove l_brace token
 
-        if (tokens.size() == 0){
+        if (tokens.get(0).getTokenType() == TokenType.EOF){
             String message = "While Loop Missing Body"; 
             String filename = token.getFilename(); 
             int lineNum = token.getLineNum(); 

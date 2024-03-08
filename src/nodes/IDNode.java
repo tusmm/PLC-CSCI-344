@@ -14,10 +14,12 @@ public class IDNode implements OperandNode {
    }
 
    public static IDNode parseIDNode(ArrayList<Token> tokens) throws SyntaxErrorException {
-        // first check if the token list is empty
-        if (tokens.size() == 0) {
-            throw new SyntaxErrorException("Empty token list", 0, "IDNode.java");
-        }        
+        // check if token list is empty
+        if (tokens.get(0).getTokenType() == TokenType.EOF) {
+            String message = "No tokens to parse"; 
+            throw new SyntaxErrorException(message, tokens.get(0).getLineNum(), tokens.get(0).getFilename());
+        }
+            
         Token token = tokens.get(0); // get the front of the token
         if (token.getTokenType() == TokenType.ID_KEYWORD) {
             tokens.remove(0); // take off the first element

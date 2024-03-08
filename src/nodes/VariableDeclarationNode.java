@@ -16,17 +16,22 @@ public class VariableDeclarationNode implements JottTree {
     }
 
     public static VariableDeclarationNode parseVariableDeclarationNode(ArrayList<Token> tokens) throws SyntaxErrorException {
-        if (tokens.isEmpty()) {
-            throw new SyntaxErrorException("No tokens to parse", 0, "VariableDeclarationNode.java");
+        // check if token list is empty
+        if (tokens.get(0).getTokenType() == TokenType.EOF) {
+            String message = "No tokens to parse"; 
+            throw new SyntaxErrorException(message, tokens.get(0).getLineNum(), tokens.get(0).getFilename());
         }
 
         // <type> <id>
         TypeNode type = TypeNode.parseTypeNode(tokens);
         IDNode id = IDNode.parseIDNode(tokens);
 
-        if (tokens.isEmpty()) {
-            throw new SyntaxErrorException("No tokens to parse", 0, "VariableDeclarationNode.java");
+        // check if token list is empty
+        if (tokens.get(0).getTokenType() == TokenType.EOF) {
+            String message = "No tokens to parse"; 
+            throw new SyntaxErrorException(message, tokens.get(0).getLineNum(), tokens.get(0).getFilename());
         }
+        
         Token semicolon = tokens.get(0);
         if(semicolon.getTokenType() != TokenType.SEMICOLON) {
             throw new SyntaxErrorException("Expected semicolon but got: " + semicolon.getToken(), semicolon.getLineNum(), semicolon.getFilename());
