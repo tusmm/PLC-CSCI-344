@@ -23,7 +23,7 @@ public class IDNode implements OperandNode {
             tokens.remove(0); // take off the first element
             return new IDNode(token);
         }
-        throw new SyntaxErrorException("Invalid ID node", token.getLineNum(), token.getFilename());
+       throw new SyntaxErrorException("Invalid ID: " + token.getToken(), token.getLineNum(), token.getFilename());
    }
 
     @Override

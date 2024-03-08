@@ -61,11 +61,11 @@ public class FunctionCallNode implements OperandNode, BodyStatementNode {
 
     @Override
     public String convertToJott() {
-        return "::" + id.convertToJott() + "[" + params.convertToJott() + "]";
+        return "::" + id.convertToJott() + "[" + params.convertToJott() + "];";
     }
 
     private static boolean isEmptyTokensList(ArrayList<Token> tokens) {
-        return tokens.size() != 0;
+        return tokens.size() == 0;
     }
 
 	@Override
