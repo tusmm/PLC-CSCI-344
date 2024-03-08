@@ -21,9 +21,11 @@ public class FunctionBodyNode implements JottTree{
         }
 
         ArrayList<VariableDeclarationNode> variableDeclarations = new ArrayList<VariableDeclarationNode>();
-        while (tokens.get(0).getTokenType() == TokenType.ID_KEYWORD) {
+        while (TypeNode.validTypes.contains(tokens.get(0).getToken())) {
+
             VariableDeclarationNode variableDeclaration = VariableDeclarationNode.parseVariableDeclarationNode(tokens);
             variableDeclarations.add(variableDeclaration);
+
         }
 
         BodyNode body = BodyNode.parseBodyNode(tokens);

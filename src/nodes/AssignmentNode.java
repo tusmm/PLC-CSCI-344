@@ -24,16 +24,14 @@ public class AssignmentNode implements BodyStatementNode {
             throw new SyntaxErrorException(message, lineNum, filename);
         }
         // <id>=<expr>;
-        Token token = tokens.get(0);
+
         IDNode id = IDNode.parseIDNode(tokens);
 
         if (tokens.size() == 0) {
-            String message = "Missing ="; 
-            String filename = token.getFilename(); 
-            int lineNum = token.getLineNum(); 
-            throw new SyntaxErrorException(message, lineNum, filename);
+            String message = "Missing =, out of tokens";
+            throw new SyntaxErrorException(message, 0, "AssignmentNode.java");
         }
-        token = tokens.get(0);
+        Token token = tokens.get(0);
         if (token.getTokenType() != TokenType.ASSIGN) {
             String unexpected = token.getTokenType().toString().toLowerCase();
             String message = "Expected = but got " + unexpected; 
