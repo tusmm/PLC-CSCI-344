@@ -24,7 +24,7 @@ public class SymbolTable {
         SymbolTable.currentScope = currentScope;
     }
 
-    public static boolean variableExistsInScope(String scope, String varName, String varType) {
+    public static boolean variableExistsInScope(String scope, String varName) {
 
         HashMap<String, String> scopeMap = variableTable.get(scope);
 
@@ -33,6 +33,10 @@ public class SymbolTable {
         }
 
         return scopeMap.containsKey(varName);
+    }
+
+    public static boolean variableExistsInScope(String varName) {
+        return variableExistsInScope(getCurrentScope(), varName);
     }
 
     public static boolean functionExists(String functionName) {
@@ -58,13 +62,30 @@ public class SymbolTable {
         variableTable.put(scope, scopeMap);
     }
 
-    private class Tuple<X, Y> {
-        public final X x;
-        public final Y y;
-        public Tuple(X x, Y y) {
-            this.x = x;
-            this.y = y;
-        }
+    public static void addVariableToScope(String varName, String varType) {
+        addVariableToScope(getCurrentScope(), varName, varType);
+    }
+
+    public static void addFunction(String funcName, List<String> paramTypes, String returnType) {
+        functionTable.put(funcName, new Tuple<List<String>, String>(paramTypes, returnType));
+    }
+
+    public static String getReturnType(String funcName) {
+        return functionTable.get(funcName).y;
+    }
+
+    public static List<String> getFunctionParamTypes(String funcName) {
+        return functionTable.get(funcName).x;
+    }
+
+}
+
+class Tuple<X, Y> {
+    public final X x;
+    public final Y y;
+    public Tuple(X x, Y y) {
+        this.x = x;
+        this.y = y;
     }
 }
 
