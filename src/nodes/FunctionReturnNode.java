@@ -73,4 +73,9 @@ public class FunctionReturnNode implements JottTree {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
     }
+
+    @Override
+    public String toString() {
+        return isVoid ? "Void" : type.toString();
+    }
 }

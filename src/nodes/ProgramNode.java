@@ -13,7 +13,7 @@ public class ProgramNode implements JottTree {
         this.functionDefs = functionDefs;
     }
 
-    public static ProgramNode parseProgramNode(ArrayList<Token> tokens) throws SyntaxErrorException {
+    public static ProgramNode parseProgramNode(ArrayList<Token> tokens) throws SyntaxErrorException, SemanticErrorException {
         // check if token list is empty
         if (tokens.get(0).getTokenType() == TokenType.EOF) {
             String message = "Reach EOF while parsing the program";

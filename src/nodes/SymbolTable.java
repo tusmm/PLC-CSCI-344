@@ -8,11 +8,11 @@ public class SymbolTable {
     // function table:
     // (function name) -> ([parameter types], return type)
     // per the writeup, no duplicate function names are allowed (no method overloading)
-    private static final HashMap<String, Tuple<List<String>, String>> functionTable = new HashMap<>();
+    private static HashMap<String, Tuple<List<String>, String>> functionTable = new HashMap<>();
 
     // variable table:
     // (function name) -> ( (variable name) -> (data type) )
-    private static final HashMap<String, HashMap<String, String>> variableTable = new HashMap<>();
+    private static HashMap<String, HashMap<String, String>> variableTable = new HashMap<>();
 
     private static String currentScope;
 
@@ -66,8 +66,12 @@ public class SymbolTable {
         addVariableToScope(getCurrentScope(), varName, varType);
     }
 
-    public static void addFunction(String funcName, List<String> paramTypes, String returnType) {
+    public static boolean addFunction(String funcName, List<String> paramTypes, String returnType) {
+        if(functionExists(funcName)) {
+            return false;
+        }
         functionTable.put(funcName, new Tuple<List<String>, String>(paramTypes, returnType));
+        return true;
     }
 
     public static String getReturnType(String funcName) {
@@ -78,6 +82,27 @@ public class SymbolTable {
         return functionTable.get(funcName).x;
     }
 
+    public static String asString() {
+        String table = "";
+        for(String func : functionTable.keySet()) {
+            table += func + ":" + functionTable.get(func).x + "," + functionTable.get(func).y + "\n";
+
+
+            if(variableTable.get(func) != null) {
+                for (String var : variableTable.get(func).keySet()) {
+                    table += var + "," + variableTable.get(func).get(var);
+                }
+            }
+
+            table += "\n";
+        }
+        return table;
+    }
+
+    public static void clearTables() {
+        functionTable = new HashMap<>();
+        variableTable = new HashMap<>();
+    }
 }
 
 class Tuple<X, Y> {
