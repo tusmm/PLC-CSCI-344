@@ -65,15 +65,15 @@ public class FunctionBodyNode implements JottTree {
 
     @Override
     public boolean validateTree() {
-        boolean valid = body.validateTree();
-
         if (variableDeclarations.size() != 0) {
-            for (VariableDeclarationNode variableDeclaration : variableDeclarations) {
-                valid = valid && variableDeclaration.validateTree();
+            for (VariableDeclarationNode varDecNode : variableDeclarations) {
+                varDecNode.validateTree();
             }
         }
+        
+        body.validateTree();
 
-        return valid;
+        return true;
     }
 
 }

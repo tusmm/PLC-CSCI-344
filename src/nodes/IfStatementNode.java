@@ -157,18 +157,20 @@ public class IfStatementNode implements BodyStatementNode {
 
     @Override
     public boolean validateTree() throws SemanticErrorException {
-        boolean valid = expr.validateTree() && body.validateTree();
+        expr.validateTree();
+        body.validateTree();
+
         if (elseif_lst.size() != 0) {
             for (ElseIfNode elseif_node : elseif_lst) {
                 // check each else if node and make sure it is valid
-                valid = valid && elseif_node.validateTree();
+                elseif_node.validateTree();
             }
         }
         if (elseNode != null) {
-            valid = valid && elseNode.validateTree();
+            elseNode.validateTree();
         }
         
-        return valid;
+        return true;
     }
 
 }

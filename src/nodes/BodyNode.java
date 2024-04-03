@@ -81,13 +81,15 @@ public class BodyNode implements JottTree {
     }
 
     @Override
-    public boolean validateTree() {
-        boolean valid = returnStatementNode.validateTree();
-
-        for (BodyStatementNode bodyStatement : bodyStatementNodes) {
-            valid = valid && bodyStatement.validateTree();
+    public boolean validateTree() throws SemanticErrorException {
+        if (bodyStatementNodes.size() != 0) {
+            for (BodyStatementNode bodyStmtNode : bodyStatementNodes) {
+                bodyStmtNode.validateTree();
+            }
         }
 
-        return valid;
+        returnStatementNode.validateTree();
+
+        return true;
     }
 }
