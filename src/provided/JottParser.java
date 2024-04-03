@@ -10,6 +10,8 @@ package provided;
 import java.util.ArrayList;
 
 import nodes.ProgramNode;
+import nodes.SemanticErrorException;
+import nodes.SymbolTable;
 import nodes.SyntaxErrorException;
 
 public class JottParser {
@@ -26,9 +28,14 @@ public class JottParser {
       tokens.add(new Token("EOF", lastElement.getFilename(), lastElement.getLineNum(), TokenType.EOF));
        try {
            root = ProgramNode.parseProgramNode(tokens);
-       } catch(SyntaxErrorException e) {
+           //System.out.println("SYMBOL TABLE:");
+           //System.out.println(SymbolTable.asString());
+       } catch(SyntaxErrorException | SemanticErrorException e) {
            System.err.println(e.getMessage());
            return null;
+       }
+       finally {
+           SymbolTable.clearTables();
        }
 
       return root;

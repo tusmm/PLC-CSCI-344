@@ -115,4 +115,15 @@ public class FunctionDefParamsNode implements JottTree {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
     }
+
+    public List<String> asList() {
+        List<String> typeList = new ArrayList<>();
+        if(isEmpty) {
+            return typeList;
+        }
+        for(FunctionDefParamsTypeNode t : functionDefParamsTypes) {
+            typeList.add(t.type.toString());
+        }
+        return typeList;
+    }
 }

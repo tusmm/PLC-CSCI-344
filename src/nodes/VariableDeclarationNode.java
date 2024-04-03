@@ -10,13 +10,20 @@ public class VariableDeclarationNode implements JottTree {
     private TypeNode type;
     private IDNode id;
 
-    public VariableDeclarationNode(TypeNode type, IDNode id) {
+    public VariableDeclarationNode(TypeNode type, IDNode id) throws SemanticErrorException {
         this.type = type;
         this.id = id;
+
+        if(SymbolTable.variableExistsInScope(id.toString())) {
+            throw new SemanticErrorException("Duplicate variable name: " + id.toString(), id.token.getLineNum(), id.token.getFilename());
+        }
+
+        SymbolTable.addVariableToScope(id.toString(), type.toString());
+
     }
 
     public static VariableDeclarationNode parseVariableDeclarationNode(ArrayList<Token> tokens)
-            throws SyntaxErrorException {
+            throws SyntaxErrorException, SemanticErrorException {
         // check if token list is empty
         if (tokens.get(0).getTokenType() == TokenType.EOF) {
             String message = "Reached EOF while parsing a variable dec";

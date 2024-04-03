@@ -55,4 +55,9 @@ public class IDNode implements OperandNode {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
     }
+
+    @Override
+    public String toString() {
+        return token.getToken();
+    }
 }

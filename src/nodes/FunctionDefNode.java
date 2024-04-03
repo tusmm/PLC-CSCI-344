@@ -18,9 +18,10 @@ public class FunctionDefNode implements JottTree {
         this.functionDefParams = functionDefParams;
         this.functionReturn = functionReturn;
         this.functionBody = functionBody;
+
     }
 
-    public static FunctionDefNode parseFunctionDefNode(ArrayList<Token> tokens) throws SyntaxErrorException {
+    public static FunctionDefNode parseFunctionDefNode(ArrayList<Token> tokens) throws SyntaxErrorException, SemanticErrorException {
         // check if token list is empty
         if (tokens.get(0).getTokenType() == TokenType.EOF) {
             String message = "Reached EOF while parsing function definition";
@@ -67,6 +68,26 @@ public class FunctionDefNode implements JottTree {
         } else {
             throw new SyntaxErrorException("Expected '{' but got " + tokens.get(0).getToken(),
                     tokens.get(0).getLineNum(), tokens.get(0).getFilename());
+        }
+
+        // add function to symbol table and set scope
+        if(!SymbolTable.addFunction(id.toString(), functionDefParams.asList(), functionReturn.toString())) {
+            throw new SemanticErrorException("Duplicate function name: " + id.toString(), id.token.getLineNum(), id.token.getFilename());
+        }
+        SymbolTable.setCurrentScope(id.toString());
+
+        if(!functionDefParams.isEmpty) {
+            // add function params to function scope
+            for (FunctionDefParamsTypeNode n : functionDefParams.functionDefParamsTypes) {
+                String varName = n.id.toString();
+                String varType = n.type.toString();
+
+                if (SymbolTable.variableExistsInScope(varName)) {
+                    throw new SemanticErrorException("Duplicate variable name: " + n.id.toString(), n.id.token.getLineNum(), n.id.token.getFilename());
+                }
+
+                SymbolTable.addVariableToScope(varName, varType);
+            }
         }
 
         FunctionBodyNode functionBody = FunctionBodyNode.parseFunctionBodyNode(tokens);

@@ -10,7 +10,7 @@ import java.util.List;
 public class TypeNode implements JottTree {
 
     private Token token;
-    public static ArrayList<String> validTypes = new ArrayList(
+    public static ArrayList<String> validTypes = new ArrayList<String>(
             List.of(new String[] { "Double", "Integer", "String", "Boolean" }));
 
     public TypeNode(Token token) {
@@ -70,5 +70,10 @@ public class TypeNode implements JottTree {
     public boolean validateTree() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
+    }
+
+    @Override
+    public String toString() {
+        return token.getToken();
     }
 }
