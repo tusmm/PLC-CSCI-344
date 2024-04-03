@@ -86,8 +86,17 @@ public class FunctionCallNode implements OperandNode, BodyStatementNode {
     }
 
     @Override
-    public boolean validateTree() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
+    public boolean validateTree() throws SemanticErrorException {
+        // check if the function exists in the symbol table
+        if (!SymbolTable.functionExists(id.toString())) {
+            throw new SemanticErrorException("Call to unknown function" + id.toString(), id.token.getLineNum(), id.token.getFilename());
+        }
+        
+        // validate the function call
+        id.validateTree()
+        // function exists, this is valid, now check parameters
+        params.validateTree();
+        
+        return true;
     }
 }
