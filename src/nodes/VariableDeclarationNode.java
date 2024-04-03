@@ -1,4 +1,4 @@
-package nodes;
+ package nodes;
 
 import java.util.ArrayList;
 
@@ -13,13 +13,6 @@ public class VariableDeclarationNode implements JottTree {
     public VariableDeclarationNode(TypeNode type, IDNode id) throws SemanticErrorException {
         this.type = type;
         this.id = id;
-
-        if(SymbolTable.variableExistsInScope(id.toString())) {
-            throw new SemanticErrorException("Duplicate variable name: " + id.toString(), id.token.getLineNum(), id.token.getFilename());
-        }
-
-        SymbolTable.addVariableToScope(id.toString(), type.toString());
-
     }
 
     public static VariableDeclarationNode parseVariableDeclarationNode(ArrayList<Token> tokens)
@@ -74,8 +67,13 @@ public class VariableDeclarationNode implements JottTree {
     }
 
     @Override
-    public boolean validateTree() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
+    public boolean validateTree() throws SemanticErrorException {
+        if(SymbolTable.variableExistsInScope(id.toString())) {
+            throw new SemanticErrorException("Duplicate variable name: " + id.toString(), id.token.getLineNum(), id.token.getFilename());
+        }
+
+        SymbolTable.addVariableToScope(id.toString(), type.toString());
+        
+        return true; 
     }
 }

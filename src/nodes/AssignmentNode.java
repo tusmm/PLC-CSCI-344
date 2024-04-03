@@ -94,8 +94,14 @@ public class AssignmentNode implements BodyStatementNode {
     }
 
     @Override
-    public boolean validateTree() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
+    public boolean validateTree() throws SemanticErrorException {
+        
+        if(SymbolTable.variableExistsInScope(id.toString())) {
+            throw new SemanticErrorException("Uniti: " + id.toString(), id.token.getLineNum(), id.token.getFilename());
+        }
+
+        SymbolTable.addVariableToScope(id.toString(), expression.toString());
+        
+        return true; 
     }
 }
