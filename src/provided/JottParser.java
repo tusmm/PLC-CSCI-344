@@ -30,6 +30,7 @@ public class JottParser {
            root = ProgramNode.parseProgramNode(tokens);
            //System.out.println("SYMBOL TABLE:");
            //System.out.println(SymbolTable.asString());
+           // root.validateTree();
        } catch(SyntaxErrorException | SemanticErrorException e) {
            System.err.println(e.getMessage());
            return null;

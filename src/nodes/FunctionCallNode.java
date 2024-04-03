@@ -93,7 +93,7 @@ public class FunctionCallNode implements OperandNode, BodyStatementNode {
         }
         
         // validate the function call
-        id.validateTree()
+        id.validateTree();
         // function exists, this is valid, now check parameters
         params.validateTree();
         
