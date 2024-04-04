@@ -94,8 +94,18 @@ public class AssignmentNode implements BodyStatementNode {
     }
 
     @Override
-    public boolean validateTree() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
+    public boolean validateTree() throws SemanticErrorException {
+        // if id doesn't exist in symbol table 
+        if(!SymbolTable.variableExistsInScope(id.toString())) {
+            throw new SemanticErrorException("Uninitialized variable being used: " + id.toString(), id.token.getLineNum(), id.token.getFilename());
+        }
+        // check id type is same as expression type
+        String id_type = SymbolTable.getVariableType(SymbolTable.getCurrentScope(), id.toString());
+        String expr_type = expression.getType(); 
+        if (!expr_type.equals(id_type)){
+            throw new SemanticErrorException("Invalid type being assigned into a variable: " + id.toString(), id.token.getLineNum(), id.token.getFilename());
+        }
+
+        return true; 
     }
 }
