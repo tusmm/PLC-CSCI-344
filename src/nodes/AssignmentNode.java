@@ -101,8 +101,8 @@ public class AssignmentNode implements BodyStatementNode {
         }
         // check id type is same as expression type
         String id_type = SymbolTable.getVariableType(SymbolTable.getCurrentScope(), id.toString());
-        String expr_type = expression.convertToJott().getClass().toString(); 
-        if (!expr_type.contains(id_type)){
+        String expr_type = expression.getType(); 
+        if (!expr_type.equals(id_type)){
             throw new SemanticErrorException("Invalid type being assigned into a variable: " + id.toString(), id.token.getLineNum(), id.token.getFilename());
         }
 
