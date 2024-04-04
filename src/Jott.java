@@ -1,4 +1,4 @@
-
+//package src;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -78,6 +78,7 @@ public class Jott {
             System.exit(1);
         }
 
+        // add translation code here
         System.out.println("Tree is valid"); 
     }
 }

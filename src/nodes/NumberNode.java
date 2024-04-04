@@ -65,4 +65,14 @@ public class NumberNode implements OperandNode {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
     }
+
+    @Override
+    public String getType() {
+        String num = token.getToken();
+        if (num.contains(".")) {
+            return "Double";
+        } else {
+            return "Integer";
+        }
+    }
 }

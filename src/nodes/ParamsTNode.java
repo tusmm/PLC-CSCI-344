@@ -68,4 +68,9 @@ public class ParamsTNode implements OperandNode {
         throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
     }
 
+    @Override
+    public String getType() {
+        return expressionNode.getType();
+    }
+
 }

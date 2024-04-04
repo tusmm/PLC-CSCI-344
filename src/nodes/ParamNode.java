@@ -53,10 +53,6 @@ public class ParamNode implements OperandNode {
 
     }
 
-    private static boolean isEmptyTokensList(ArrayList<Token> tokens) {
-        return tokens.size() == 0;
-    }
-
     @Override
     public String convertToJott() {
         String jottString = "";
@@ -89,6 +85,11 @@ public class ParamNode implements OperandNode {
     public boolean validateTree() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
+    }
+
+    @Override
+    public String getType() {
+        return expressionNode.getType();
     }
 
 }
