@@ -95,13 +95,17 @@ public class AssignmentNode implements BodyStatementNode {
 
     @Override
     public boolean validateTree() throws SemanticErrorException {
-        
-        if(SymbolTable.variableExistsInScope(id.toString())) {
-            throw new SemanticErrorException("Uniti: " + id.toString(), id.token.getLineNum(), id.token.getFilename());
+        // if id doesn't exist in symbol table 
+        if(!SymbolTable.variableExistsInScope(id.toString())) {
+            throw new SemanticErrorException("Uninitialized variable being used: " + id.toString(), id.token.getLineNum(), id.token.getFilename());
+        }
+        // check id type is same as expression type
+        String id_type = SymbolTable.getVariableType(SymbolTable.getCurrentScope(), id.toString());
+        String expr_type = expression.convertToJott().getClass().toString(); 
+        if (!expr_type.contains(id_type)){
+            throw new SemanticErrorException("Invalid type being assigned into a variable: " + id.toString(), id.token.getLineNum(), id.token.getFilename());
         }
 
-        SymbolTable.addVariableToScope(id.toString(), expression.toString());
-        
         return true; 
     }
 }
