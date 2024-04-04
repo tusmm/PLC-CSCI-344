@@ -62,4 +62,10 @@ public class ExpressionMathopNode implements ExpressionNode {
         throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
     }
 
+    @Override
+    public String getExpressionType() {
+        // If the expression is valid both operands should have the same type
+        return operandNodeLeft.getExpressionType();
+    }
+
 }

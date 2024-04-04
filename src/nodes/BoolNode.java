@@ -73,4 +73,8 @@ public class BoolNode implements ExpressionNode {
         throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
     }
 
+    @Override
+    public String getExpressionType() {
+        return "Bool";
+    }
 }

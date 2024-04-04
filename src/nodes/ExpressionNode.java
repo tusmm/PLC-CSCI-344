@@ -38,4 +38,6 @@ public interface ExpressionNode extends JottTree {
 
         return opNode1;
     }
+
+    public String getExpressionType();
 }

@@ -2,10 +2,11 @@ package nodes;
 
 import java.util.ArrayList;
 
+import provided.JottTree;
 import provided.Token;
 import provided.TokenType;
 
-public class ParamsTNode implements OperandNode {
+public class ParamsTNode implements JottTree {
     ExpressionNode expressionNode;
 
     public ParamsTNode(ExpressionNode expressionNode) {

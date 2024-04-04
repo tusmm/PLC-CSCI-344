@@ -61,4 +61,8 @@ public class StringLiteralNode implements ExpressionNode {
         throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
     }
 
+    @Override
+    public String getExpressionType() {
+        return "String";
+    }
 }

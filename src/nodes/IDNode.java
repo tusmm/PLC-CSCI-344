@@ -60,4 +60,9 @@ public class IDNode implements OperandNode {
     public String toString() {
         return token.getToken();
     }
+
+    @Override
+    public String getExpressionType() {
+        return SymbolTable.getVariableType(SymbolTable.getCurrentScope(), token.getToken());
+    }
 }
