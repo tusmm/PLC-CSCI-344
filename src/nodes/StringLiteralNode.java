@@ -32,6 +32,10 @@ public class StringLiteralNode implements ExpressionNode {
         return new StringLiteralNode(token);
     }
 
+    public String getType() {
+        return "String";
+    }
+
     @Override
     public String convertToJott() {
         return token.getToken();

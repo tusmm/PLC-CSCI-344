@@ -32,6 +32,10 @@ public class ExpressionRelopNode implements ExpressionNode {
 
     }
 
+    public String getType() {
+        return "Boolean";
+    }
+
     @Override
     public String convertToJott() {
         return operandNodeLeft.convertToJott() + relopNode.convertToJott() + operandNodeRight.convertToJott();

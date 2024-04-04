@@ -1,6 +1,7 @@
 package nodes;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import provided.Token;
 import provided.TokenType;
@@ -86,9 +87,39 @@ public class FunctionCallNode implements OperandNode, BodyStatementNode {
     }
 
     @Override
-    public boolean validateTree() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
+    public boolean validateTree() throws SemanticErrorException {
+        // check if the function exists in the symbol table
+        if (!SymbolTable.functionExists(id.toString())) {
+            throw new SemanticErrorException("Call to unknown function" + id.toString(), id.token.getLineNum(), id.token.getFilename());
+        }
+
+        // validate the function call
+        id.validateTree();
+
+        List<String> expectedParamTypes = SymbolTable.getFunctionParamTypes(id.toString()); 
+        ArrayList<String> actualParamTypes = new ArrayList<String>();
+        
+        // append params.expressionNode.gettype to the paramst list 
+        actualParamTypes.add(params.expressionNode.getType());
+        for (ParamsTNode param : params.paramsTNode) {
+            actualParamTypes.add(param.expressionNode.getType());
+        }
+
+        if (expectedParamTypes.size() != actualParamTypes.size()) {
+            throw new SemanticErrorException("Function call to " + id.toString() + " has wrong number of arguments", id.token.getLineNum(), id.token.getFilename());
+        }
+
+        for (int i = 0; i < expectedParamTypes.size(); i++) {
+            if (!expectedParamTypes.get(i).equals(actualParamTypes.get(i))) {
+                throw new SemanticErrorException("Invalid type being passed into function param: " + id.toString() + "\nExpected " + actualParamTypes.get(i) + ", but got " + expectedParamTypes.get(i), id.token.getLineNum(), id.token.getFilename());
+            }
+        }
+        
+        return true;
+    }
+
+    public String getType() {
+        return SymbolTable.getReturnType(id.toString());
     }
 
     @Override

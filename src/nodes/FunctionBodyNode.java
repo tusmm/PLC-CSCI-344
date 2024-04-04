@@ -64,9 +64,16 @@ public class FunctionBodyNode implements JottTree {
     }
 
     @Override
-    public boolean validateTree() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
+    public boolean validateTree() throws SemanticErrorException {
+        if (variableDeclarations.size() != 0) {
+            for (VariableDeclarationNode varDecNode : variableDeclarations) {
+                varDecNode.validateTree();
+            }
+        }
+        
+        body.validateTree();
+
+        return true;
     }
 
 }

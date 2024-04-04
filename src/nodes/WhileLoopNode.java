@@ -147,9 +147,11 @@ public class WhileLoopNode implements BodyStatementNode {
     }
 
     @Override
-    public boolean validateTree() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
+    public boolean validateTree() throws SemanticErrorException {
+        expression.validateTree();
+        body.validateTree();
+        
+        return true;
     }
 
 }

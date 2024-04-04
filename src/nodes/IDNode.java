@@ -62,7 +62,7 @@ public class IDNode implements OperandNode {
     }
 
     @Override
-    public String getExpressionType() {
-        return SymbolTable.getVariableType(SymbolTable.getCurrentScope(), token.getToken());
+    public String getType() {
+        return SymbolTable.getVariableType(SymbolTable.getCurrentScope(), token.toString());
     }
 }

@@ -156,9 +156,21 @@ public class IfStatementNode implements BodyStatementNode {
     }
 
     @Override
-    public boolean validateTree() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
+    public boolean validateTree() throws SemanticErrorException {
+        expr.validateTree();
+        body.validateTree();
+
+        if (elseif_lst.size() != 0) {
+            for (ElseIfNode elseif_node : elseif_lst) {
+                // check each else if node and make sure it is valid
+                elseif_node.validateTree();
+            }
+        }
+        if (elseNode != null) {
+            elseNode.validateTree();
+        }
+        
+        return true;
     }
 
 }

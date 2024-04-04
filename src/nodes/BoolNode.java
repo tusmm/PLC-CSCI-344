@@ -40,6 +40,10 @@ public class BoolNode implements ExpressionNode {
         throw new SyntaxErrorException(message, lineNum, filename);
     }
 
+    public String getType() {
+        return "Boolean";
+    }
+
     @Override
     public String convertToJott() {
         if (token.getToken().equals("True")) {
@@ -69,8 +73,7 @@ public class BoolNode implements ExpressionNode {
 
     @Override
     public boolean validateTree() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
+        return true; 
     }
 
     @Override
