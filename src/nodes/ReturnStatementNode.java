@@ -88,7 +88,7 @@ public class ReturnStatementNode implements JottTree {
         }
 
         // check if the return type of the expression matches the expected return type
-        String actualReturnType = expressionNode.getExpressionType();
+        String actualReturnType = expressionNode.getType();
 
         if (!expectedReturnType.equals(actualReturnType)) {
             throw new SemanticErrorException("Expected return type " + expectedReturnType + " but got " + actualReturnType, retLineNum, filename);

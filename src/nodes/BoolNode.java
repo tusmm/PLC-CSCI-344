@@ -40,10 +40,6 @@ public class BoolNode implements ExpressionNode {
         throw new SyntaxErrorException(message, lineNum, filename);
     }
 
-    public String getType() {
-        return "Boolean";
-    }
-
     @Override
     public String convertToJott() {
         if (token.getToken().equals("True")) {
@@ -77,7 +73,7 @@ public class BoolNode implements ExpressionNode {
     }
 
     @Override
-    public String getExpressionType() {
+    public String getType() {
         return "Bool";
     }
 }

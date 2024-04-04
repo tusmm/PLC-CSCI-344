@@ -15,7 +15,7 @@ public class FunctionBodyNode implements JottTree {
         this.body = body;
     }
 
-    public static FunctionBodyNode parseFunctionBodyNode(ArrayList<Token> tokens) throws SyntaxErrorException, SemanticErrorException {
+    public static FunctionBodyNode parseFunctionBodyNode(ArrayList<Token> tokens) throws SyntaxErrorException {
         // check if token list is empty
         if (tokens.get(0).getTokenType() == TokenType.EOF) {
             String message = "Reached EOF while parsing function body";

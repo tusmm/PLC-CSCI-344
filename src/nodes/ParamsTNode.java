@@ -67,10 +67,4 @@ public class ParamsTNode implements JottTree {
     public boolean validateTree() {
         return true; 
     }
-
-    @Override
-    public String getType() {
-        return expressionNode.getType();
-    }
-
 }

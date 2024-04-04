@@ -32,10 +32,6 @@ public class ExpressionRelopNode implements ExpressionNode {
 
     }
 
-    public String getType() {
-        return "Boolean";
-    }
-
     @Override
     public String convertToJott() {
         return operandNodeLeft.convertToJott() + relopNode.convertToJott() + operandNodeRight.convertToJott();
@@ -66,9 +62,9 @@ public class ExpressionRelopNode implements ExpressionNode {
     }
 
     @Override
-    public String getExpressionType() {
+    public String getType() {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getExpressionType'");
+        return "Boolean";
     }
 
 }

@@ -10,13 +10,12 @@ public class VariableDeclarationNode implements JottTree {
     private TypeNode type;
     private IDNode id;
 
-    public VariableDeclarationNode(TypeNode type, IDNode id) throws SemanticErrorException {
+    public VariableDeclarationNode(TypeNode type, IDNode id) {
         this.type = type;
         this.id = id;
     }
 
-    public static VariableDeclarationNode parseVariableDeclarationNode(ArrayList<Token> tokens)
-            throws SyntaxErrorException, SemanticErrorException {
+    public static VariableDeclarationNode parseVariableDeclarationNode(ArrayList<Token> tokens) throws SyntaxErrorException {
         // check if token list is empty// check if the function exists in the symbol table
         if (tokens.get(0).getTokenType() == TokenType.EOF) {
             String message = "Reached EOF while parsing a variable dec";

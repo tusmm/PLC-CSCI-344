@@ -67,7 +67,7 @@ public class NumberNode implements OperandNode {
     }
 
     @Override
-    public String getExpressionType() {
+    public String getType() {
         if (token.getToken().contains(".")) {
             return "Double";
         }
