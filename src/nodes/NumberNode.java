@@ -68,11 +68,10 @@ public class NumberNode implements OperandNode {
 
     @Override
     public String getType() {
-        String num = token.getToken();
-        if (num.contains(".")) {
+        if (token.getToken().contains(".")) {
             return "Double";
-        } else {
-            return "Integer";
         }
+
+        return "Integer";
     }
 }

@@ -11,10 +11,14 @@ public class ReturnStatementNode implements JottTree {
 
     private ExpressionNode expressionNode;
     private boolean isVoid;
+    private int retLineNum;
+    private String filename;
 
-    public ReturnStatementNode(ExpressionNode expr, boolean isVoid) {
+    public ReturnStatementNode(ExpressionNode expr, boolean isVoid, int retLineNum, String filename) {
         this.expressionNode = expr;
         this.isVoid = isVoid;
+        this.retLineNum = retLineNum;
+        this.filename = filename;
     }
 
     public static ReturnStatementNode parseReturnStatementNode(ArrayList<Token> tokens) throws SyntaxErrorException {
@@ -26,7 +30,7 @@ public class ReturnStatementNode implements JottTree {
 
         Token retr = tokens.get(0);
         if (retr.getTokenType() != TokenType.ID_KEYWORD || !retr.getToken().equals("Return")) {
-            return new ReturnStatementNode(null, true);
+            return new ReturnStatementNode(null, true, retr.getLineNum(), retr.getFilename());
         }
         tokens.remove(0);
 
@@ -39,7 +43,7 @@ public class ReturnStatementNode implements JottTree {
         }
         tokens.remove(0);
 
-        return new ReturnStatementNode(expr, false);
+        return new ReturnStatementNode(expr, false, retr.getLineNum(), retr.getFilename());
 
     }
 
@@ -72,8 +76,24 @@ public class ReturnStatementNode implements JottTree {
     }
 
     @Override
-    public boolean validateTree() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
+    public boolean validateTree() throws SemanticErrorException {
+        String expectedReturnType = SymbolTable.getReturnType(SymbolTable.getCurrentScope());
+
+        if (expectedReturnType.equals("Void")) {
+            if (isVoid) {
+                return true;
+            } else {
+                throw new SemanticErrorException("Expected void return type but got non-void return type", retLineNum, filename);
+            }
+        }
+
+        // check if the return type of the expression matches the expected return type
+        String actualReturnType = expressionNode.getType();
+
+        if (!expectedReturnType.equals(actualReturnType)) {
+            throw new SemanticErrorException("Expected return type " + expectedReturnType + " but got " + actualReturnType, retLineNum, filename);
+        }
+
+        return true;
     }
 }

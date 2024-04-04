@@ -13,7 +13,7 @@ public class ProgramNode implements JottTree {
         this.functionDefs = functionDefs;
     }
 
-    public static ProgramNode parseProgramNode(ArrayList<Token> tokens) throws SyntaxErrorException, SemanticErrorException {
+    public static ProgramNode parseProgramNode(ArrayList<Token> tokens) throws SyntaxErrorException {
         // check if token list is empty
         if (tokens.get(0).getTokenType() == TokenType.EOF) {
             String message = "Reach EOF while parsing the program";
@@ -59,8 +59,11 @@ public class ProgramNode implements JottTree {
     }
 
     @Override
-    public boolean validateTree() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
+    public boolean validateTree() throws SemanticErrorException {
+        for (FunctionDefNode functionDef : functionDefs) {
+            functionDef.validateTree();
+        }
+
+        return true;
     }
 }

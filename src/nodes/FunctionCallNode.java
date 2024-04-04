@@ -118,7 +118,8 @@ public class FunctionCallNode implements OperandNode, BodyStatementNode {
         return true;
     }
 
+    @Override
     public String getType() {
-        return SymbolTable.getReturnType(id.toString());
+        return SymbolTable.getReturnType(id.token.getToken());
     }
 }

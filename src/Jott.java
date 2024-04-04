@@ -63,7 +63,6 @@ public class Jott {
         }
         // at this point, args should be valid
 
-        // tokenize the input file
         ArrayList<Token> tokens = JottTokenizer.tokenize(args[0]);
         if (tokens == null) {
             System.out.println("Error tokenizing file");
@@ -77,8 +76,13 @@ public class Jott {
             System.out.println("Error parsing tokens");
             System.exit(1);
         }
-
-        // add translation code here
-        System.out.println("Tree is valid"); 
+        
+        try {
+            root.validateTree();
+            System.out.println("Tree is valid");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.exit(1);
+        }
     }
 }

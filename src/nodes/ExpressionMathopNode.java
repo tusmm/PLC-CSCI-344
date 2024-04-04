@@ -33,17 +33,6 @@ public class ExpressionMathopNode implements ExpressionNode {
 
     }
 
-    public String getType() {
-        // if both operands are integers, it will return an integer
-        // if both operands are doubles, it will reutrn a double
-        if (operandNodeLeft.getType().equals("Integer") && operandNodeRight.getType().equals("Integer")) {
-            return "Integer";
-        } else if (operandNodeLeft.getType().equals("Double") && operandNodeRight.getType().equals("Double")) {
-            return "Double";
-        } 
-        return "BAD TYPE";
-    }
-
     @Override
     public String convertToJott() {
         return operandNodeLeft.convertToJott() + mathopNode.convertToJott() + operandNodeRight.convertToJott();
@@ -71,6 +60,12 @@ public class ExpressionMathopNode implements ExpressionNode {
     public boolean validateTree() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
+    }
+
+    @Override
+    public String getType() {
+        // If the expression is valid both operands should have the same type
+        return operandNodeLeft.getType();
     }
 
 }

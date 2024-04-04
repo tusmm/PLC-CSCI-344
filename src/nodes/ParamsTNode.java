@@ -2,10 +2,11 @@ package nodes;
 
 import java.util.ArrayList;
 
+import provided.JottTree;
 import provided.Token;
 import provided.TokenType;
 
-public class ParamsTNode implements OperandNode {
+public class ParamsTNode implements JottTree {
     ExpressionNode expressionNode;
 
     public ParamsTNode(ExpressionNode expressionNode) {
@@ -66,10 +67,4 @@ public class ParamsTNode implements OperandNode {
     public boolean validateTree() {
         return true; 
     }
-
-    @Override
-    public String getType() {
-        return expressionNode.getType();
-    }
-
 }

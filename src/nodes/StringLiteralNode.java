@@ -32,10 +32,6 @@ public class StringLiteralNode implements ExpressionNode {
         return new StringLiteralNode(token);
     }
 
-    public String getType() {
-        return "String";
-    }
-
     @Override
     public String convertToJott() {
         return token.getToken();
@@ -65,4 +61,8 @@ public class StringLiteralNode implements ExpressionNode {
         throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
     }
 
+    @Override
+    public String getType() {
+        return "String";
+    }
 }

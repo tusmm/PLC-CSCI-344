@@ -21,7 +21,7 @@ public class FunctionDefNode implements JottTree {
 
     }
 
-    public static FunctionDefNode parseFunctionDefNode(ArrayList<Token> tokens) throws SyntaxErrorException, SemanticErrorException {
+    public static FunctionDefNode parseFunctionDefNode(ArrayList<Token> tokens) throws SyntaxErrorException {
         // check if token list is empty
         if (tokens.get(0).getTokenType() == TokenType.EOF) {
             String message = "Reached EOF while parsing function definition";
@@ -70,26 +70,6 @@ public class FunctionDefNode implements JottTree {
                     tokens.get(0).getLineNum(), tokens.get(0).getFilename());
         }
 
-        // add function to symbol table and set scope
-        if(!SymbolTable.addFunction(id.toString(), functionDefParams.asList(), functionReturn.toString())) {
-            throw new SemanticErrorException("Duplicate function name: " + id.toString(), id.token.getLineNum(), id.token.getFilename());
-        }
-        SymbolTable.setCurrentScope(id.toString());
-
-        if(!functionDefParams.isEmpty) {
-            // add function params to function scope
-            for (FunctionDefParamsTypeNode n : functionDefParams.functionDefParamsTypes) {
-                String varName = n.id.toString();
-                String varType = n.type.toString();
-
-                if (SymbolTable.variableExistsInScope(varName)) {
-                    throw new SemanticErrorException("Duplicate variable name: " + n.id.toString(), n.id.token.getLineNum(), n.id.token.getFilename());
-                }
-
-                SymbolTable.addVariableToScope(varName, varType);
-            }
-        }
-
         FunctionBodyNode functionBody = FunctionBodyNode.parseFunctionBodyNode(tokens);
 
         if (tokens.get(0).getTokenType() == TokenType.R_BRACE) {
@@ -127,9 +107,16 @@ public class FunctionDefNode implements JottTree {
     }
 
     @Override
-    public boolean validateTree() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
+    public boolean validateTree() throws SemanticErrorException {
+        if(!SymbolTable.addFunction(id.toString(), functionDefParams.asList(), functionReturn.toString())) {
+            throw new SemanticErrorException("Duplicate function name: " + id.toString(), id.token.getLineNum(), id.token.getFilename());
+        }
+
+        SymbolTable.setCurrentScope(id.toString());
+        functionDefParams.validateTree();
+        functionBody.validateTree();
+
+        return true;
     }
 
 }

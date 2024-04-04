@@ -58,5 +58,4 @@ public class RelopNode implements JottTree {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
     }
-
 }
