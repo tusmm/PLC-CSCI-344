@@ -1,5 +1,6 @@
 package nodes;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -102,6 +103,11 @@ public class SymbolTable {
     public static void clearTables() {
         functionTable = new HashMap<>();
         variableTable = new HashMap<>();
+        init();
+    }
+
+    public static void init() {
+        functionTable.put("print", new Tuple<List<String>, String>(new ArrayList<>(List.of("String")), "Void"));
     }
 }
 

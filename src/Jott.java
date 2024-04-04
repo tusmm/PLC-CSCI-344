@@ -1,8 +1,12 @@
 //package src;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import nodes.SemanticErrorException;
+import nodes.SymbolTable;
 import provided.JottParser;
 import provided.JottTokenizer;
 import provided.JottTree;
@@ -78,11 +82,28 @@ public class Jott {
         }
         
         try {
+            SymbolTable.clearTables();
             root.validateTree();
             System.out.println("Tree is valid");
-        } catch (Exception e) {
+        } catch (SemanticErrorException e) {
             System.out.println(e.getMessage());
             System.exit(1);
         }
+
+        if(args[2].equals("Jott")) {
+
+            String outputFile = args[1];
+
+            try {
+                PrintWriter pr = new PrintWriter(outputFile);
+                pr.println(root.convertToJott());
+                pr.close();
+            } catch (FileNotFoundException e) {
+                System.err.println("Error while writing to file: " + outputFile);
+            }
+
+        }
+
+
     }
 }
