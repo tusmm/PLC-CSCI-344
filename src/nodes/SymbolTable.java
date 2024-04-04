@@ -38,7 +38,7 @@ public class SymbolTable {
     public static boolean variableExistsInScope(String varName) {
         return variableExistsInScope(getCurrentScope(), varName);
     }
-
+    
     public static boolean functionExists(String functionName) {
 
         return functionTable.get(functionName) != null;

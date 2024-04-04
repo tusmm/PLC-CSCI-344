@@ -7,6 +7,7 @@ import provided.Token;
 import provided.TokenType;
 
 public interface ExpressionNode extends JottTree {
+
     public static ExpressionNode parseExpressionNode(ArrayList<Token> tokens) throws SyntaxErrorException {
         // check if token list is empty
         if (tokens.get(0).getTokenType() == TokenType.EOF) {
@@ -38,4 +39,9 @@ public interface ExpressionNode extends JottTree {
 
         return opNode1;
     }
+
+    public String getType();
 }
+
+
+

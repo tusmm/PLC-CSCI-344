@@ -24,7 +24,7 @@ public class VariableDeclarationNode implements JottTree {
 
     public static VariableDeclarationNode parseVariableDeclarationNode(ArrayList<Token> tokens)
             throws SyntaxErrorException, SemanticErrorException {
-        // check if token list is empty
+        // check if token list is empty// check if the function exists in the symbol table
         if (tokens.get(0).getTokenType() == TokenType.EOF) {
             String message = "Reached EOF while parsing a variable dec";
             throw new SyntaxErrorException(message, tokens.get(0).getLineNum(), tokens.get(0).getFilename());

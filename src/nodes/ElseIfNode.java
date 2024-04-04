@@ -125,9 +125,10 @@ public class ElseIfNode implements JottTree {
     }
 
     @Override
-    public boolean validateTree() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
-    }
+    public boolean validateTree() throws SemanticErrorException {
+        expr.validateTree();
+        body.validateTree();
 
+        return true;
+    }
 }
