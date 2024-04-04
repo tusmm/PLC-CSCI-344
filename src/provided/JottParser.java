@@ -10,7 +10,6 @@ package provided;
 import java.util.ArrayList;
 
 import nodes.ProgramNode;
-import nodes.SemanticErrorException;
 import nodes.SymbolTable;
 import nodes.SyntaxErrorException;
 
@@ -30,7 +29,7 @@ public class JottParser {
            root = ProgramNode.parseProgramNode(tokens);
            //System.out.println("SYMBOL TABLE:");
            //System.out.println(SymbolTable.asString());
-       } catch(SyntaxErrorException | SemanticErrorException e) {
+       } catch(SyntaxErrorException e) {
            System.err.println(e.getMessage());
            return null;
        }

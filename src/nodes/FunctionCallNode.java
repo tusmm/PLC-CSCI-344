@@ -90,4 +90,9 @@ public class FunctionCallNode implements OperandNode, BodyStatementNode {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
     }
+
+    @Override
+    public String getExpressionType() {
+        return SymbolTable.getReturnType(id.token.getToken());
+    }
 }

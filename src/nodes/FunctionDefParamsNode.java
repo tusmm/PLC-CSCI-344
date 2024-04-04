@@ -111,9 +111,22 @@ public class FunctionDefParamsNode implements JottTree {
     }
 
     @Override
-    public boolean validateTree() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
+    public boolean validateTree() throws SemanticErrorException {
+        if (isEmpty) {
+            return true;
+        }
+
+        if (SymbolTable.variableExistsInScope(id.toString())) {
+            throw new SemanticErrorException("Duplicate variable name: " + id.toString(), id.token.getLineNum(), id.token.getFilename());
+        }
+
+        SymbolTable.addVariableToScope(id.toString(), type.toString());
+
+        for (FunctionDefParamsTypeNode functionDefParamsTypeNode : functionDefParamsTypes) {
+            functionDefParamsTypeNode.validateTree();
+        }
+
+        return true;
     }
 
     public List<String> asList() {
