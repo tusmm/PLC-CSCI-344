@@ -1,7 +1,7 @@
 package testers;
 
 /*
-  Jott parser tester. This will test the parsing phase of the Jott
+  Jott semantic tester. This will test the semantic phase of the Jott
   project.
 
   This tester assumes a working and valid tokenizer.
@@ -37,37 +37,25 @@ public class JottSemanticTester {
     private void createTestCases(){
         this.testCases = new ArrayList<>();
         // add phase3 test cases here
-        testCases.add(new TestCase("provided writeup example1", "providedExample1.jott", false ));
-        testCases.add(new TestCase("provided writeup example2 (error)", "providedExample2.jott", true ));
-        testCases.add(new TestCase("provided writeup example3 (error)", "providedExample3.jott", true ));
-        testCases.add(new TestCase("provided writeup example4 (error)", "providedExample4.jott", true ));
-        testCases.add(new TestCase("provided writeup example5 (error)", "providedExample5.jott", true ));
-        testCases.add(new TestCase("hello world", "helloWorld.jott", false ));
-        testCases.add(new TestCase("1foo error (error)", "1foo.jott", true ));
-        testCases.add(new TestCase("return <id> type mismatch", "returnId.jott", false ));
-        testCases.add(new TestCase("type:var error (error)", "paramOrderSwapped.jott", true ));
-        testCases.add(new TestCase("missing expr (error)", "missingExp.jott", true ));
-        testCases.add(new TestCase("missingBrace (error)", "missingBrace.jott", true ));
-        testCases.add(new TestCase("elseif without if (error)", "elseIfNoIf.jott", true ));
-        testCases.add(new TestCase("missing return", "missingReturn.jott", false ));
-        testCases.add(new TestCase("Void not valid param type (error)", "voidParam.jott", true ));
-        testCases.add(new TestCase("function not defined", "funcNotDefined.jott", false ));
-        testCases.add(new TestCase("mismatch return type", "mismatchedReturn.jott", false ));
-        testCases.add(new TestCase("function call param type not matching", "funcCallParamInvalid.jott", false ));
-        testCases.add(new TestCase("single expression program (error)", "singleExpr.jott", true ));
-        testCases.add(new TestCase("valid while loop", "validLoop.jott", false ));
-        testCases.add(new TestCase("missing main", "missingMain.jott", false ));
-        testCases.add(new TestCase("main must be integer", "mainReturnNotInt.jott", false ));
-        testCases.add(new TestCase("i_expr relop d_expr function return", "funcReturnInExpr.jott", false ));
-        testCases.add(new TestCase("invalid asmt stmt (error)", "invalidAsmtStmt.jott", true ));
-        testCases.add(new TestCase("missing comma in func_def_params (error)", "missingCommaParams.jott", true ));
-        testCases.add(new TestCase("while is keyword, cannot be used as id", "whileKeyword.jott", false ));
-        testCases.add(new TestCase("expr by itself (error)", "loneExpr.jott", true ));
-        testCases.add(new TestCase("code after return (error)", "codeAfterReturn.jott", true ));
-        //testCases.add(new TestCase("lone minus (error)", "loneMinus.jott", true ));
-        testCases.add(new TestCase("else without if (error)", "elseNoIf.jott", true ));
-        testCases.add(new TestCase("missing closing } (error)", "missingClosing.jott", true ));
-        testCases.add(new TestCase("valid if with return", "validIfReturn.jott", false));
+        testCases.add(new TestCase("funCallParamInvalid", "funcCallParamInvalid.jott", false ));
+        testCases.add(new TestCase("funcNotDefined", "funcNotDefined.jott", false ));
+        testCases.add(new TestCase("funcReturnInExpr (error)", "funcReturnInExpr.jott", false ));
+        testCases.add(new TestCase("funcWrongParamType (pass)", "funcWrongParamType.jott", true ));
+        testCases.add(new TestCase("helloWorld (error)", "helloWorld.jott", true ));
+        testCases.add(new TestCase("ifStmtReturns", "ifStmtReturns.jott", true ));
+        testCases.add(new TestCase("largerValid (error)", "largerValid.jott", true ));
+        testCases.add(new TestCase("mainReturnNotInt (error)", "mainReturnNotInt.jott", false ));
+        testCases.add(new TestCase("mismatchedReturn (error)", "mismatchedReturn.jott", false ));
+        testCases.add(new TestCase("missingFuncParams (error)", "missingFuncParams.jott", false ));
+        testCases.add(new TestCase("missingMain (error)", "missingMain.jott", false ));
+        testCases.add(new TestCase("missingReturn (error)", "missingReturn.jott", false ));
+        testCases.add(new TestCase("noReturnIf", "noReturnIf.jott", false ));
+        testCases.add(new TestCase("noReturnWhile (error)", "noReturnWhile.jott", false ));
+        testCases.add(new TestCase("providedExample1", "providedExample1.jott", true ));
+        testCases.add(new TestCase("returnId", "returnId.jott", false ));
+        testCases.add(new TestCase("validLoop", "validLoop.jott", true ));
+        testCases.add(new TestCase("voidReturn", "voidReturn.jott", false ));
+        testCases.add(new TestCase("whileKeyword", "whileKeyword.jott", false ));
     }
 
     private boolean semanticTest(TestCase test, String orginalJottCode){
@@ -80,21 +68,10 @@ public class JottSemanticTester {
                 System.err.println("\t\tPlease verify your tokenizer is working properly");
                 return false;
             }
-            System.out.println(tokenListString(tokens));
+            // System.out.println(tokenListString(tokens));
             ArrayList<Token> cpyTokens = new ArrayList<>(tokens);
             JottTree root = JottParser.parse(tokens);
-
-            if (!test.error && root == null) {
-                System.err.println("\tFailed Test: " + test.testName);
-                System.err.println("\t\tExpected a JottTree and got null");
-                return false;
-            } else if (test.error && root == null) {
-                return true;
-            } else if (test.error) {
-                System.err.println("\tFailed Test: " + test.testName);
-                System.err.println("\t\tExpected a null and got JottTree");
-                return false;
-            }
+            root.validateTree();
 
             System.out.println("Orginal Jott Code:\n");
             System.out.println(orginalJottCode);
@@ -105,7 +82,7 @@ public class JottSemanticTester {
             System.out.println(jottCode);
 
             try {
-                FileWriter writer = new FileWriter("phase3testcases/parserTestTemp.jott");
+                FileWriter writer = new FileWriter("phase3testcases/semanticTestTemp.jott");
                 if (jottCode == null) {
                     System.err.println("\tFailed Test: " + test.testName);
                     System.err.println("Expected a program string; got null");
@@ -117,7 +94,7 @@ public class JottSemanticTester {
                 e.printStackTrace();
             }
 
-            ArrayList<Token> newTokens = JottTokenizer.tokenize("parserTestCases/parserTestTemp.jott");
+            ArrayList<Token> newTokens = JottTokenizer.tokenize("phase3testcases/semanticTestTemp.jott");
 
             if (newTokens == null) {
                 System.err.println("\tFailed Test: " + test.testName);
@@ -175,7 +152,7 @@ public class JottSemanticTester {
         String orginalJottCode;
         try {
             orginalJottCode = new String(
-                    Files.readAllBytes(Paths.get("parserTestCases/" + test.fileName)));
+                    Files.readAllBytes(Paths.get("phase3testcases/" + test.fileName)));
         } catch (IOException e) {
             e.printStackTrace();
             return false;
