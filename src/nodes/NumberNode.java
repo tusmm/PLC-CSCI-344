@@ -61,8 +61,8 @@ public class NumberNode implements OperandNode {
     }
 
     @Override
-    public void validateTree() {
-        return;
+    public boolean validateTree() {
+        return true; // this should be fine
     }
 
     @Override

@@ -56,9 +56,8 @@ public class StringLiteralNode implements ExpressionNode {
     }
 
     @Override
-    public void validateTree() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
+    public boolean validateTree() {
+        return true;
     }
 
     @Override
