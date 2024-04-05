@@ -51,7 +51,7 @@ public class IDNode implements OperandNode {
     }
 
     @Override
-    public boolean validateTree() {
+    public void validateTree() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
     }

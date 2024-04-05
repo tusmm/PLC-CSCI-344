@@ -59,11 +59,9 @@ public class ProgramNode implements JottTree {
     }
 
     @Override
-    public boolean validateTree() throws SemanticErrorException {
+    public void validateTree() throws SemanticErrorException {
         for (FunctionDefNode functionDef : functionDefs) {
             functionDef.validateTree();
         }
-
-        return true;
     }
 }

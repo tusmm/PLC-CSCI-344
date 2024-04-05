@@ -13,6 +13,7 @@ public class BodyNode implements JottTree {
 
     private List<BodyStatementNode> bodyStatementNodes;
     private ReturnStatementNode returnStatementNode;
+    private boolean returnsEarly = false;
 
     public BodyNode(List<BodyStatementNode> bodyStatementNodes, ReturnStatementNode returnStatementNode) {
         this.bodyStatementNodes = bodyStatementNodes;
@@ -81,15 +82,23 @@ public class BodyNode implements JottTree {
     }
 
     @Override
-    public boolean validateTree() throws SemanticErrorException {
+    public void validateTree() throws SemanticErrorException {
         if (bodyStatementNodes.size() != 0) {
             for (BodyStatementNode bodyStmtNode : bodyStatementNodes) {
                 bodyStmtNode.validateTree();
+                if (bodyStmtNode.willReturn()) {
+                    returnsEarly = true;
+                }
             }
         }
 
-        returnStatementNode.validateTree();
+        // Ignore if we return early
+        if (!returnsEarly) {
+            returnStatementNode.validateTree();
+        }
+    }
 
-        return true;
+    public boolean willReturn() {
+        return returnsEarly || !returnStatementNode.isEmpty();
     }
 }
