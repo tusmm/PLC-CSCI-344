@@ -47,6 +47,8 @@ public class FunctionDefNode implements JottTree {
 
         FunctionDefParamsNode functionDefParams = FunctionDefParamsNode.parseFunctionDefParamsNode(tokens);
 
+        System.out.println("function " + id + " has params: " + functionDefParams.convertToJott());
+
         if (tokens.get(0).getTokenType() == TokenType.R_BRACKET) {
             tokens.remove(0);
         } else {
