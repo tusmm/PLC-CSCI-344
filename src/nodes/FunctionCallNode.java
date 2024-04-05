@@ -113,11 +113,18 @@ public class FunctionCallNode implements OperandNode, BodyStatementNode {
             throw new SemanticErrorException("Function call to " + id.toString() + " has wrong number of arguments", id.token.getLineNum(), id.token.getFilename());
         }
 
-        for (int i = 0; i < expectedParamTypes.size(); i++) {
-            if (!expectedParamTypes.get(i).equals(actualParamTypes.get(i))) {
-                throw new SemanticErrorException("Invalid type being passed into function param: " + id.toString() + "\nExpected " + expectedParamTypes.get(i) + ", but got " + actualParamTypes.get(i), id.token.getLineNum(), id.token.getFilename());
+        if (id.token.getToken().equals("print")) {
+            if (actualParamTypes.get(0).equals("Void")) {
+                throw new SemanticErrorException("Print statement requires a non-void arguments", id.token.getLineNum(), id.token.getFilename());
+            }
+        } else {
+            for (int i = 0; i < expectedParamTypes.size(); i++) {
+                if (!expectedParamTypes.get(i).equals(actualParamTypes.get(i))) {
+                    throw new SemanticErrorException("Invalid type being passed into function param: " + id.toString() + "\nExpected " + expectedParamTypes.get(i) + ", but got " + actualParamTypes.get(i), id.token.getLineNum(), id.token.getFilename());
+                }
             }
         }
+
     }
 
     @Override
