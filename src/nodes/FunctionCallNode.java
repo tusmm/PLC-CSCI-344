@@ -115,7 +115,7 @@ public class FunctionCallNode implements OperandNode, BodyStatementNode {
 
         for (int i = 0; i < expectedParamTypes.size(); i++) {
             if (!expectedParamTypes.get(i).equals(actualParamTypes.get(i))) {
-                throw new SemanticErrorException("Invalid type being passed into function param: " + id.toString() + "\nExpected " + actualParamTypes.get(i) + ", but got " + expectedParamTypes.get(i), id.token.getLineNum(), id.token.getFilename());
+                throw new SemanticErrorException("Invalid type being passed into function param: " + id.toString() + "\nExpected " + expectedParamTypes.get(i) + ", but got " + actualParamTypes.get(i), id.token.getLineNum(), id.token.getFilename());
             }
         }
     }

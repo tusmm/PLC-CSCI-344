@@ -108,6 +108,8 @@ public class SymbolTable {
 
     public static void init() {
         functionTable.put("print", new Tuple<List<String>, String>(new ArrayList<>(List.of("String")), "Void"));
+        functionTable.put("concat", new Tuple<List<String>, String>(new ArrayList<>(List.of("String", "String")), "Void"));
+        functionTable.put("length", new Tuple<List<String>, String>(new ArrayList<>(List.of("String")), "Integer"));
     }
 }
 
