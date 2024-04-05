@@ -109,6 +109,11 @@ public class FunctionCallNode implements OperandNode, BodyStatementNode {
                 actualParamTypes.add(param.expressionNode.getType());
             }
         }
+
+        // System.out.println(SymbolTable.asString());
+        // System.out.println("expected size: " + expectedParamTypes.size());
+        // System.out.println("actual size: " + actualParamTypes.size());
+
         if (expectedParamTypes.size() != actualParamTypes.size()) {
             throw new SemanticErrorException("Function call to " + id.toString() + " has wrong number of arguments", id.token.getLineNum(), id.token.getFilename());
         }
