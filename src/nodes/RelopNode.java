@@ -6,7 +6,7 @@ import provided.*;
 
 public class RelopNode implements JottTree {
 
-    private Token token;
+    Token token;
 
     public RelopNode(Token token) {
         this.token = token;
