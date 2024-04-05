@@ -43,10 +43,10 @@ public class JottSemanticTester {
         testCases.add(new TestCase("funCallParamInvalid (error)", "funcCallParamInvalid.jott", true ));
         testCases.add(new TestCase("funcNotDefined (error)", "funcNotDefined.jott", true ));
         testCases.add(new TestCase("funcReturnInExpr (error)", "funcReturnInExpr.jott", true ));
-        testCases.add(new TestCase("funcWrongParamType (pass)", "funcWrongParamType.jott", false ));
-        testCases.add(new TestCase("helloWorld ", "helloWorld.jott", false ));
+        testCases.add(new TestCase("funcWrongParamType (error)", "funcWrongParamType.jott", true ));
+        testCases.add(new TestCase("helloWorld", "helloWorld.jott", false ));
         testCases.add(new TestCase("ifStmtReturns", "ifStmtReturns.jott", false ));
-        testCases.add(new TestCase("largerValid (error)", "largerValid.jott", false ));
+        testCases.add(new TestCase("largerValid", "largerValid.jott", false ));
         testCases.add(new TestCase("mainReturnNotInt (error)", "mainReturnNotInt.jott", true ));
         testCases.add(new TestCase("mismatchedReturn (error)", "mismatchedReturn.jott", true ));
         testCases.add(new TestCase("missingFuncParams (error)", "missingFuncParams.jott", true ));
