@@ -147,11 +147,14 @@ public class WhileLoopNode implements BodyStatementNode {
     }
 
     @Override
-    public boolean validateTree() throws SemanticErrorException {
+    public void validateTree() throws SemanticErrorException {
         expression.validateTree();
         body.validateTree();
-        
-        return true;
+    }
+
+    @Override
+    public boolean willReturn() {
+        return body.willReturn();
     }
 
 }

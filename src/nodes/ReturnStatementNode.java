@@ -76,12 +76,12 @@ public class ReturnStatementNode implements JottTree {
     }
 
     @Override
-    public boolean validateTree() throws SemanticErrorException {
+    public void validateTree() throws SemanticErrorException {
         String expectedReturnType = SymbolTable.getReturnType(SymbolTable.getCurrentScope());
 
         if (expectedReturnType.equals("Void")) {
             if (isVoid) {
-                return true;
+                return;
             } else {
                 throw new SemanticErrorException("Expected void return type but got non-void return type", retLineNum, filename);
             }
@@ -93,7 +93,9 @@ public class ReturnStatementNode implements JottTree {
         if (!expectedReturnType.equals(actualReturnType)) {
             throw new SemanticErrorException("Expected return type " + expectedReturnType + " but got " + actualReturnType, retLineNum, filename);
         }
+    }
 
-        return true;
+    public boolean isEmpty() {
+        return isVoid;
     }
 }

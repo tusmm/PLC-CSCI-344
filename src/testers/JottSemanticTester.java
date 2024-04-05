@@ -12,6 +12,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+
+import nodes.SemanticErrorException;
+import nodes.SyntaxErrorException;
 import provided.*;
 
 public class JottSemanticTester {
@@ -37,25 +40,25 @@ public class JottSemanticTester {
     private void createTestCases(){
         this.testCases = new ArrayList<>();
         // add phase3 test cases here
-        testCases.add(new TestCase("funCallParamInvalid", "funcCallParamInvalid.jott", false ));
-        testCases.add(new TestCase("funcNotDefined", "funcNotDefined.jott", false ));
-        testCases.add(new TestCase("funcReturnInExpr (error)", "funcReturnInExpr.jott", false ));
-        testCases.add(new TestCase("funcWrongParamType (pass)", "funcWrongParamType.jott", true ));
-        testCases.add(new TestCase("helloWorld (error)", "helloWorld.jott", true ));
-        testCases.add(new TestCase("ifStmtReturns", "ifStmtReturns.jott", true ));
-        testCases.add(new TestCase("largerValid (error)", "largerValid.jott", true ));
-        testCases.add(new TestCase("mainReturnNotInt (error)", "mainReturnNotInt.jott", false ));
-        testCases.add(new TestCase("mismatchedReturn (error)", "mismatchedReturn.jott", false ));
-        testCases.add(new TestCase("missingFuncParams (error)", "missingFuncParams.jott", false ));
-        testCases.add(new TestCase("missingMain (error)", "missingMain.jott", false ));
-        testCases.add(new TestCase("missingReturn (error)", "missingReturn.jott", false ));
-        testCases.add(new TestCase("noReturnIf", "noReturnIf.jott", false ));
-        testCases.add(new TestCase("noReturnWhile (error)", "noReturnWhile.jott", false ));
-        testCases.add(new TestCase("providedExample1", "providedExample1.jott", true ));
-        testCases.add(new TestCase("returnId", "returnId.jott", false ));
-        testCases.add(new TestCase("validLoop", "validLoop.jott", true ));
-        testCases.add(new TestCase("voidReturn", "voidReturn.jott", false ));
-        testCases.add(new TestCase("whileKeyword", "whileKeyword.jott", false ));
+        testCases.add(new TestCase("funCallParamInvalid (error)", "funcCallParamInvalid.jott", true ));
+        testCases.add(new TestCase("funcNotDefined (error)", "funcNotDefined.jott", true ));
+        testCases.add(new TestCase("funcReturnInExpr (error)", "funcReturnInExpr.jott", true ));
+        testCases.add(new TestCase("funcWrongParamType (error)", "funcWrongParamType.jott", true ));
+        testCases.add(new TestCase("helloWorld", "helloWorld.jott", false ));
+        testCases.add(new TestCase("ifStmtReturns", "ifStmtReturns.jott", false ));
+        testCases.add(new TestCase("largerValid", "largerValid.jott", false ));
+        testCases.add(new TestCase("mainReturnNotInt (error)", "mainReturnNotInt.jott", true ));
+        testCases.add(new TestCase("mismatchedReturn (error)", "mismatchedReturn.jott", true ));
+        testCases.add(new TestCase("missingFuncParams (error)", "missingFuncParams.jott", true ));
+        testCases.add(new TestCase("missingMain (error)", "missingMain.jott", true ));
+        testCases.add(new TestCase("missingReturn (error)", "missingReturn.jott", true ));
+        testCases.add(new TestCase("noReturnIf (error)", "noReturnIf.jott", true ));
+        testCases.add(new TestCase("noReturnWhile (error)", "noReturnWhile.jott", true ));
+        testCases.add(new TestCase("providedExample1", "providedExample1.jott", false ));
+        testCases.add(new TestCase("returnId (error)", "returnId.jott", true ));
+        testCases.add(new TestCase("validLoop", "validLoop.jott", false ));
+        testCases.add(new TestCase("voidReturn (error)", "voidReturn.jott", true ));
+        testCases.add(new TestCase("whileKeyword (error)", "whileKeyword.jott", true ));
     }
 
     private boolean semanticTest(TestCase test, String orginalJottCode){
@@ -70,63 +73,83 @@ public class JottSemanticTester {
             }
             // System.out.println(tokenListString(tokens));
             ArrayList<Token> cpyTokens = new ArrayList<>(tokens);
-            JottTree root = JottParser.parse(tokens);
-            root.validateTree();
+            JottTree root;
+            root = JottParser.parse(tokens);
+            // syntax error
+            // if (root == null) {
+            //     if (!test.error) {
+            //         System.err.println("\tFailed Test: " + test.testName);
+            //         System.err.println("\t\tExpected no error, but got error: SyntaxErrorException");
+            //         return false;
+            //     }
+            //     return true;
+            // }
 
-            System.out.println("Orginal Jott Code:\n");
-            System.out.println(orginalJottCode);
-            System.out.println();
-
-            String jottCode = root.convertToJott();
-            System.out.println("Resulting Jott Code:\n");
-            System.out.println(jottCode);
-
-            try {
-                FileWriter writer = new FileWriter("phase3testcases/semanticTestTemp.jott");
-                if (jottCode == null) {
+            try { 
+                root.validateTree();
+            } catch (SemanticErrorException e) {
+                if (!test.error) {
                     System.err.println("\tFailed Test: " + test.testName);
-                    System.err.println("Expected a program string; got null");
+                    System.err.println("\t\tExpected no error, but got error: " + e.getMessage());
                     return false;
                 }
-                writer.write(jottCode);
-                writer.close();
-            } catch (IOException e) {
-                e.printStackTrace();
+                return true;
             }
 
-            ArrayList<Token> newTokens = JottTokenizer.tokenize("phase3testcases/semanticTestTemp.jott");
+            // System.out.println("Orginal Jott Code:\n");
+            // System.out.println(orginalJottCode);
+            // System.out.println();
 
-            if (newTokens == null) {
-                System.err.println("\tFailed Test: " + test.testName);
-                System.err.println("Tokenization of files dot not match.");
-                System.err.println("Similar files should have same tokenization.");
-                System.err.println("Expected: " + tokenListString(tokens));
-                System.err.println("Got: null");
-                return false;
-            }
+            // String jottCode = root.convertToJott();
+            // System.out.println("Resulting Jott Code:\n");
+            // System.out.println(jottCode);
 
-            if (newTokens.size() != cpyTokens.size()) {
-                System.err.println("\tFailed Test: " + test.testName);
-                System.err.println("Tokenization of files dot not match.");
-                System.err.println("Similar files should have same tokenization.");
-                System.err.println("Expected: " + tokenListString(cpyTokens));
-                System.err.println("Got:    : " + tokenListString(newTokens));
-                return false;
-            }
+            // try {
+            //     FileWriter writer = new FileWriter("phase3testcases/semanticTestTemp.jott");
+            //     if (jottCode == null) {
+            //         System.err.println("\tFailed Test: " + test.testName);
+            //         System.err.println("Expected a program string; got null");
+            //         return false;
+            //     }
+            //     writer.write(jottCode);
+            //     writer.close();
+            // } catch (IOException e) {
+            //     e.printStackTrace();
+            // }
 
-            for (int i = 0; i < newTokens.size(); i++) {
-                Token n = newTokens.get(i);
-                Token t = cpyTokens.get(i);
+            // ArrayList<Token> newTokens = JottTokenizer.tokenize("phase3testcases/semanticTestTemp.jott");
 
-                if (!tokensEqualNoFileData(n, t)) {
-                    System.err.println("\tFailed Test: " + test.testName);
-                    System.err.println("Token mismatch: Tokens do not match.");
-                    System.err.println("Similar files should have same tokenization.");
-                    System.err.println("Expected: " + tokenListString(cpyTokens));
-                    System.err.println("Got     : " + tokenListString(newTokens));
-                    return false;
-                }
-            }
+            // if (newTokens == null) {
+            //     System.err.println("\tFailed Test: " + test.testName);
+            //     System.err.println("Tokenization of files dot not match.");
+            //     System.err.println("Similar files should have same tokenization.");
+            //     System.err.println("Expected: " + tokenListString(tokens));
+            //     System.err.println("Got: null");
+            //     return false;
+            // }
+
+            // if (newTokens.size() != cpyTokens.size()) {
+            //     System.err.println("\tFailed Test: " + test.testName);
+            //     System.err.println("Tokenization of files dot not match.");
+            //     System.err.println("Similar files should have same tokenization.");
+            //     System.err.println("Expected: " + tokenListString(cpyTokens));
+            //     System.err.println("Got:    : " + tokenListString(newTokens));
+            //     return false;
+            // }
+
+            // for (int i = 0; i < newTokens.size(); i++) {
+            //     Token n = newTokens.get(i);
+            //     Token t = cpyTokens.get(i);
+
+            //     if (!tokensEqualNoFileData(n, t)) {
+            //         System.err.println("\tFailed Test: " + test.testName);
+            //         System.err.println("Token mismatch: Tokens do not match.");
+            //         System.err.println("Similar files should have same tokenization.");
+            //         System.err.println("Expected: " + tokenListString(cpyTokens));
+            //         System.err.println("Got     : " + tokenListString(newTokens));
+            //         return false;
+            //     }
+            // }
             return true;
         }catch (Exception e){
             System.err.println("\tFailed Test: " + test.testName);

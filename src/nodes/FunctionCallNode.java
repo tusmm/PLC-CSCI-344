@@ -87,7 +87,7 @@ public class FunctionCallNode implements OperandNode, BodyStatementNode {
     }
 
     @Override
-    public boolean validateTree() throws SemanticErrorException {
+    public void validateTree() throws SemanticErrorException {
         // check if the function exists in the symbol table
         if (!SymbolTable.functionExists(id.toString())) {
             throw new SemanticErrorException("Call to unknown function" + id.toString(), id.token.getLineNum(), id.token.getFilename());
@@ -114,12 +114,19 @@ public class FunctionCallNode implements OperandNode, BodyStatementNode {
                 throw new SemanticErrorException("Invalid type being passed into function param: " + id.toString() + "\nExpected " + actualParamTypes.get(i) + ", but got " + expectedParamTypes.get(i), id.token.getLineNum(), id.token.getFilename());
             }
         }
-        
-        return true;
     }
 
     @Override
-    public String getType() {
-        return SymbolTable.getReturnType(id.token.getToken());
+    public String getType() throws SemanticErrorException {
+        if (!SymbolTable.functionExists(id.toString())) {
+            throw new SemanticErrorException("Call to unknown function" + id.toString(), id.token.getLineNum(), id.token.getFilename());
+        }
+        return SymbolTable.getReturnType(id.toString());
+    }
+
+    @Override
+    public boolean willReturn() {
+        // Call doesnt return, only returns when part of a return statement
+        return false;
     }
 }

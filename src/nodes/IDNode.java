@@ -52,8 +52,7 @@ public class IDNode implements OperandNode {
 
     @Override
     public boolean validateTree() {
-        return true; // i... think... bc if it exists it is valid semantics
-    }
+        return true;
 
     @Override
     public String toString() {
