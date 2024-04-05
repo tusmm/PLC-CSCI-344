@@ -125,10 +125,12 @@ public class ElseIfNode implements JottTree {
     }
 
     @Override
-    public boolean validateTree() throws SemanticErrorException {
+    public void validateTree() throws SemanticErrorException {
         expr.validateTree();
         body.validateTree();
+    }
 
-        return true;
+    public boolean willReturn() {
+        return body.willReturn();
     }
 }

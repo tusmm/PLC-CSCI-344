@@ -94,7 +94,7 @@ public class AssignmentNode implements BodyStatementNode {
     }
 
     @Override
-    public boolean validateTree() throws SemanticErrorException {
+    public void validateTree() throws SemanticErrorException {
         // if id doesn't exist in symbol table 
         if(!SymbolTable.variableExistsInScope(id.toString())) {
             throw new SemanticErrorException("Uninitialized variable being used: " + id.toString(), id.token.getLineNum(), id.token.getFilename());
@@ -105,7 +105,10 @@ public class AssignmentNode implements BodyStatementNode {
         if (!expr_type.equals(id_type)){
             throw new SemanticErrorException("Invalid type being assigned into a variable: " + id.toString(), id.token.getLineNum(), id.token.getFilename());
         }
+    }
 
-        return true; 
+    @Override
+    public boolean willReturn() {
+        return false;
     }
 }

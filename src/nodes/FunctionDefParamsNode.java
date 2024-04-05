@@ -111,9 +111,9 @@ public class FunctionDefParamsNode implements JottTree {
     }
 
     @Override
-    public boolean validateTree() throws SemanticErrorException {
+    public void validateTree() throws SemanticErrorException {
         if (isEmpty) {
-            return true;
+            return;
         }
 
         if (SymbolTable.variableExistsInScope(id.toString())) {
@@ -125,8 +125,6 @@ public class FunctionDefParamsNode implements JottTree {
         for (FunctionDefParamsTypeNode functionDefParamsTypeNode : functionDefParamsTypes) {
             functionDefParamsTypeNode.validateTree();
         }
-
-        return true;
     }
 
     public List<String> asList() {

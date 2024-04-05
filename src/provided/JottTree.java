@@ -39,5 +39,5 @@ public interface JottTree {
      * @return true if valid Jott code; false otherwise
      * @throws SemanticErrorException 
      */
-    public boolean validateTree() throws SemanticErrorException;
+    public void validateTree() throws SemanticErrorException;
 }

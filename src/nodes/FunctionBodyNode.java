@@ -64,7 +64,7 @@ public class FunctionBodyNode implements JottTree {
     }
 
     @Override
-    public boolean validateTree() throws SemanticErrorException {
+    public void validateTree() throws SemanticErrorException {
         if (variableDeclarations.size() != 0) {
             for (VariableDeclarationNode varDecNode : variableDeclarations) {
                 varDecNode.validateTree();
@@ -72,8 +72,6 @@ public class FunctionBodyNode implements JottTree {
         }
         
         body.validateTree();
-
-        return true;
     }
 
 }

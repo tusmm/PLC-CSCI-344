@@ -66,13 +66,11 @@ public class VariableDeclarationNode implements JottTree {
     }
 
     @Override
-    public boolean validateTree() throws SemanticErrorException {
+    public void validateTree() throws SemanticErrorException {
         if(SymbolTable.variableExistsInScope(id.toString())) {
             throw new SemanticErrorException("Duplicate variable name: " + id.toString(), id.token.getLineNum(), id.token.getFilename());
         }
 
         SymbolTable.addVariableToScope(id.toString(), type.toString());
-        
-        return true; 
     }
 }

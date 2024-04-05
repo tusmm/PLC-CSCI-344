@@ -48,4 +48,6 @@ public interface BodyStatementNode extends JottTree {
 
     }
 
+    // Must be called after validateTree
+    public boolean willReturn();
 }

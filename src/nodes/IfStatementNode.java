@@ -13,6 +13,7 @@ public class IfStatementNode implements BodyStatementNode {
     BodyNode body;
     ArrayList<ElseIfNode> elseif_lst;
     ElseNode elseNode;
+    private Boolean willReturnEarly = null;
 
     public IfStatementNode(ExpressionNode expr, BodyNode body, ArrayList<ElseIfNode> elseif_lst, ElseNode elseNode) {
         this.expr = expr;
@@ -156,21 +157,41 @@ public class IfStatementNode implements BodyStatementNode {
     }
 
     @Override
-    public boolean validateTree() throws SemanticErrorException {
+    public void validateTree() throws SemanticErrorException {
         expr.validateTree();
         body.validateTree();
+
+        boolean willReturn = body.willReturn();
 
         if (elseif_lst.size() != 0) {
             for (ElseIfNode elseif_node : elseif_lst) {
                 // check each else if node and make sure it is valid
                 elseif_node.validateTree();
+                if (!elseif_node.willReturn()) {
+                    willReturn = false;
+                }
             }
         }
         if (elseNode != null) {
             elseNode.validateTree();
+            if (!elseNode.willReturn()) {
+                willReturn = false;
+            }
         }
-        
-        return true;
+
+        willReturnEarly = willReturn;
+
+        return;
+    }
+
+    @Override
+    public boolean willReturn() {
+        if (willReturnEarly == null) {
+            System.err.println("Fatal compiler error: IfStatementNode.willReturn() called before validateTree()");
+            System.exit(42);
+        }
+
+        return willReturnEarly;
     }
 
 }
