@@ -74,9 +74,18 @@ public class JottSemanticTester {
             // System.out.println(tokenListString(tokens));
             ArrayList<Token> cpyTokens = new ArrayList<>(tokens);
             JottTree root;
-                
-            try {
-                root = JottParser.parse(tokens);
+            root = JottParser.parse(tokens);
+            // syntax error
+            // if (root == null) {
+            //     if (!test.error) {
+            //         System.err.println("\tFailed Test: " + test.testName);
+            //         System.err.println("\t\tExpected no error, but got error: SyntaxErrorException");
+            //         return false;
+            //     }
+            //     return true;
+            // }
+
+            try { 
                 root.validateTree();
             } catch (SemanticErrorException e) {
                 if (!test.error) {
