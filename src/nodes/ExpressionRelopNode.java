@@ -56,13 +56,12 @@ public class ExpressionRelopNode implements ExpressionNode {
     }
 
     @Override
-    public boolean validateTree() throws SemanticErrorException {
+    public void validateTree() throws SemanticErrorException {
         if (operandNodeLeft.getType() != operandNodeLeft.getType()) {
             throw new SemanticErrorException((operandNodeLeft.toString() + " and " + operandNodeRight.toString() + " do not have matching types"), relopNode.token.getLineNum(), relopNode.token.getFilename());
         } 
         operandNodeLeft.validateTree();
         operandNodeRight.validateTree(); // these will catch if a function isn't valid,, but now i need to implement the rest grawrg
-        return true; // yeah that's it i think
     }
 
     @Override

@@ -33,5 +33,4 @@ public interface OperandNode extends ExpressionNode {
                 token.getFilename());
     }
 
-    public String getType();
 }

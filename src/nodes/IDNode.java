@@ -51,8 +51,8 @@ public class IDNode implements OperandNode {
     }
 
     @Override
-    public boolean validateTree() {
-        return true;
+    public void validateTree() {
+    }
 
     @Override
     public String toString() {

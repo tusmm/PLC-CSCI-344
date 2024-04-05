@@ -57,7 +57,7 @@ public class ExpressionMathopNode implements ExpressionNode {
     }
 
     @Override
-    public boolean validateTree() throws SemanticErrorException {
+    public void validateTree() throws SemanticErrorException {
 
         if (operandNodeLeft.getType() != operandNodeRight.getType()) {
             throw new SemanticErrorException((operandNodeLeft.toString() + " and " + operandNodeRight.toString() + " do not have matching types"), mathopNode.token.getLineNum(), mathopNode.token.getFilename());
@@ -67,7 +67,6 @@ public class ExpressionMathopNode implements ExpressionNode {
 
         operandNodeLeft.validateTree();
         operandNodeRight.validateTree();
-        return true;
 
     }
 
