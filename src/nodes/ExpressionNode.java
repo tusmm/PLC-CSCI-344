@@ -40,7 +40,7 @@ public interface ExpressionNode extends JottTree {
         return opNode1;
     }
 
-    public String getType();
+    public String getType() throws SemanticErrorException;
 }
 
 
