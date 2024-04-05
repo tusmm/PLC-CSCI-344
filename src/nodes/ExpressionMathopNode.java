@@ -64,7 +64,6 @@ public class ExpressionMathopNode implements ExpressionNode {
         } // types don't match
 
         // check for divide by 0 ??
-
         operandNodeLeft.validateTree();
         operandNodeRight.validateTree();
 

@@ -88,6 +88,11 @@ public class ReturnStatementNode implements JottTree {
         }
 
         // check if the return type of the expression matches the expected return type
+        
+        if (expressionNode == null && !expectedReturnType.equals("Void")) {
+            throw new SemanticErrorException("Missing return statement", retLineNum, filename);
+        }
+        
         String actualReturnType = expressionNode.getType();
 
         if (!expectedReturnType.equals(actualReturnType)) {

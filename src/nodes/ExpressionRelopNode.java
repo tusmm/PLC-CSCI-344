@@ -27,9 +27,8 @@ public class ExpressionRelopNode implements ExpressionNode {
         }
         RelopNode relopNode = RelopNode.parseRelopNode(tokens);
         OperandNode operandNodeRight = OperandNode.parseOperandNode(tokens);
-
+        
         return new ExpressionRelopNode(operandNodeLeft, relopNode, operandNodeRight);
-
     }
 
     @Override

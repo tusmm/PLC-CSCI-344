@@ -57,6 +57,7 @@ public class StringLiteralNode implements ExpressionNode {
 
     @Override
     public void validateTree() {
+        
     }
 
     @Override
