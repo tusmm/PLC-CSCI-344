@@ -6,7 +6,7 @@ import provided.*;
 
 public class MathopNode implements JottTree {
 
-    private Token token;
+    Token token;
 
     public MathopNode(Token token) {
         this.token = token;
@@ -55,8 +55,7 @@ public class MathopNode implements JottTree {
 
     @Override
     public boolean validateTree() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
+        return true;
     }
 
 }

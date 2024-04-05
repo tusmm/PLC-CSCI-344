@@ -57,9 +57,19 @@ public class ExpressionMathopNode implements ExpressionNode {
     }
 
     @Override
-    public boolean validateTree() {
+    public boolean validateTree() throws SemanticErrorException {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
+
+        if (operandNodeLeft.getType() != operandNodeRight.getType()) {
+            throw new SemanticErrorException((operandNodeLeft.toString() + " and " + operandNodeRight.toString() + " do not have matching types"), mathopNode.token.getLineNum(), mathopNode.token.getFilename());
+        } // types don't match
+
+        // check for divide by 0 ??
+
+        operandNodeLeft.validateTree();
+        operandNodeRight.validateTree();
+        return true;
+
     }
 
     @Override

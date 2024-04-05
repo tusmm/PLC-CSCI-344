@@ -32,4 +32,6 @@ public interface OperandNode extends ExpressionNode {
         throw new SyntaxErrorException("Unexpected token: " + token.getToken(), token.getLineNum(),
                 token.getFilename());
     }
+
+    public String getType();
 }
