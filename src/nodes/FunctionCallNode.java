@@ -100,11 +100,15 @@ public class FunctionCallNode implements OperandNode, BodyStatementNode {
         ArrayList<String> actualParamTypes = new ArrayList<String>();
         
         // append params.expressionNode.gettype to the paramst list 
-        actualParamTypes.add(params.expressionNode.getType());
-        for (ParamsTNode param : params.paramsTNode) {
-            actualParamTypes.add(param.expressionNode.getType());
+        // need to account for functions with no params
+        if (params.expressionNode != null) {
+            actualParamTypes.add(params.expressionNode.getType());
         }
-
+        if (params.paramsTNode != null) {
+            for (ParamsTNode param : params.paramsTNode) {
+                actualParamTypes.add(param.expressionNode.getType());
+            }
+        }
         if (expectedParamTypes.size() != actualParamTypes.size()) {
             throw new SemanticErrorException("Function call to " + id.toString() + " has wrong number of arguments", id.token.getLineNum(), id.token.getFilename());
         }
