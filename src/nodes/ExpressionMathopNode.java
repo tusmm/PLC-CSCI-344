@@ -63,7 +63,7 @@ public class ExpressionMathopNode implements ExpressionNode {
     }
 
     @Override
-    public String getType() {
+    public String getType() throws SemanticErrorException {
         // If the expression is valid both operands should have the same type
         return operandNodeLeft.getType();
     }

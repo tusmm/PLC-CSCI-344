@@ -117,8 +117,11 @@ public class FunctionCallNode implements OperandNode, BodyStatementNode {
     }
 
     @Override
-    public String getType() {
-        return SymbolTable.getReturnType(id.token.getToken());
+    public String getType() throws SemanticErrorException {
+        if (!SymbolTable.functionExists(id.toString())) {
+            throw new SemanticErrorException("Call to unknown function" + id.toString(), id.token.getLineNum(), id.token.getFilename());
+        }
+        return SymbolTable.getReturnType(id.toString());
     }
 
     @Override
