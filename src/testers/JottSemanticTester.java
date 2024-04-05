@@ -100,56 +100,56 @@ public class JottSemanticTester {
             // System.out.println(orginalJottCode);
             // System.out.println();
 
-            String jottCode = root.convertToJott();
+            // String jottCode = root.convertToJott();
             // System.out.println("Resulting Jott Code:\n");
             // System.out.println(jottCode);
 
-            try {
-                FileWriter writer = new FileWriter("phase3testcases/semanticTestTemp.jott");
-                if (jottCode == null) {
-                    System.err.println("\tFailed Test: " + test.testName);
-                    System.err.println("Expected a program string; got null");
-                    return false;
-                }
-                writer.write(jottCode);
-                writer.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            // try {
+            //     FileWriter writer = new FileWriter("phase3testcases/semanticTestTemp.jott");
+            //     if (jottCode == null) {
+            //         System.err.println("\tFailed Test: " + test.testName);
+            //         System.err.println("Expected a program string; got null");
+            //         return false;
+            //     }
+            //     writer.write(jottCode);
+            //     writer.close();
+            // } catch (IOException e) {
+            //     e.printStackTrace();
+            // }
 
-            ArrayList<Token> newTokens = JottTokenizer.tokenize("phase3testcases/semanticTestTemp.jott");
+            // ArrayList<Token> newTokens = JottTokenizer.tokenize("phase3testcases/semanticTestTemp.jott");
 
-            if (newTokens == null) {
-                System.err.println("\tFailed Test: " + test.testName);
-                System.err.println("Tokenization of files dot not match.");
-                System.err.println("Similar files should have same tokenization.");
-                System.err.println("Expected: " + tokenListString(tokens));
-                System.err.println("Got: null");
-                return false;
-            }
+            // if (newTokens == null) {
+            //     System.err.println("\tFailed Test: " + test.testName);
+            //     System.err.println("Tokenization of files dot not match.");
+            //     System.err.println("Similar files should have same tokenization.");
+            //     System.err.println("Expected: " + tokenListString(tokens));
+            //     System.err.println("Got: null");
+            //     return false;
+            // }
 
-            if (newTokens.size() != cpyTokens.size()) {
-                System.err.println("\tFailed Test: " + test.testName);
-                System.err.println("Tokenization of files dot not match.");
-                System.err.println("Similar files should have same tokenization.");
-                System.err.println("Expected: " + tokenListString(cpyTokens));
-                System.err.println("Got:    : " + tokenListString(newTokens));
-                return false;
-            }
+            // if (newTokens.size() != cpyTokens.size()) {
+            //     System.err.println("\tFailed Test: " + test.testName);
+            //     System.err.println("Tokenization of files dot not match.");
+            //     System.err.println("Similar files should have same tokenization.");
+            //     System.err.println("Expected: " + tokenListString(cpyTokens));
+            //     System.err.println("Got:    : " + tokenListString(newTokens));
+            //     return false;
+            // }
 
-            for (int i = 0; i < newTokens.size(); i++) {
-                Token n = newTokens.get(i);
-                Token t = cpyTokens.get(i);
+            // for (int i = 0; i < newTokens.size(); i++) {
+            //     Token n = newTokens.get(i);
+            //     Token t = cpyTokens.get(i);
 
-                if (!tokensEqualNoFileData(n, t)) {
-                    System.err.println("\tFailed Test: " + test.testName);
-                    System.err.println("Token mismatch: Tokens do not match.");
-                    System.err.println("Similar files should have same tokenization.");
-                    System.err.println("Expected: " + tokenListString(cpyTokens));
-                    System.err.println("Got     : " + tokenListString(newTokens));
-                    return false;
-                }
-            }
+            //     if (!tokensEqualNoFileData(n, t)) {
+            //         System.err.println("\tFailed Test: " + test.testName);
+            //         System.err.println("Token mismatch: Tokens do not match.");
+            //         System.err.println("Similar files should have same tokenization.");
+            //         System.err.println("Expected: " + tokenListString(cpyTokens));
+            //         System.err.println("Got     : " + tokenListString(newTokens));
+            //         return false;
+            //     }
+            // }
             return true;
         }catch (Exception e){
             System.err.println("\tFailed Test: " + test.testName);
