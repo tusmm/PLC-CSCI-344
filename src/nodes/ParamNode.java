@@ -57,9 +57,13 @@ public class ParamNode implements JottTree {
     @Override
     public String convertToJott() {
         String jottString = "";
-        jottString += expressionNode.convertToJott();
-        for (ParamsTNode param : paramsTNode) {
-            jottString += param.convertToJott();
+        if (expressionNode != null) {
+            jottString += expressionNode.convertToJott();
+        }
+        if (paramsTNode != null && !paramsTNode.isEmpty()) {
+            for (ParamsTNode param : paramsTNode) {
+                jottString += param.convertToJott();
+            }
         }
         return jottString;
     }
