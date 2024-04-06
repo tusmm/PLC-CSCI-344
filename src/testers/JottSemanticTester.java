@@ -14,6 +14,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import nodes.SemanticErrorException;
+import nodes.SymbolTable;
 import nodes.SyntaxErrorException;
 import provided.*;
 

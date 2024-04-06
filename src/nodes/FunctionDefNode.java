@@ -47,8 +47,6 @@ public class FunctionDefNode implements JottTree {
 
         FunctionDefParamsNode functionDefParams = FunctionDefParamsNode.parseFunctionDefParamsNode(tokens);
 
-        System.out.println("function " + id + " has params: " + functionDefParams.convertToJott());
-
         if (tokens.get(0).getTokenType() == TokenType.R_BRACKET) {
             tokens.remove(0);
         } else {
@@ -110,7 +108,7 @@ public class FunctionDefNode implements JottTree {
 
     @Override
     public void validateTree() throws SemanticErrorException {
-        if(!SymbolTable.addFunction(id.toString(), functionDefParams.asList(), functionReturn.toString())) {
+        if(!SymbolTable.addFunction(id.toString(), functionDefParams.typesAsList(), functionReturn.toString())) {
             throw new SemanticErrorException("Duplicate function name: " + id.toString(), id.token.getLineNum(), id.token.getFilename());
         }
 

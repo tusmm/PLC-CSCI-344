@@ -71,7 +71,7 @@ public class SymbolTable {
         if(functionExists(funcName)) {
             return false;
         }
-        functionTable.put(funcName, new Tuple<List<String>, String>(paramTypes, returnType));
+        functionTable.put(funcName, new Tuple<List<String>, String>(new ArrayList<>(paramTypes), returnType));
         return true;
     }
 
