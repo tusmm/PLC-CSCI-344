@@ -71,6 +71,11 @@ public class VariableDeclarationNode implements JottTree {
             throw new SemanticErrorException("Duplicate variable name: " + id.toString(), id.token.getLineNum(), id.token.getFilename());
         }
 
+        if(!Character.isLowerCase(id.toString().charAt(0))) {
+            throw new SemanticErrorException("Variable must start with a lowercase letter: " + id.toString(), id.token.getLineNum(), id.token.getFilename());
+        }
+
         SymbolTable.addVariableToScope(id.toString(), type.toString());
+
     }
 }
