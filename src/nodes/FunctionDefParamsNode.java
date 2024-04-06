@@ -127,11 +127,13 @@ public class FunctionDefParamsNode implements JottTree {
         }
     }
 
-    public List<String> asList() {
+    public List<String> typesAsList() {
         List<String> typeList = new ArrayList<>();
         if(isEmpty) {
             return typeList;
         }
+        
+        typeList.add(type.toString());
         for(FunctionDefParamsTypeNode t : functionDefParamsTypes) {
             typeList.add(t.type.toString());
         }

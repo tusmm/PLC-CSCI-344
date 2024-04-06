@@ -100,20 +100,36 @@ public class FunctionCallNode implements OperandNode, BodyStatementNode {
         ArrayList<String> actualParamTypes = new ArrayList<String>();
         
         // append params.expressionNode.gettype to the paramst list 
-        actualParamTypes.add(params.expressionNode.getType());
-        for (ParamsTNode param : params.paramsTNode) {
-            actualParamTypes.add(param.expressionNode.getType());
+        // need to account for functions with no params
+        if (params.expressionNode != null) {
+            actualParamTypes.add(params.expressionNode.getType());
         }
+        if (params.paramsTNode != null) {
+            for (ParamsTNode param : params.paramsTNode) {
+                actualParamTypes.add(param.expressionNode.getType());
+            }
+        }
+
+        // System.out.println(SymbolTable.asString());
+        // System.out.println("expected size: " + expectedParamTypes.size());
+        // System.out.println("actual size: " + actualParamTypes.size());
 
         if (expectedParamTypes.size() != actualParamTypes.size()) {
             throw new SemanticErrorException("Function call to " + id.toString() + " has wrong number of arguments", id.token.getLineNum(), id.token.getFilename());
         }
 
-        for (int i = 0; i < expectedParamTypes.size(); i++) {
-            if (!expectedParamTypes.get(i).equals(actualParamTypes.get(i))) {
-                throw new SemanticErrorException("Invalid type being passed into function param: " + id.toString() + "\nExpected " + actualParamTypes.get(i) + ", but got " + expectedParamTypes.get(i), id.token.getLineNum(), id.token.getFilename());
+        if (id.token.getToken().equals("print")) {
+            if (actualParamTypes.get(0).equals("Void")) {
+                throw new SemanticErrorException("Print statement requires a non-void arguments", id.token.getLineNum(), id.token.getFilename());
+            }
+        } else {
+            for (int i = 0; i < expectedParamTypes.size(); i++) {
+                if (!expectedParamTypes.get(i).equals(actualParamTypes.get(i))) {
+                    throw new SemanticErrorException("Invalid type being passed into function param: " + id.toString() + "\nExpected " + expectedParamTypes.get(i) + ", but got " + actualParamTypes.get(i), id.token.getLineNum(), id.token.getFilename());
+                }
             }
         }
+
     }
 
     @Override

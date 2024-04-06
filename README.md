@@ -14,7 +14,7 @@ lh5844  | Lucy Hu
 `javac -sourcepath . Jott.java`
 
 ## How to Run
-`java Jott <input_file> <output_file> <language`
+`java Jott <input_file> <output_file> <language>`
 ### Examples
 ```
 java Jott input.jott output.jott Jott

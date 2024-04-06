@@ -172,7 +172,7 @@ public class IfStatementNode implements BodyStatementNode {
                 }
             }
         }
-        if (elseNode != null) {
+        if (elseNode.body != null) {
             elseNode.validateTree();
             if (!elseNode.willReturn()) {
                 willReturn = false;

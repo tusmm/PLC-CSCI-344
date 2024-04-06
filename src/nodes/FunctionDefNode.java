@@ -108,7 +108,7 @@ public class FunctionDefNode implements JottTree {
 
     @Override
     public void validateTree() throws SemanticErrorException {
-        if(!SymbolTable.addFunction(id.toString(), functionDefParams.asList(), functionReturn.toString())) {
+        if(!SymbolTable.addFunction(id.toString(), functionDefParams.typesAsList(), functionReturn.toString())) {
             throw new SemanticErrorException("Duplicate function name: " + id.toString(), id.token.getLineNum(), id.token.getFilename());
         }
 

@@ -71,7 +71,7 @@ public class SymbolTable {
         if(functionExists(funcName)) {
             return false;
         }
-        functionTable.put(funcName, new Tuple<List<String>, String>(paramTypes, returnType));
+        functionTable.put(funcName, new Tuple<List<String>, String>(new ArrayList<>(paramTypes), returnType));
         return true;
     }
 
@@ -107,7 +107,9 @@ public class SymbolTable {
     }
 
     public static void init() {
-        functionTable.put("print", new Tuple<List<String>, String>(new ArrayList<>(List.of("String")), "Void"));
+        functionTable.put("print", new Tuple<List<String>, String>(new ArrayList<>(List.of("Any")), "Void"));
+        functionTable.put("concat", new Tuple<List<String>, String>(new ArrayList<>(List.of("String", "String")), "String"));
+        functionTable.put("length", new Tuple<List<String>, String>(new ArrayList<>(List.of("String")), "Integer"));
     }
 }
 

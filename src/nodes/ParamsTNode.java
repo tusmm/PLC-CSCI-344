@@ -30,11 +30,10 @@ public class ParamsTNode implements JottTree {
                 throw new SyntaxErrorException(message, tokens.get(0).getLineNum(), tokens.get(0).getFilename());
             }
 
-            if (ExpressionNode.parseExpressionNode(tokens) != null) {
-                ExpressionNode expressionNode = ExpressionNode.parseExpressionNode(tokens);
-                return new ParamsTNode(expressionNode);
-            }
-            throw new SyntaxErrorException("Invalid ParamsNode", token.getLineNum(), token.getFilename());
+
+            ExpressionNode expressionNode = ExpressionNode.parseExpressionNode(tokens);
+            return new ParamsTNode(expressionNode);
+
         }
 
         throw new SyntaxErrorException("Invalid ParamsNode", token.getLineNum(), token.getFilename());
