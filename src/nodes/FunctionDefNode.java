@@ -96,8 +96,10 @@ public class FunctionDefNode implements JottTree {
 
     @Override
     public String convertToC() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToC'");
+        boolean isMain = id.convertToC().equals("main");
+        return (isMain ? "int" : functionReturn.convertToC()) + " " + id.convertToC() +
+                "(" + functionDefParams.convertToC() + ") {" + functionBody.convertToC() +
+                (isMain ? "return 0;" : "") + "}";
     }
 
     @Override
