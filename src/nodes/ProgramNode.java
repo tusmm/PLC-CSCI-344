@@ -60,6 +60,7 @@ public class ProgramNode implements JottTree {
                     strcat(result, s2);
                     return result;
                 }
+                
                 """;
         for (FunctionDefNode functionDef : functionDefs) {
             c += functionDef.convertToC() + "\n";

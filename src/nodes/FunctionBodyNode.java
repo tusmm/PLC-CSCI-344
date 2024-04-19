@@ -53,8 +53,12 @@ public class FunctionBodyNode implements JottTree {
 
     @Override
     public String convertToC() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToC'");
+        String c = "";
+        for (VariableDeclarationNode variableDeclaration : variableDeclarations) {
+            c += variableDeclaration.convertToC() + "\n";
+        }
+        c += body.convertToC();
+        return c;
     }
 
     @Override

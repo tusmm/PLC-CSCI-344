@@ -7,3 +7,4 @@ out/*
 parserTestCases/parserTestTemp.jott
 phase3testcases/parserTestTemp.jott
 output.jott
+output.c

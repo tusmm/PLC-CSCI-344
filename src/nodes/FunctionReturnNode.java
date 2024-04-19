@@ -58,8 +58,7 @@ public class FunctionReturnNode implements JottTree {
 
     @Override
     public String convertToC() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToC'");
+        return (isVoid ? "void" : type.convertToC());
     }
 
     @Override

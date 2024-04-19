@@ -76,8 +76,16 @@ public class ParamNode implements JottTree {
 
     @Override
     public String convertToC() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToC'");
+        String c = "";
+        if (expressionNode != null) {
+            c += expressionNode.convertToC();
+        }
+        if (paramsTNode != null && !paramsTNode.isEmpty()) {
+            for (ParamsTNode param : paramsTNode) {
+                c += param.convertToC();
+            }
+        }
+        return c;
     }
 
     @Override

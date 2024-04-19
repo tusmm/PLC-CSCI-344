@@ -102,6 +102,16 @@ public class Jott {
                 System.err.println("Error while writing to file: " + outputFile);
             }
 
+        } else if(args[2].equals("C")) {
+            String outputFile = args[1];
+
+            try {
+                PrintWriter pr = new PrintWriter(outputFile);
+                pr.println(root.convertToC());
+                pr.close();
+            } catch (FileNotFoundException e) {
+                System.err.println("Error while writing to file: " + outputFile);
+            }
         }
 
 
