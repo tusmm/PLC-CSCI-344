@@ -91,7 +91,14 @@ public class FunctionDefNode implements JottTree {
     @Override
     public String convertToJava(String className) {
 
-        String funcString = "public static " + functionReturn.convertToJava(className) + " " + id.convertToJava(className);
+        String funcString = "public static " + functionReturn.convertToJava(className) + " " + id.convertToJava(className) + "(";
+        if (id.token.getToken().equals("main")) {
+            funcString += "String args[]"; // special case
+        } else {
+            funcString += functionDefParams.convertToJava(className);
+        }
+
+        funcString += ") {\n}";
         return funcString;
 
 
