@@ -52,8 +52,10 @@ public class FunctionReturnNode implements JottTree {
 
     @Override
     public String convertToJava(String className) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToJava'");
+        if (isVoid) {
+            return "void";
+        }
+        return type.convertToJava(className);
     }
 
     @Override
