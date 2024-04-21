@@ -47,13 +47,12 @@ public class FunctionBodyNode implements JottTree {
 
     @Override
     public String convertToJava(String className) {
-        // TODO Auto-generated method stub
 
         String javaString = "";
         for (VariableDeclarationNode variableDeclaration : variableDeclarations) {
             javaString += "\t" + variableDeclaration.convertToJava(className) + "\n";
         }
-
+        javaString += body.convertToJava(className);
         return javaString;
 
 

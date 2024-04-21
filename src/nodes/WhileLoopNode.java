@@ -130,8 +130,8 @@ public class WhileLoopNode implements BodyStatementNode {
 
     @Override
     public String convertToJava(String className) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToJava'");
+        // TODO fix implementation
+        return "WHILE LOOP GOES HERE SMILES";
     }
 
     @Override
