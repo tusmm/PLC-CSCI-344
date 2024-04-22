@@ -54,9 +54,6 @@ public class FunctionBodyNode implements JottTree {
         }
         javaString += body.convertToJava(className);
         return javaString;
-
-
-        // throw new UnsupportedOperationException("Unimplemented method 'convertToJava'");
     }
 
     @Override
