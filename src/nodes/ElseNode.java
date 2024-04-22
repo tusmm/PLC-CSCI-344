@@ -79,7 +79,7 @@ public class ElseNode implements JottTree {
         if (body == null) {
             return "";
         } else {
-            return "else {\n" + body.convertToJava(className) + "}\n";
+            return "else { " + body.convertToJava(className) + " }";
         }
     }
 

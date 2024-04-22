@@ -46,7 +46,7 @@ public class ProgramNode implements JottTree {
         String java = "public class " + className + " {\n";
 
         for (FunctionDefNode functionDef : functionDefs) {
-            java += "\t" + functionDef.convertToJava(className) + "\n";
+            java += "\n" + functionDef.convertToJava(className) + "\n";
         }
 
         return java + "\n}";

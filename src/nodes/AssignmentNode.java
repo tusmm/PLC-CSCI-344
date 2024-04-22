@@ -77,7 +77,7 @@ public class AssignmentNode implements BodyStatementNode {
 
     @Override
     public String convertToJava(String className) {
-        return id.convertToJava(className) + " = " + expression.convertToJava(className) + ";";
+        return id.convertToJava(className) + " = " + expression.convertToJava(className) + "; ";
     }
 
     @Override

@@ -140,7 +140,7 @@ public class IfStatementNode implements BodyStatementNode {
 
     @Override
     public String convertToJava(String className) {
-        String javaString = "if (" + expr.convertToJava(className) + ") {\n" + body.convertToJava(className) + "}\n";
+        String javaString = "if ( " + expr.convertToJava(className) + " ) { " + body.convertToJava(className) + " } ";
         for (int i = 0; i < elseif_lst.size(); i++) {
             javaString += elseif_lst.get(i).convertToJava(className);
         }

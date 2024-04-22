@@ -97,11 +97,11 @@ public class FunctionDefNode implements JottTree {
         } else {
             funcString += functionDefParams.convertToJava(className);
         }
-        funcString += ") {\n";
+        funcString += ") { ";
 
         funcString += functionBody.convertToJava(className);
 
-        return funcString + "\n\t}" ;
+        return funcString + " }" ;
     }
 
     @Override

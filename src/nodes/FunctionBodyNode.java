@@ -50,7 +50,7 @@ public class FunctionBodyNode implements JottTree {
 
         String javaString = "";
         for (VariableDeclarationNode variableDeclaration : variableDeclarations) {
-            javaString += "\t" + variableDeclaration.convertToJava(className) + "\n";
+            javaString += variableDeclaration.convertToJava(className) + " ";
         }
         javaString += body.convertToJava(className);
         return javaString;

@@ -131,7 +131,7 @@ public class WhileLoopNode implements BodyStatementNode {
     @Override
     public String convertToJava(String className) {
         // TODO fix implementation
-        return "\nwhile (" + expression.convertToJava(className) + ") {\n" + body.convertToJava(className) + "\n}";
+        return "while ( " + expression.convertToJava(className) + " ) { " + body.convertToJava(className) + " } ";
     }
 
     @Override

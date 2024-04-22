@@ -108,7 +108,7 @@ public class ElseIfNode implements JottTree {
 
     @Override
     public String convertToJava(String className) {
-        return "else if ("+ expr.convertToJava(className) + ") {\n" + body.convertToJava(className) + "}\n"; 
+        return "else if ( "+ expr.convertToJava(className) + " ) { " + body.convertToJava(className) + " }"; 
     }
 
     @Override

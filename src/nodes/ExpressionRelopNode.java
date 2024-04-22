@@ -38,7 +38,7 @@ public class ExpressionRelopNode implements ExpressionNode {
 
     @Override
     public String convertToJava(String className) {
-        return operandNodeLeft.convertToJava(className) + relopNode.convertToJava(className) + operandNodeRight.convertToJava(className);
+        return operandNodeLeft.convertToJava(className) + " " + relopNode.convertToJava(className) + " " + operandNodeRight.convertToJava(className);
     }
 
     @Override

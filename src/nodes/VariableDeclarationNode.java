@@ -49,7 +49,7 @@ public class VariableDeclarationNode implements JottTree {
 
     @Override
     public String convertToJava(String className) {
-        return "\t" + type.convertToJava(className) + " " + id.convertToJava(className) + ";";
+        return type.convertToJava(className) + " " + id.convertToJava(className) + ";";
     }
 
     @Override
