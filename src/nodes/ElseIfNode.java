@@ -108,8 +108,7 @@ public class ElseIfNode implements JottTree {
 
     @Override
     public String convertToJava(String className) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToJava'");
+        return "else if ("+ expr.convertToJava(className) + ") {\n" + body.convertToJava(className) + "}\n"; 
     }
 
     @Override

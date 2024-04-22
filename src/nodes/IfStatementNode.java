@@ -140,8 +140,12 @@ public class IfStatementNode implements BodyStatementNode {
 
     @Override
     public String convertToJava(String className) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToJava'");
+        String javaString = "if (" + expr.convertToJava(className) + ") {\n" + body.convertToJava(className) + "}\n";
+        for (int i = 0; i < elseif_lst.size(); i++) {
+            javaString += elseif_lst.get(i).convertToJava(className);
+        }
+        javaString += elseNode.convertToJott();
+        return javaString;
     }
 
     @Override

@@ -74,8 +74,10 @@ public class ParamNode implements JottTree {
         if (expressionNode != null) {
             javaString += expressionNode.convertToJava(className);
         }
-        for (ParamsTNode param: paramsTNode) {
-            javaString += ", " + param.convertToJava(className);
+        if (paramsTNode != null && !paramsTNode.isEmpty()) {
+            for (ParamsTNode param: paramsTNode) {
+                javaString += ", " + param.convertToJava(className);
+            }
         }
 
         return javaString;
