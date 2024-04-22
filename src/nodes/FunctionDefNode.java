@@ -101,7 +101,7 @@ public class FunctionDefNode implements JottTree {
 
         funcString += functionBody.convertToJava(className);
 
-        return funcString + "\t}" ;
+        return funcString + "\n\t}" ;
 
 
         // throw new UnsupportedOperationException("Unimplemented method 'convertToJava'");

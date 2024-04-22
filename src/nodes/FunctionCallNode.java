@@ -70,8 +70,7 @@ public class FunctionCallNode implements OperandNode, BodyStatementNode {
 
     @Override
     public String convertToJava(String className) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToJava'");
+        return id.convertToJava(className) + "(" + params.convertToJava(className) + ");";
     }
 
     @Override

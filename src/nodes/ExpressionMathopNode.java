@@ -40,7 +40,7 @@ public class ExpressionMathopNode implements ExpressionNode {
 
     @Override
     public String convertToJava(String className) {
-        return operandNodeLeft.convertToJava(className) + mathopNode.convertToJava(className) + operandNodeRight.convertToJava(className);
+        return operandNodeLeft.convertToJava(className) + " "+ mathopNode.convertToJava(className) + " " + operandNodeRight.convertToJava(className);
     }
 
     @Override

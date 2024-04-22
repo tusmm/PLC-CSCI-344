@@ -61,7 +61,7 @@ public class ReturnStatementNode implements JottTree {
     public String convertToJava(String className) {
         if (isVoid) {
             return "";
-        } return "Return Statement";
+        } return "return " + expressionNode.convertToJava(className) + ";";
     }
 
     @Override
