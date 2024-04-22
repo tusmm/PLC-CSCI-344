@@ -70,7 +70,7 @@ public class FunctionCallNode implements OperandNode, BodyStatementNode {
 
     @Override
     public String convertToJava(String className) {
-        return id.convertToJava(className) + "(" + params.convertToJava(className) + ");";
+        return id.convertToJava(className) + "(" + params.convertToJava(className) + ")" + (hasSemiColon ? ";" : "");
     }
 
     @Override

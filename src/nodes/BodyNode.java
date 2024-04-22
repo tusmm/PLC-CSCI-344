@@ -67,7 +67,7 @@ public class BodyNode implements JottTree {
     public String convertToJava(String className) {
         String java = "";
         for (BodyStatementNode bodyStatement : bodyStatementNodes) {
-            java += bodyStatement.convertToJava(className);
+            java += bodyStatement.convertToJava(className) + "\n";
         }
         java += returnStatementNode.convertToJava(className);
         return java;

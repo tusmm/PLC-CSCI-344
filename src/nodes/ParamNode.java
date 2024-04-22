@@ -70,8 +70,17 @@ public class ParamNode implements JottTree {
 
     @Override
     public String convertToJava(String className) {
+        String javaString = "";
+        if (expressionNode != null) {
+            javaString += expressionNode.convertToJava(className);
+        }
+        for (ParamsTNode param: paramsTNode) {
+            javaString += ", " + param.convertToJava(className);
+        }
+
+        return javaString;
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToJava'");
+        //throw new UnsupportedOperationException("Unimplemented method 'convertToJava'");
     }
 
     @Override
