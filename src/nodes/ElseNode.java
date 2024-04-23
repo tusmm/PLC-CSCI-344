@@ -82,7 +82,7 @@ public class ElseNode implements JottTree {
 
     @Override
     public String convertToC() {
-        return "else {" + body.convertToC() + "}";
+        return (body == null) ? "" : "else {" + body.convertToC() + "}";
     }
 
     @Override
