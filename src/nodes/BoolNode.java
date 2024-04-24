@@ -51,8 +51,11 @@ public class BoolNode implements ExpressionNode {
 
     @Override
     public String convertToJava(String className) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToJava'");
+        if (token.getToken().equals("True")) {
+            return "true";
+        } else {
+            return "false";
+        }
     }
 
     @Override

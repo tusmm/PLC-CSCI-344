@@ -70,8 +70,19 @@ public class FunctionCallNode implements OperandNode, BodyStatementNode {
 
     @Override
     public String convertToJava(String className) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToJava'");
+
+        String funcName = id.token.getToken();
+        if (funcName.equals("print")) {
+            return "System.out.println(" + params.convertToJava(className) + "); "; // will only have 1 param
+        } else if (funcName.equals("concat")) {
+            String paramString = params.convertToJava(className);
+            String[] pList = paramString.split(",", 0); // there will always be 2 args, this has been validated
+            return pList[0] + " + " + pList[1] + " ";
+
+        } else if (funcName.equals("length")) {
+            return params.convertToJava(className) + ".length()" + (hasSemiColon ? ";" : "") + " "; // gg ez
+        }
+        return id.convertToJava(className) + "(" + params.convertToJava(className) + ")" + (hasSemiColon ? ";" : "") + " ";
     }
 
     @Override

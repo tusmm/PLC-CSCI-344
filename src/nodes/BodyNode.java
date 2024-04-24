@@ -65,8 +65,12 @@ public class BodyNode implements JottTree {
 
     @Override
     public String convertToJava(String className) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToJava'");
+        String java = "";
+        for (BodyStatementNode bodyStatement : bodyStatementNodes) {
+            java += bodyStatement.convertToJava(className);
+        }
+        java += returnStatementNode.convertToJava(className);
+        return java;
     }
 
     @Override
