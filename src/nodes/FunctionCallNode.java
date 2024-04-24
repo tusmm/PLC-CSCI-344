@@ -80,7 +80,7 @@ public class FunctionCallNode implements OperandNode, BodyStatementNode {
             return pList[0] + " + " + pList[1] + " ";
 
         } else if (funcName.equals("length")) {
-            return params.convertToJava(className) + ".length() "; // gg ez
+            return params.convertToJava(className) + ".length()" + (hasSemiColon ? ";" : "") + " "; // gg ez
         }
         return id.convertToJava(className) + "(" + params.convertToJava(className) + ")" + (hasSemiColon ? ";" : "") + " ";
     }
