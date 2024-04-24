@@ -71,6 +71,9 @@ public class ReturnStatementNode implements JottTree {
 
     @Override
     public String convertToPython() {
+        if (isVoid) {
+            return "";
+        }
         return "return " + expressionNode.convertToPython(); 
     }
 
