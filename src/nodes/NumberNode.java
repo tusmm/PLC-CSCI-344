@@ -44,8 +44,7 @@ public class NumberNode implements OperandNode {
 
     @Override
     public String convertToJava(String className) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToJava'");
+        return (isNeg ? "-" : "") + token.getToken();
     }
 
     @Override

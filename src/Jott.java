@@ -102,6 +102,22 @@ public class Jott {
                 System.err.println("Error while writing to file: " + outputFile);
             }
 
+        } else if (args[2].equals("Java")) {
+
+            String outputFile = args[1];
+            String[] name = outputFile.split(".java"); // assumes input name ends with .java
+
+
+            try {
+                PrintWriter pr = new PrintWriter(outputFile);
+                pr.println(root.convertToJava(name[0]));
+                pr.close();
+            } catch (FileNotFoundException e) {
+                System.err.println("Error while writing to file: " + outputFile);
+            }
+
+
+
         }
 
 

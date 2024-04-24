@@ -90,8 +90,18 @@ public class FunctionDefNode implements JottTree {
 
     @Override
     public String convertToJava(String className) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToJava'");
+
+        String funcString = "public static " + functionReturn.convertToJava(className) + " " + id.convertToJava(className) + "(";
+        if (id.token.getToken().equals("main")) {
+            funcString += "String args[]"; // special case
+        } else {
+            funcString += functionDefParams.convertToJava(className);
+        }
+        funcString += ") { ";
+
+        funcString += functionBody.convertToJava(className);
+
+        return funcString + " }" ;
     }
 
     @Override
