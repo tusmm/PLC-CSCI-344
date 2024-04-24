@@ -85,8 +85,7 @@ public class ElseNode implements JottTree {
 
     @Override
     public String convertToC() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToC'");
+        return (body == null) ? "" : "else {" + body.convertToC() + "}";
     }
 
     @Override

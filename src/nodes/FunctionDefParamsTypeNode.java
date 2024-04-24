@@ -50,7 +50,7 @@ public class FunctionDefParamsTypeNode implements JottTree {
 
     @Override
     public String convertToJott() {
-        return id.convertToJott() + ":" + type.convertToJott();
+        return "," + id.convertToJott() + ":" + type.convertToJott();
     }
 
     @Override
@@ -60,8 +60,7 @@ public class FunctionDefParamsTypeNode implements JottTree {
 
     @Override
     public String convertToC() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToC'");
+        return "," + type.convertToC() + " " + id.convertToC();
     }
 
     @Override

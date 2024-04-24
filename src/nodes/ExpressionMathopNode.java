@@ -45,8 +45,7 @@ public class ExpressionMathopNode implements ExpressionNode {
 
     @Override
     public String convertToC() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToC'");
+        return operandNodeLeft.convertToC() + mathopNode.convertToC() + operandNodeRight.convertToC();
     }
 
     @Override

@@ -150,8 +150,13 @@ public class IfStatementNode implements BodyStatementNode {
 
     @Override
     public String convertToC() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToC'");
+        String c = "if(" + expr.convertToC() + "){" + body.convertToC() + "}";
+        for (int i = 0; i < elseif_lst.size(); i++) {
+            c += elseif_lst.get(i).convertToC();
+        }
+        c += elseNode.convertToC();
+
+        return c;
     }
 
     @Override

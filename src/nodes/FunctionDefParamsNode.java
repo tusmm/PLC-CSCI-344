@@ -106,8 +106,17 @@ public class FunctionDefParamsNode implements JottTree {
 
     @Override
     public String convertToC() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToC'");
+        if (isEmpty) {
+            return "";
+        }
+
+        String c = type.convertToC() + " " + id.convertToC();
+
+        for (FunctionDefParamsTypeNode functionDefParamsTypeNode : functionDefParamsTypes) {
+            c += functionDefParamsTypeNode.convertToC();
+        }
+
+        return c;
     }
 
     @Override

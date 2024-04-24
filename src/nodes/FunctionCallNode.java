@@ -87,8 +87,30 @@ public class FunctionCallNode implements OperandNode, BodyStatementNode {
 
     @Override
     public String convertToC() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToC'");
+
+        String semicolon = (hasSemiColon ? ";" : "");
+
+        if(id.toString().equals("print")) {
+            String paramType;
+            try {
+                paramType = params.expressionNode.getType();
+            } catch (SemanticErrorException e) {
+                return null;
+            }
+
+            String formatter = "%d"; // %d for int and boolean (default)
+            if(paramType.equals("String")) {
+                formatter = "%s";
+            } else if(paramType.equals("Double")) {
+                formatter = "%f";
+            }
+
+            return "printf(\"" + formatter + "\\n\", " + params.convertToC() + ")" + semicolon;
+
+        }
+
+        return (id.toString().equals("length") ? "strlen" : id.toString()) + "(" + params.convertToC() + ")" + semicolon;
+
     }
 
     @Override
