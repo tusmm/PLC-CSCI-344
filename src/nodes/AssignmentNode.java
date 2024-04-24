@@ -77,14 +77,12 @@ public class AssignmentNode implements BodyStatementNode {
 
     @Override
     public String convertToJava(String className) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToJava'");
+        return id.convertToJava(className) + " = " + expression.convertToJava(className) + "; ";
     }
 
     @Override
     public String convertToC() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToC'");
+        return id.convertToC() + "=" + expression.convertToC() + ";";
     }
 
     @Override

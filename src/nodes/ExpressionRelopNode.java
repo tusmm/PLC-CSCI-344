@@ -38,14 +38,12 @@ public class ExpressionRelopNode implements ExpressionNode {
 
     @Override
     public String convertToJava(String className) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToJava'");
+        return operandNodeLeft.convertToJava(className) + " " + relopNode.convertToJava(className) + " " + operandNodeRight.convertToJava(className);
     }
 
     @Override
     public String convertToC() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToC'");
+        return  operandNodeLeft.convertToC() + relopNode.convertToC() + operandNodeRight.convertToC();
     }
 
     @Override

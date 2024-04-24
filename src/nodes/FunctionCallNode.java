@@ -70,14 +70,47 @@ public class FunctionCallNode implements OperandNode, BodyStatementNode {
 
     @Override
     public String convertToJava(String className) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToJava'");
+
+        String funcName = id.token.getToken();
+        if (funcName.equals("print")) {
+            return "System.out.println(" + params.convertToJava(className) + "); "; // will only have 1 param
+        } else if (funcName.equals("concat")) {
+            String paramString = params.convertToJava(className);
+            String[] pList = paramString.split(",", 0); // there will always be 2 args, this has been validated
+            return pList[0] + " + " + pList[1] + " ";
+
+        } else if (funcName.equals("length")) {
+            return params.convertToJava(className) + ".length()" + (hasSemiColon ? ";" : "") + " "; // gg ez
+        }
+        return id.convertToJava(className) + "(" + params.convertToJava(className) + ")" + (hasSemiColon ? ";" : "") + " ";
     }
 
     @Override
     public String convertToC() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToC'");
+
+        String semicolon = (hasSemiColon ? ";" : "");
+
+        if(id.toString().equals("print")) {
+            String paramType;
+            try {
+                paramType = params.expressionNode.getType();
+            } catch (SemanticErrorException e) {
+                return null;
+            }
+
+            String formatter = "%d"; // %d for int and boolean (default)
+            if(paramType.equals("String")) {
+                formatter = "%s";
+            } else if(paramType.equals("Double")) {
+                formatter = "%f";
+            }
+
+            return "printf(\"" + formatter + "\\n\", " + params.convertToC() + ")" + semicolon;
+
+        }
+
+        return (id.toString().equals("length") ? "strlen" : id.toString()) + "(" + params.convertToC() + ")" + semicolon;
+
     }
 
     @Override

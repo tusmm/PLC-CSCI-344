@@ -50,14 +50,32 @@ public class TypeNode implements JottTree {
 
     @Override
     public String convertToJava(String className) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToJava'");
+        String typeString = token.getToken();
+        if (typeString.equals("Integer")) {
+            return "int";
+        } else if (typeString.equals("String")) {
+            return typeString; // this is correct
+        }
+
+        return typeString.toLowerCase(); // bool and double
     }
 
     @Override
     public String convertToC() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToC'");
+        if(toString().equals("Double")) {
+            return "double";
+        }
+        if(toString().equals("Integer")) {
+            return  "int";
+        }
+        if(toString().equals("String")) {
+            return "char*";
+        }
+        if(toString().equals("Boolean")) {
+            // #include <stdbool.h>
+            return "bool";
+        }
+        return null;
     }
 
     @Override
