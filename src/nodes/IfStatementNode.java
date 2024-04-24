@@ -161,9 +161,13 @@ public class IfStatementNode implements BodyStatementNode {
 
     @Override
     public String convertToPython() {
-        String returnString = "if " + expr.convertToPython() + ":\n" + body.convertToPython();
+        String returnString = "if " + expr.convertToPython() + ":\n"; 
+        SymbolTable.incrementIndent();
+        String idents = "\t".repeat(SymbolTable.getIndentCount());
+        returnString += idents + body.convertToPython();
+        SymbolTable.decrementIndent();
         for (int i = 0; i < elseif_lst.size(); i++) {
-            returnString += elseif_lst.get(i).convertToPython();
+            returnString += elseif_lst.get(i).convertToPython() + "\n";
         }
         returnString += elseNode.convertToPython();
 

@@ -118,7 +118,12 @@ public class ElseIfNode implements JottTree {
 
     @Override
     public String convertToPython() {
-        return "elif " + expr.convertToPython() + ":\n" + body.convertToPython();
+        String elif = "elif " + expr.convertToPython() + ":\n";
+        SymbolTable.incrementIndent();
+        String idents = "\t".repeat(SymbolTable.getIndentCount());
+        elif += idents + body.convertToPython();
+        SymbolTable.decrementIndent();
+        return elif;
     }
 
     @Override
