@@ -15,13 +15,13 @@ public class Jott {
     private static boolean isValidExec(String[] args) {
         // check for correct number of arguments
         if (args.length != 3) {
-            System.out.println("Usage: java Jott <input_file> <output_file> <language>");
+            System.err.println("Usage: java Jott <input_file> <output_file> <language>");
             return false;
         }
 
         // check that the first argument is a .jott file
         if (!args[0].endsWith(".jott")) {
-            System.out.println("Input file must be a .jott file");
+            System.err.println("Input file must be a .jott file");
             return false;
         }
         
@@ -37,7 +37,7 @@ public class Jott {
         // output.java.jott, .jott will be detected as the file type
         // checks if the output file is a valid type
         if (!isValidOutputFileType) {
-            System.out.println("Output file must be a .java, .c, .py, or .jott file");
+            System.err.println("Output file must be a .java, .c, .py, or .jott file");
             return false;
         }
         
@@ -51,7 +51,7 @@ public class Jott {
         // jAvA, wont be accepted, unless we want it to, we can add a tolwercase to our check
         // check if valid language input
         if (!isValidLanguage) {
-            System.out.println("Language must be Java, C, Python, or Jott");
+            System.err.println("Language must be Java, C, Python, or Jott");
             return false;
         }
 
@@ -67,7 +67,7 @@ public class Jott {
 
         ArrayList<Token> tokens = JottTokenizer.tokenize(args[0]);
         if (tokens == null) {
-            System.out.println("Error tokenizing file");
+            System.err.println("Error tokenizing file");
             System.exit(1);
         }
         
@@ -75,7 +75,7 @@ public class Jott {
         JottTree root = JottParser.parse(tokens);
         // program will handle validation
         if (root == null) {
-            System.out.println("Error parsing tokens");
+            System.err.println("Error parsing tokens");
             System.exit(1);
         }
         
@@ -84,7 +84,7 @@ public class Jott {
             root.validateTree();
             System.out.println("Tree is valid");
         } catch (SemanticErrorException e) {
-            System.out.println(e.getMessage());
+            System.err.println(e.getMessage());
             System.exit(1);
         }
 
@@ -105,7 +105,7 @@ public class Jott {
 
             try {
                 PrintWriter pr = new PrintWriter(outputFile);
-                pr.println(root.convertToC());
+            pr.println(root.convertToC());
                 pr.close();
             } catch (FileNotFoundException e) {
                 System.err.println("Error while writing to file: " + outputFile);
