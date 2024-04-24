@@ -54,8 +54,11 @@ public class ProgramNode implements JottTree {
 
     @Override
     public String convertToPython() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToPython'");
+        String python = "";
+        for (FunctionDefNode functionDef : functionDefs) {
+            python += functionDef.convertToPython() + "\n";
+        }
+        return python;
     }
 
     @Override

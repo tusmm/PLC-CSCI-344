@@ -152,8 +152,13 @@ public class IfStatementNode implements BodyStatementNode {
 
     @Override
     public String convertToPython() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToPython'");
+        String returnString = "if " + expr.convertToPython() + ":\n" + body.convertToPython();
+        for (int i = 0; i < elseif_lst.size(); i++) {
+            returnString += elseif_lst.get(i).convertToPython();
+        }
+        returnString += elseNode.convertToPython();
+
+        return returnString;
     }
 
     @Override

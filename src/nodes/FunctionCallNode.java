@@ -82,8 +82,7 @@ public class FunctionCallNode implements OperandNode, BodyStatementNode {
 
     @Override
     public String convertToPython() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToPython'");
+        return id.convertToPython() + "(" + params.convertToPython() + ")";
     }
 
     @Override
