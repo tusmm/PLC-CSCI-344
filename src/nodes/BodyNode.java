@@ -92,7 +92,7 @@ public class BodyNode implements JottTree {
             body += idents + bodyStatement.convertToPython() + "\n";
         }
         idents = "\t".repeat(SymbolTable.getIndentCount());
-        body += idents + returnStatementNode.convertToPython();
+        body += idents + returnStatementNode.convertToPython() + "\n";
         return body;
     }
 
