@@ -59,8 +59,12 @@ public class FunctionBodyNode implements JottTree {
 
     @Override
     public String convertToPython() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToPython'");
+        String f_body = "";
+        for (VariableDeclarationNode variableDeclaration : variableDeclarations) {
+            f_body += variableDeclaration.convertToPython() + "\n";
+        }
+        f_body += body.convertToPython();
+        return f_body;
     }
 
     @Override

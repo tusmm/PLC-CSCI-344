@@ -89,8 +89,7 @@ public class AssignmentNode implements BodyStatementNode {
 
     @Override
     public String convertToPython() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToPython'");
+        return id.convertToPython() + " = " + expression.convertToPython(); 
     }
 
     @Override

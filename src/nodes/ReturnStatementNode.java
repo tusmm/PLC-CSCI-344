@@ -71,8 +71,7 @@ public class ReturnStatementNode implements JottTree {
 
     @Override
     public String convertToPython() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToPython'");
+        return "return " + expressionNode.convertToPython(); 
     }
 
     @Override

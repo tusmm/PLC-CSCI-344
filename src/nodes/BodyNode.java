@@ -77,8 +77,12 @@ public class BodyNode implements JottTree {
 
     @Override
     public String convertToPython() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToPython'");
+        String body = "";
+        for (BodyStatementNode bodyStatement : bodyStatementNodes) {
+            body += bodyStatement.convertToPython() + "\n";
+        }
+        body += returnStatementNode.convertToPython();
+        return body;
     }
 
     @Override

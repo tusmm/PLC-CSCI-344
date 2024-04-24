@@ -61,8 +61,7 @@ public class VariableDeclarationNode implements JottTree {
 
     @Override
     public String convertToPython() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToPython'");
+        return id.convertToPython() + " = " + "None"; 
     }
 
     @Override
