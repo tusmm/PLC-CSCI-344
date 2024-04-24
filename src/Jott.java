@@ -82,7 +82,6 @@ public class Jott {
         try {
             SymbolTable.clearTables();
             root.validateTree();
-            System.out.println("Tree is valid");
         } catch (SemanticErrorException e) {
             System.out.println(e.getMessage());
             System.exit(1);
