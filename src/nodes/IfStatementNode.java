@@ -166,7 +166,7 @@ public class IfStatementNode implements BodyStatementNode {
         returnString += body.convertToPython();
         SymbolTable.decrementIndent();
         for (int i = 0; i < elseif_lst.size(); i++) {
-            returnString += elseif_lst.get(i).convertToPython() + "\n";
+            returnString += elseif_lst.get(i).convertToPython();
         }
         returnString += elseNode.convertToPython();
 

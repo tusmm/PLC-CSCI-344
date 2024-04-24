@@ -94,7 +94,7 @@ public class ElseNode implements JottTree {
             return "";
         } else {
             String indents = "\t".repeat(SymbolTable.getIndentCount());
-            String elseString = "\n" + indents + "else:\n";
+            String elseString = indents + "else:\n";
             SymbolTable.incrementIndent();
             elseString += body.convertToPython() + "\n";
             SymbolTable.decrementIndent();
