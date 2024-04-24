@@ -86,10 +86,13 @@ public class BodyNode implements JottTree {
     @Override
     public String convertToPython() {
         String body = "";
+        String idents; 
         for (BodyStatementNode bodyStatement : bodyStatementNodes) {
-            body += bodyStatement.convertToPython() + "\n";
+            idents = "\t".repeat(SymbolTable.getIndentCount());
+            body += idents + bodyStatement.convertToPython() + "\n";
         }
-        body += returnStatementNode.convertToPython();
+        idents = "\t".repeat(SymbolTable.getIndentCount());
+        body += idents + returnStatementNode.convertToPython();
         return body;
     }
 

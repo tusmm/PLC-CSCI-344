@@ -69,8 +69,10 @@ public class FunctionBodyNode implements JottTree {
     @Override
     public String convertToPython() {
         String f_body = "";
+        String idents; 
         for (VariableDeclarationNode variableDeclaration : variableDeclarations) {
-            f_body += variableDeclaration.convertToPython() + "\n";
+            idents = "\t".repeat(SymbolTable.getIndentCount());
+            f_body += idents + variableDeclaration.convertToPython() + "\n";
         }
         f_body += body.convertToPython();
         return f_body;
