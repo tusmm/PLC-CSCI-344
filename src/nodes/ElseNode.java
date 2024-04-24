@@ -93,7 +93,7 @@ public class ElseNode implements JottTree {
         if (body == null) {
             return "";
         } else {
-            return "else:\n" + body.convertToPython();
+            return "\nelse:\n" + body.convertToPython() + "\n";
         }
     }
 

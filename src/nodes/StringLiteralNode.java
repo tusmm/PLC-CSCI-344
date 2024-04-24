@@ -49,7 +49,7 @@ public class StringLiteralNode implements ExpressionNode {
 
     @Override
     public String convertToPython() {
-        return token.toString();
+        return token.getToken();
     }
 
     @Override

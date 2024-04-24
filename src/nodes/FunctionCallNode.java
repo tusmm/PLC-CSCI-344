@@ -115,6 +115,13 @@ public class FunctionCallNode implements OperandNode, BodyStatementNode {
 
     @Override
     public String convertToPython() {
+        if (id.toString().equals("print")) {
+            return "print(" + params.convertToPython() + ")";
+        } else if (id.toString().equals("concat")) {
+            return params.convertToPython().replace(",", " + ");
+        } else if (id.toString().equals("length")) {
+            return "len(" + params.convertToPython() + ")";
+        }
         return id.convertToPython() + "(" + params.convertToPython() + ")";
     }
 
