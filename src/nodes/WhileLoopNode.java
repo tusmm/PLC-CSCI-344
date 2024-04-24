@@ -141,7 +141,13 @@ public class WhileLoopNode implements BodyStatementNode {
 
     @Override
     public String convertToPython() {
-        return "while " + expression.convertToPython() + ":\n" + body.convertToPython(); // must handle indent
+        String indents = "\t".repeat(SymbolTable.getIndentCount());
+        String whileString = indents + "while " + expression.convertToPython() + ":\n";
+        SymbolTable.incrementIndent();
+        indents = "\t".repeat(SymbolTable.getIndentCount());
+        whileString += indents + body.convertToPython();
+        SymbolTable.decrementIndent();
+        return  whileString;
     }
 
     @Override
