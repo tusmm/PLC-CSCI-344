@@ -80,7 +80,7 @@ public class ProgramNode implements JottTree {
         for (FunctionDefNode functionDef : functionDefs) {
             python += functionDef.convertToPython() + "\n";
         }
-        python += "\nmain()";
+        python += "main()";
         return python;
     }
 
