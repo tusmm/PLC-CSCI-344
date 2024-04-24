@@ -47,7 +47,7 @@ public class RelopNode implements JottTree {
 
     @Override
     public String convertToPython() {
-        return token.toString();
+        return token.getToken();
     }
 
     @Override
