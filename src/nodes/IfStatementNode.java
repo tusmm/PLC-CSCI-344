@@ -144,7 +144,7 @@ public class IfStatementNode implements BodyStatementNode {
         for (int i = 0; i < elseif_lst.size(); i++) {
             javaString += elseif_lst.get(i).convertToJava(className);
         }
-        javaString += elseNode.convertToJott();
+        javaString += elseNode.convertToJava(className);
         return javaString;
     }
 
