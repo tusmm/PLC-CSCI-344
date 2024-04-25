@@ -141,8 +141,11 @@ public class WhileLoopNode implements BodyStatementNode {
 
     @Override
     public String convertToPython() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToPython'");
+        String whileString = "while " + expression.convertToPython() + ":\n";
+        SymbolTable.incrementIndent();
+        whileString += body.convertToPython();
+        SymbolTable.decrementIndent();
+        return  whileString;
     }
 
     @Override

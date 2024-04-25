@@ -48,8 +48,7 @@ public class ExpressionRelopNode implements ExpressionNode {
 
     @Override
     public String convertToPython() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToPython'");
+        return operandNodeLeft.convertToPython() + relopNode.convertToPython() + operandNodeRight.convertToPython();
     }
 
     @Override

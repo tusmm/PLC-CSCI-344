@@ -50,8 +50,7 @@ public class ExpressionMathopNode implements ExpressionNode {
 
     @Override
     public String convertToPython() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToPython'");
+        return operandNodeLeft.convertToPython() + mathopNode.convertToPython() + operandNodeRight.convertToPython();
     }
 
     @Override

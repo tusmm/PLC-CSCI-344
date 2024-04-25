@@ -121,8 +121,17 @@ public class FunctionDefParamsNode implements JottTree {
 
     @Override
     public String convertToPython() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToPython'");
+        if (isEmpty) {
+            return "";
+        }
+
+        String functionDefParams = id.convertToPython();
+
+        for (FunctionDefParamsTypeNode functionDefParamsTypeNode : functionDefParamsTypes) {
+            functionDefParams += functionDefParamsTypeNode.convertToPython();
+        }
+
+        return functionDefParams;
     }
 
     @Override

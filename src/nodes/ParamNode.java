@@ -98,8 +98,16 @@ public class ParamNode implements JottTree {
 
     @Override
     public String convertToPython() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToPython'");
+        String pythonString = "";
+        if (expressionNode != null) {
+            pythonString += expressionNode.convertToPython();
+        }
+        if (paramsTNode != null && !paramsTNode.isEmpty()) {
+            for (ParamsTNode param : paramsTNode) {
+                pythonString += param.convertToPython();
+            }
+        }
+        return pythonString;
     }
 
     @Override

@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class SymbolTable {
-
+    private static int indentCount = 0;
     // function table:
     // (function name) -> ([parameter types], return type)
     // per the writeup, no duplicate function names are allowed (no method overloading)
@@ -16,6 +16,18 @@ public class SymbolTable {
     private static HashMap<String, HashMap<String, String>> variableTable = new HashMap<>();
 
     private static String currentScope;
+
+    public static int getIndentCount() {
+        return indentCount;
+    }
+
+    public static void incrementIndent() {
+        indentCount++;
+    }
+
+    public static void decrementIndent() {
+        indentCount--;
+    }
 
     public static String getCurrentScope() {
         return currentScope;

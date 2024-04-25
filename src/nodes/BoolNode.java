@@ -65,8 +65,7 @@ public class BoolNode implements ExpressionNode {
 
     @Override
     public String convertToPython() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToPython'");
+        return convertToJott();
     }
 
     @Override

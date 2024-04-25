@@ -118,8 +118,12 @@ public class ElseIfNode implements JottTree {
 
     @Override
     public String convertToPython() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToPython'");
+        String idents = "\t".repeat(SymbolTable.getIndentCount());
+        String elif = idents + "elif " + expr.convertToPython() + ":\n";
+        SymbolTable.incrementIndent();
+        elif += body.convertToPython();
+        SymbolTable.decrementIndent();
+        return elif;
     }
 
     @Override

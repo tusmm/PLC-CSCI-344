@@ -27,7 +27,7 @@ public class Jott {
         
         // check that second argument is ends with ("java", "c", "python", "jott")
         ArrayList<String> outputFileTypes = new ArrayList<String>(
-            Arrays.asList(".java", ".c", ".python", ".jott")
+            Arrays.asList(".java", ".c", ".py", ".jott")
         );
         
         int lastDotIndex = args[1].lastIndexOf(".");
@@ -82,7 +82,6 @@ public class Jott {
         try {
             SymbolTable.clearTables();
             root.validateTree();
-            System.out.println("Tree is valid");
         } catch (SemanticErrorException e) {
             System.err.println(e.getMessage());
             System.exit(1);
@@ -125,6 +124,16 @@ public class Jott {
                 System.err.println("Error while writing to file: " + outputFile);
             }
 
+        } else if(args[2].equals("Python")) {
+            String outputFile = args[1];
+
+            try {
+                PrintWriter pr = new PrintWriter(outputFile);
+                pr.println(root.convertToPython());
+                pr.close();
+            } catch (FileNotFoundException e) {
+                System.err.println("Error while writing to file: " + outputFile);
+            }
         }
 
 

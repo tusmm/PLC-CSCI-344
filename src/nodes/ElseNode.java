@@ -90,8 +90,16 @@ public class ElseNode implements JottTree {
 
     @Override
     public String convertToPython() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToPython'");
+        if (body == null) {
+            return "";
+        } else {
+            String indents = "\t".repeat(SymbolTable.getIndentCount());
+            String elseString = indents + "else:\n";
+            SymbolTable.incrementIndent();
+            elseString += body.convertToPython() + "\n";
+            SymbolTable.decrementIndent();
+            return elseString;
+        }
     }
 
     @Override
