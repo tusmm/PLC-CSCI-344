@@ -11,7 +11,7 @@ faluthe | Patrick LeBlanc
 lh5844  | Lucy Hu
 
 ## How to Build
-`javac *.java`
+`javac -sourcepath . Jott.java`
 
 ## How to Run
 `java Jott <input_file> <output_file> <language>`
